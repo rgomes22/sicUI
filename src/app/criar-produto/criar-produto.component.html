@@ -1,0 +1,49 @@
+<div style="text-align:left">
+  <h2>{{titulo}}</h2> 
+  <button (click)="goBack()">Back</button >
+</div>
+<div style="text-align:center">
+  <p>
+    <label>Nome Produto:
+      <input #productName />
+    </label>
+  </p>
+  <p>
+      <label>Descrição Produto:
+        <input #productDescription />
+      </label>
+    </p>
+<p>
+ <!----- <label>Material:
+
+    <select name="selectedMaterialId" (change)="adicionarMaterial($event.target.value)" class="select-width form-control">
+      <option value="-1">Escolha um material</option>
+      <option *ngFor="let mf of allMateriaisFinish" value="{{mf.materialId}}">{{mf.materialId}}
+        {{mf.materialName}}</option>
+    </select>
+    
+  </label>--->
+  
+</p>
+<p>
+  <label>Categoria:
+
+    <select name="selectedCategoryId" (change)="addCategory($event.target.value)" class="select-width form-control">
+      <option value="-1">Escolha uma categoria</option>
+      <option *ngFor="let cat of allCategories" value="{{cat.categoryId}}">{{cat.categoryId}}
+        {{cat.categoryName}}</option>
+    </select>
+    
+  </label>
+</p>
+<p>
+    <button (click)=" post(productName.value,productDescription.value)">Adicionar Produto</button>
+</p>
+
+
+ 
+ 
+
+
+
+</div>
