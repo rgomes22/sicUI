@@ -28,7 +28,7 @@
         </li>
     
         <h2>Continuous Editor</h2>
-    <div *ngIf="selectedContDim">
+    
         
         <div>
             <label>Min width: 
@@ -60,8 +60,10 @@
                 <input type="text" #MaxH />
             </label>
         </div>
-        <button (click)="editContDim(MinW.value,MaxW.value,MinH.value,MaxH.value,MinD.value,MaxD.value)" >Submit Edit</button >
         <button (click)="criarCont(MinW.value,MaxW.value,MinH.value,MaxH.value,MinD.value,MaxD.value)">Criar dimensao</button> 
+
+        <div *ngIf="selectedContDim">
+        <button (click)="editContDim(MinW.value,MaxW.value,MinH.value,MaxH.value,MinD.value,MaxD.value)" >Submit Edit</button >
         <button (click)="apagarCont()">Apagar Dimensao</button> 
         </div>
         <h2>Discreet Editor</h2>
