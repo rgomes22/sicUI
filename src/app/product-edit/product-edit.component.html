@@ -1,0 +1,24 @@
+<div *ngIf="product">
+    
+    
+    <h2>{{product.productName | uppercase}} Editor</h2>
+    <div><span>id: </span>{{product.productId}}</div>
+    <div>
+      <label>name:
+        <input [(ngModel)]="product.productName" placeholder="name"/>
+      </label>
+    </div>
+    <div>
+        <label>description:
+            <input [(ngModel)]="product.productDescription" placeholder="description"/>
+          </label>
+    </div>
+    <div>
+      <h2>SubProducts</h2>
+      <li *ngFor="let p of product.subProducts">
+        <span class="badge">{{p.productId}}  {{p.productName}}</span>
+      </li>
+    </div>
+
+  
+  </div>

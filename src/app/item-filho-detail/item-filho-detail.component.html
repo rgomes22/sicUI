@@ -1,0 +1,132 @@
+<div style="text-align:left">
+  <h2>Detalhes do Item Filho</h2>
+  <button (click)="goBack()">Back</button>
+</div>
+<div style="text-align:center">
+
+  <div *ngIf="item">
+    <hr>
+    <h2>ITEM {{item.nome}}</h2>
+    <hr>
+    <!---<h4>ID: {{item.id}}</h4>---->
+    <h3>CARATERISTICAS</h3>
+    <div *ngIf="produto">
+
+      <h4>Produto: {{produto.productName}}</h4>
+    </div>
+    <h4>Descricao: {{item.descricao}}</h4>
+    <h4>Width: {{item.width}}</h4>
+    <h4>Height: {{item.height}}</h4>
+    <h4>Depth: {{item.depth}}</h4>
+
+    <h4>Material: {{item.material}}</h4>
+    <h4>Finish: {{item.finish}}</h4>
+    <p></p>
+    <hr>
+    <div style="text-align:center">
+      <h3>EDITAR ITEM </h3>
+      <label>Nome:
+        <input #NomeE />
+      </label>
+      <p>
+        <label>Material:
+
+          <select name="MaterialIdEdit" (change)="materialOpEdit($event.target.value)" class="select-width form-control">
+            <option value="-1">Escolha um valor</option>
+            <option *ngFor="let mf of allMaterialFinishes" value="{{mf.materialId}}">{{mf.materialId}}
+              {{mf.materialName}}</option>
+          </select>
+        </label>
+      </p>
+
+      <p>
+        <label>Acabamento:
+
+          <select name="FinishIdEdit" (change)="finishOpEdit($event.target.value)" class="select-width form-control">
+            <option value="-1">Escolha um valor</option>
+            <option *ngFor="let mf of allMaterialFinishes" value="{{mf.finishId}}">{{mf.finishId}} {{mf.finishName}}</option>
+          </select>
+        </label>
+      </p>
+      <p></p>
+      <label>Height:
+        <input #HeightE />
+      </label>
+      <p></p>
+      <label>Depth:
+        <input #DepthE />
+      </label>
+      <p></p>
+      <label>Width:
+        <input #WidthE />
+      </label>
+      <p></p>
+      <button (click)="editarItem(NomeE.value,HeightE.value,DepthE.value,WidthE.value)">Editar</button>
+
+    </div>
+    <hr>
+
+    <h3>ITENS FILHOS</h3>
+    <p align="center">
+      <li *ngFor="let filho of item.itemFilhos">
+        <nav>
+          <a routerLink="/itens/{{item.id}}/filho/{{filho.id}}">
+            <span class="badge">{{filho.nome}}</span>
+          </a>
+
+          <button class="button" title="remove Item" (click)="remove(filho)">x</button>
+        </nav>
+      </li>
+    </p>
+    <hr>
+    <h3>CRIAR ITEM FILHO</h3>
+    <label>Nome:
+      <input #Nome />
+    </label>
+    <p></p>
+    <p>
+      <label>Produto:
+        <select name="ProductId" (change)="productOp($event.target.value)" class="select-width form-control">
+          <option value="-1">Escolha um valor</option>
+          <option *ngFor="let p of allProdutos" value="{{p.productId}}">{{p.productId}} {{p.productName}}</option>
+        </select>
+      </label>
+    </p>
+    <p></p>
+    <p>
+      <label>Material:
+
+        <select name="MaterialId" (change)="materialOp($event.target.value)" class="select-width form-control">
+          <option value="-1">Escolha um valor</option>
+          <option *ngFor="let mf of allMaterialFinishes" value="{{mf.materialId}}">{{mf.materialId}}
+            {{mf.materialName}}</option>
+        </select>
+      </label>
+    </p>
+
+    <p>
+      <label>Acabamento:
+
+        <select name="FinishId" (change)="finishOp($event.target.value)" class="select-width form-control">
+          <option value="-1">Escolha um valor</option>
+          <option *ngFor="let mf of allMaterialFinishes" value="{{mf.finishId}}">{{mf.finishId}} {{mf.finishName}}</option>
+        </select>
+      </label>
+    </p>
+    <p></p>
+    <label>Height:
+      <input #Height />
+    </label>
+    <p></p>
+    <label>Depth:
+      <input #Depth />
+    </label>
+    <p></p>
+    <label>Width:
+      <input #Width />
+    </label>
+    <p></p>
+    <button (click)="createFilho(Nome.value,Height.value,Depth.value,Width.value)">Criar</button>
+  </div>
+
+</div>
