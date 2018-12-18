@@ -1,0 +1,15 @@
+<div style="text-align:left">
+  <h2>{{titulo}}</h2> 
+  <button (click)="goBack()">Back</button >
+</div>
+
+<div style="text-align: center">
+  <h2>{{listagem}}</h2> 
+  <li *ngFor="let prod of allProdutos" [class.selected]="prod === selectedProduct" (click)="onSelect(prod)">
+    <span class="badge">{{prod.productName}}</span> 
+    <button class="delete" title="delete produto"
+    (click)="delete(prod)"> x </button>
+  </li>
+</div>
+
+<app-product-edit [product]="selectedProduct"></app-product-edit>
