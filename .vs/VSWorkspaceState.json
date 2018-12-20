@@ -1,10 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\src",
-    "\\src\\app",
-    "\\src\\app\\dimensoes-gestao"
+    ""
   ],
-  "SelectedNode": "\\src\\app\\dimensoes-gestao\\dimensoes-gestao.component.html",
+  "SelectedNode": "\\angular.json",
   "PreviewInSolutionExplorer": false
 }
