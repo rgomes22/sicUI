@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
-import { RestricoesService } from '../Services/restricoes.service';
-import { ProdutosService} from '../Services/produtos.service';
+import { RestricoesService } from '../../Services/restricoes.service';
+import { ProdutosService} from '../../Services/produtos.service';
 
 import { Restricao } from '../../model/Restricao';
 import { Produto } from '../../model/Produto';

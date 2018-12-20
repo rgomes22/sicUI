@@ -1,0 +1,21 @@
+<div style="text-align:left">
+  <h2>{{titulo}}</h2> 
+  <button (click)="goBack()">Back</button >
+</div>
+<div style="text-align:center">
+  <p>
+    <label>Nome Categoria:
+      <input #Nome/>
+    </label>
+  </p>
+  <p>
+    <label>Categoria Pai:
+  
+      <select name="ParentCategory" (change)="adcionarPai($event.target.value)" class="select-width form-control">
+        <option value="-1">Escolha um valor</option>
+        <option *ngFor="let cat of allCategories" value="{{cat.categoryId}}">{{cat.categoryId}}
+          {{cat.categoryName}}</option>
+      </select>
+    </label>
+  </p>  
+</div>

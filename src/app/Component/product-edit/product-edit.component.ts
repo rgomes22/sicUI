@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Produto } from '../../model/Produto';
 import { MaterialFinish } from '../../model/MaterialFinish';
-import { MaterialFinishService } from '../Services/material-finish.service';
-import { CategoryServiceService } from '../Services/category-service.service';
+import { MaterialFinishService } from '../../Services/material-finish.service';
+import { CategoryServiceService } from '../../Services/category-service.service';
 import { Category } from '../../model/Category';
-import { ProdutosService } from '../Services/produtos.service';
+import { ProdutosService } from '../../Services/produtos.service';
 import { produtoPutDTO } from '../../DTOS/produtoPutDTO';
 import { categoryDTO } from '../../DTOS/categoryDTO';
 

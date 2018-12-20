@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Category } from '../../model/Category';
+import { Category } from '../model/Category';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -52,5 +52,14 @@ export class CategoryServiceService {
       tap(_ => this.log('Get Category by Id')),
       catchError(this.handleError<any>('Get Category by Id'))
     )
+  }
+
+  delete(category:Category | number ): Observable<Category>{
+    const id = typeof category === 'number' ? category : category.categoryId;
+    const url = `${this.url}/${id}`;
+    return this.http.delete<Category>(url, httpOptions).pipe(
+      tap(_=> this.log(`Delete da categoria id=${id}`)),
+      catchError(this.handleError<Category>('DELETE PRODUTO'))
+    );
   }
 }

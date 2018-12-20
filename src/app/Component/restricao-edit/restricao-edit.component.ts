@@ -1,7 +1,7 @@
 import { Component, OnInit , Input} from '@angular/core';
 
 import { Restricao } from '../../model/Restricao';
-import { RestricoesService } from '../Services/restricoes.service';
+import { RestricoesService } from '../../Services/restricoes.service';
 import { Produto } from '../../model/Produto';
 import { restricaoPutDTO } from '../../DTOS/restricaoPutDTO'
 

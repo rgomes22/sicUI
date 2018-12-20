@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { Encomenda } from '../../model/Encomenda';
-import { EncomendaService } from '../Services/encomenda.service';
+import { EncomendaService } from '../../Services/encomenda.service';
 
 @Component({
   selector: 'app-encomenda-gestao',

@@ -3,9 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Restricao } from '../../model/Restricao';
-import { RestricaoDTO } from '../../DTOS/restricaoDTO';
-import { restricaoPutDTO } from '../../DTOS/restricaoPutDTO';
+import { Restricao } from '../model/Restricao';
+import { RestricaoDTO } from '../DTOS/restricaoDTO';
+import { restricaoPutDTO } from '../DTOS/restricaoPutDTO';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

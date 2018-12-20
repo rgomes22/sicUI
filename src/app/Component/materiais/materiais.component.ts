@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { Material } from '../../model/Material';
-import { MateriaisService } from '../Services/materiais.service';
+import { MateriaisService } from '../../Services/materiais.service';
 
 @Component({
   selector: 'app-materiais',

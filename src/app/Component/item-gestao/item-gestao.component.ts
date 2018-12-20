@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { Item } from '../../model/Item';
-import { ItemService } from '../Services/item.service';
-import { MaterialFinishService } from '../Services/material-finish.service';
+import { ItemService } from '../../Services/item.service';
+import { MaterialFinishService } from '../../Services/material-finish.service';
 import { criarItemFilhoDTO } from '../../DTOS/criarItemFilhoDTO';
 import { ThrowStmt } from '@angular/compiler';
 import { MaterialFinish } from '../../model/MaterialFinish';
 import { Produto } from '../../model/Produto';
-import { ProdutosService } from '../Services/produtos.service';
+import { ProdutosService } from '../../Services/produtos.service';
 
 @Component({
   selector: 'app-item-gestao',

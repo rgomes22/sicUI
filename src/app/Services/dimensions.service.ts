@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { DiscreetDimension } from '../../model/DiscreetDimension';
-import { ContinuousDimension } from '../../model/ContinuousDimension';
-import { CDPutDTO } from '../../DTOS/CDPutDTO';
-import { DDPutDTO } from '../../DTOS/DDPutDTO';
-import { DiscreetDimensionPostDTO } from '../../DTOS/DiscreetDimensionPostDTO';
-import { ContinuousDimensionPostDTO } from '../../DTOS/ContinuousDimensionPostDTO';
+import { DiscreetDimension } from '../model/DiscreetDimension';
+import { ContinuousDimension } from '../model/ContinuousDimension';
+import { CDPutDTO } from '../DTOS/CDPutDTO';
+import { DDPutDTO } from '../DTOS/DDPutDTO';
+import { DiscreetDimensionPostDTO } from '../DTOS/DiscreetDimensionPostDTO';
+import { ContinuousDimensionPostDTO } from '../DTOS/ContinuousDimensionPostDTO';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

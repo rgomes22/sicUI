@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
-import { ProdutosService } from '../Services/produtos.service';
+import { ProdutosService } from '../../Services/produtos.service';
 import { Produto } from '../../model/Produto';
 
 

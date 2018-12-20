@@ -1,14 +1,14 @@
 import { Component, OnInit , Input} from '@angular/core';
 import { Location } from '@angular/common';
 
-import { ProdutosService } from '../Services/produtos.service';
+import { ProdutosService } from '../../Services/produtos.service';
 import { Produto } from '../../model/Produto';
 import { criarProdutoDTO } from '../../DTOS/criarProdutoDTO';
 import { Category } from '../../model/Category';
 //import { Material } from '../model/Material';
 import { MaterialFinish } from '../../model/MaterialFinish';
-import { MaterialFinishService } from '../Services/material-finish.service';
-import { CategoryServiceService } from '../Services/category-service.service';
+import { MaterialFinishService } from '../../Services/material-finish.service';
+import { CategoryServiceService } from '../../Services/category-service.service';
 
 @Component({
   selector: 'app-criar-produto',

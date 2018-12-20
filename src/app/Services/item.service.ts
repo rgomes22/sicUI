@@ -3,8 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Item } from '../../model/Item';
-import { criarItemFilhoDTO } from '../../DTOS/criarItemFilhoDTO';
+import { Item } from '../model/Item';
+import { criarItemFilhoDTO } from '../DTOS/criarItemFilhoDTO';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };

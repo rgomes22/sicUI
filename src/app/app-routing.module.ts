@@ -20,6 +20,9 @@ import { DimensoesGestaoComponent } from './Component/dimensoes-gestao/dimensoes
 
 import {  RestricaoEditComponent } from './Component/restricao-edit/restricao-edit.component';
 
+import { CriarCategoriaComponent } from './Component/criar-categoria/criar-categoria.component';
+
+import { GerirCategoriasComponent } from './Component/gerir-categorias/gerir-categorias.component';
 
 
 const routes: Routes = [
@@ -38,6 +41,8 @@ const routes: Routes = [
   {path: 'dimensoes', component : DimensoesGestaoComponent},
 
   {path:'restricao-edicao' , component : RestricaoEditComponent},
+  {path:'gerirCategoria' , component : GerirCategoriasComponent},
+  {path:'criarCategoria' , component : CriarCategoriaComponent}
 
 ];
 

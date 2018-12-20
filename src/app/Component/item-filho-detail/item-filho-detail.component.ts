@@ -3,12 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Item } from '../../model/Item';
-import { ItemService } from '../Services/item.service';
+import { ItemService } from '../../Services/item.service';
 import { criarItemFilhoDTO } from '../../DTOS/criarItemFilhoDTO';
 import { MaterialFinish } from '../../model/MaterialFinish';
 import { Produto } from '../../model/Produto';
-import { ProdutosService } from '../Services/produtos.service';
-import { MaterialFinishService } from '../Services/material-finish.service';
+import { ProdutosService } from '../../Services/produtos.service';
+import { MaterialFinishService } from '../../Services/material-finish.service';
 
 @Component({
   selector: 'app-item-filho-detail',
