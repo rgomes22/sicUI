@@ -11,11 +11,14 @@
   <p>
     <label>Categoria Pai:
   
-      <select name="ParentCategory" (change)="adcionarPai($event.target.value)" class="select-width form-control">
+      <select name="ParentCategory" (change)="adicionarPai($event.target.value)" class="select-width form-control">
         <option value="-1">Escolha um valor</option>
         <option *ngFor="let cat of allCategories" value="{{cat.categoryId}}">{{cat.categoryId}}
           {{cat.categoryName}}</option>
       </select>
     </label>
   </p>  
+  <p>
+    <button (click)=" post(Nome.value)">Adicionar Produto</button>
+  </p>
 </div>

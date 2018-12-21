@@ -36,16 +36,16 @@ export class ProdutosService {
     const url2 = `${this.urlPutProduto}/${id}`;
     alert("put url "+url2);
     return this.httpClient.put<Produto>(url2,produto,httpOptions).pipe(
-      tap(_ => this.log(`put id=${id}`)),
-      catchError(this.handleError<Produto>(`put id=${id}`))
+      tap(_ => this.log(`put id`)),
+      catchError(this.handleError<Produto>(`put id`))
     );
   }
 
   getProduto( id: number ): Observable<Produto>{
     const url = `${this.urlGetProdutos}/${id}`;
     return this.httpClient.get<Produto>(url).pipe(
-      tap(_ => this.log(`fetched PROD id=${id}`)),
-      catchError(this.handleError<Produto>(`get PROD id=${id}`))
+      tap(_ => this.log(`fetched PROD id`)),
+      catchError(this.handleError<Produto>(`get PROD id`))
     );
   }
   //Post do produto 
@@ -70,7 +70,7 @@ export class ProdutosService {
     const id = typeof produto === 'number' ? produto : produto.productId;
     const url = `${this.urlGetProdutos}/${id}`;
     return this.httpClient.delete<Produto>(url, httpOptions).pipe(
-      tap(_=> this.log(`Delete do Produto id=${id}`)),
+      tap(_=> this.log(`Delete do Produto id`)),
       catchError(this.handleError<Produto>('DELETE PRODUTO'))
     );
   }

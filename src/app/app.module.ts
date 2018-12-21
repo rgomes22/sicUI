@@ -24,6 +24,7 @@ import { DimensoesGestaoComponent } from './Component/dimensoes-gestao/dimensoes
 import { RestricaoEditComponent } from './Component/restricao-edit/restricao-edit.component';
 import { CriarCategoriaComponent } from './Component/criar-categoria/criar-categoria.component';
 import { GerirCategoriasComponent } from './Component/gerir-categorias/gerir-categorias.component';
+import { EditarCategoriaComponent } from './Component/editar-categoria/editar-categoria.component';
 
 
 
@@ -45,7 +46,8 @@ import { GerirCategoriasComponent } from './Component/gerir-categorias/gerir-cat
     DimensoesGestaoComponent,
     RestricaoEditComponent,
     CriarCategoriaComponent,
-    GerirCategoriasComponent
+    GerirCategoriasComponent,
+    EditarCategoriaComponent
 
 
     
