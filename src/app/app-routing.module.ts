@@ -24,6 +24,7 @@ import { CriarCategoriaComponent } from './Component/criar-categoria/criar-categ
 
 import { GerirCategoriasComponent } from './Component/gerir-categorias/gerir-categorias.component';
 
+import { LoginComponent } from './Component/login/login.component';
 
 const routes: Routes = [
   {path: 'catalogo', component : CatalogoComponent},
@@ -42,8 +43,8 @@ const routes: Routes = [
 
   {path:'restricao-edicao' , component : RestricaoEditComponent},
   {path:'gerirCategoria' , component : GerirCategoriasComponent},
-  {path:'criarCategoria' , component : CriarCategoriaComponent}
-
+  {path:'criarCategoria' , component : CriarCategoriaComponent},
+  {path: 'login', component: LoginComponent}
 ];
 
 @NgModule({
