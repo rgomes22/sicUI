@@ -4,6 +4,8 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Category } from '../model/Category';
+import { categoryPutDTO } from '../DTOS/categoryPutDTO';
+import { criarCategoriaDTO } from '../DTOS/criarCategoriaDTO';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -46,7 +48,7 @@ export class CategoryServiceService {
 
   }
 
-  getCategoryById(categoryId:number): Observable<Category>{
+  getCategoryById(categoryId:number | string): Observable<Category>{
     const url2 = `${this.url}/${categoryId}`;
     return this.http.get<Category>(url2).pipe(
       tap(_ => this.log('Get Category by Id')),
@@ -58,8 +60,22 @@ export class CategoryServiceService {
     const id = typeof category === 'number' ? category : category.categoryId;
     const url = `${this.url}/${id}`;
     return this.http.delete<Category>(url, httpOptions).pipe(
-      tap(_=> this.log(`Delete da categoria id=${id}`)),
-      catchError(this.handleError<Category>('DELETE PRODUTO'))
+      tap(_=> this.log(`Delete da categoria id`)),
+      catchError(this.handleError<Category>('DELETE CATEGORIA'))
+    );
+  }
+  putCategoria(id:number, category: categoryPutDTO): Observable<Category>{
+    const url2 = `${this.url}/${id}`;
+    alert("put url "+url2);
+    return this.http.put<Category>(url2,category,httpOptions).pipe(
+      tap(_ => this.log(`put id`)),
+      catchError(this.handleError<Category>(`put id`))
+    );
+  }
+  postCategoria(categoria:criarCategoriaDTO): Observable<Category>{
+    return this.http.post<Category>(this.url,categoria,httpOptions).pipe(
+      tap((categoria:Category)=> this.log('Categoria adicionada')),
+      catchError(this.handleError<Category>('Post categoty'))
     );
   }
 }

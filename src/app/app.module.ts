@@ -25,6 +25,7 @@ import { RestricaoEditComponent } from './Component/restricao-edit/restricao-edi
 import { CriarCategoriaComponent } from './Component/criar-categoria/criar-categoria.component';
 import { GerirCategoriasComponent } from './Component/gerir-categorias/gerir-categorias.component';
 import { LoginComponent } from './Component/login/login.component';
+import { EditarCategoriaComponent } from './Component/editar-categoria/editar-categoria.component';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DemoMaterialModule} from './material.module';
@@ -47,7 +48,8 @@ import {DemoMaterialModule} from './material.module';
     RestricaoEditComponent,
     CriarCategoriaComponent,
     GerirCategoriasComponent,
-    LoginComponent
+    LoginComponent,
+    EditarCategoriaComponent
 
 
     

@@ -44,4 +44,8 @@ listagem = 'Categorias Disponiveis';
     this.categoryService.delete(category).subscribe();
   }
 
+  onSelect(category: Category): void {
+    this.selectedCategory = category;
+  }
+
 }

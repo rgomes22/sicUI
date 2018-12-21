@@ -4,10 +4,13 @@
 </div>
 
 <div style="text-align: center">
-  <h2>{{listagem}}</h2> 
+  <h3>{{listagem}}</h3> 
   <li *ngFor="let cat of allCategories" [class.selected]="cat === selectedCategory" (click)="onSelect(cat)" >
     <span class="badge">{{cat.categoryName}}</span> 
     <button class="delete" title="delete categoria"
     (click)="delete(cat)"> x </button>
   </li>
 </div>
+
+
+<app-editar-categoria [category]="selectedCategory"></app-editar-categoria>
