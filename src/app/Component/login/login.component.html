@@ -1,14 +1,39 @@
-<mat-card class="formCard">
-    <div class="example-container">
-        <mat-form-field>
-          <input #Email1 matInput placeholder="E-mail" [formControl]="email" required>
-          <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-        </mat-form-field>
-      
-        <mat-form-field>
-          <input #password matInput type="Password" [formControl]="pass" placeholder="Password" required>
-          <mat-error *ngIf="pass.invalid">{{getErrorMessagePass()}}</mat-error>
-        </mat-form-field>
-        <button (click)="logIn(Email1.value, password.value)" mat-raised-button class="loginButton" >Login</button>
-    </div>
+<mat-card class="formCard" *ngIf="loginFirstFactor">
+  <div *ngIf="loginError" class="alert alert-danger" role="alert">
+    {{loginFirstFactorMessage}}
+  </div>
+  <div class="example-container">
+    <mat-form-field>
+      <input #Email1 matInput placeholder="E-mail" [formControl]="email" required>
+      <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input #password matInput type="Password" [formControl]="pass" placeholder="Password" required>
+      <mat-error *ngIf="pass.invalid">{{getErrorMessagePass()}}</mat-error>
+    </mat-form-field>
+    <button (click)="logIn(Email1.value, password.value)" mat-raised-button class="loginButton">Login</button>
+  </div>
+</mat-card>
+
+<mat-card class="formCard" *ngIf="loginSecondFactor">
+  <div class="alert alert-success" role="alert">
+    {{loginFirstFactorMessage}}
+  </div>
+  <br>
+  <div class="example-container">
+    <mat-form-field>
+      <input #Email1 matInput placeholder="E-mail" [formControl]="email" required>
+      <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input #code matInput [formControl]="codigo" placeholder="Código" required>
+      <mat-error *ngIf="codigo.invalid">{{getErrorMessageCodigo()}}</mat-error>
+    </mat-form-field>
+    <button (click)="logInFact2(Email1.value, code.value)" mat-raised-button class="loginButton">Login</button>
+  </div>
+  <br>
+  <div *ngIf="loginErrorFact2" class="alert alert-danger" role="alert">{{loginSecondFactorMessage}}</div>
+  <br>
 </mat-card>
