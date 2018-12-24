@@ -30,6 +30,7 @@ import {GerirAcabamentosComponent} from './Component/gerir-acabamentos/gerir-aca
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DemoMaterialModule} from './material.module';
 import { JwtModule } from '@auth0/angular-jwt';
+import { DashComponent } from './Component/dash/dash.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -57,7 +58,8 @@ export function tokenGetter() {
     LoginComponent,
     EditarCategoriaComponent,
     GerirAcabamentosComponent,
-    EditAcabamentosComponent
+    EditAcabamentosComponent,
+    DashComponent
 
 
     

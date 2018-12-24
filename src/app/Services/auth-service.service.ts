@@ -60,24 +60,26 @@ export class AuthServiceService {
 
   public isAuthenticated(): boolean {
     const token = localStorage.getItem(TOKEN);
-    //console.log(this.isTokenExpired());
+    if(!token) return false;
     var email = this.getEmailFromToken();
     var refreshToken = this.getRefreshTokenFromToken();
+
     var userInput = {
       "email": email,
       "refreshToken": refreshToken
     }
+
     if (this.jwtHelper.isTokenExpired(token)) {
-      console.log("hello");
       this.refreshToken(userInput).subscribe(result=>{
-        console.log("hello2");
         console.log(result);
+
         if(result.status===200){
           this.setToken(JSON.parse(result.body).accessToken);
           return true;
         }else{
           return false;
         }
+        
       });
     }else{
       return true;
@@ -104,6 +106,11 @@ export class AuthServiceService {
         this.loadingError$.next(true);
         return of(error);
       }));
+  }
+
+  destroyTokens(){
+    localStorage.removeItem(TOKEN);
+    localStorage.removeItem(REFRESH_TOKEN);
   }
 
 }
