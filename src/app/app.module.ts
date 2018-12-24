@@ -20,13 +20,13 @@ import { CriarProdutoComponent } from './Component/criar-produto/criar-produto.c
 import { RestricaoGestaoComponent } from './Component/restricao-gestao/restricao-gestao.component';
 
 import { DimensoesGestaoComponent } from './Component/dimensoes-gestao/dimensoes-gestao.component';
-
+import {EditAcabamentosComponent} from './Component/edit-acabamentos/edit-acabamentos.component'
 import { RestricaoEditComponent } from './Component/restricao-edit/restricao-edit.component';
 import { CriarCategoriaComponent } from './Component/criar-categoria/criar-categoria.component';
 import { GerirCategoriasComponent } from './Component/gerir-categorias/gerir-categorias.component';
 import { LoginComponent } from './Component/login/login.component';
 import { EditarCategoriaComponent } from './Component/editar-categoria/editar-categoria.component';
-
+import {GerirAcabamentosComponent} from './Component/gerir-acabamentos/gerir-acabamentos.component'
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DemoMaterialModule} from './material.module';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -55,7 +55,9 @@ export function tokenGetter() {
     CriarCategoriaComponent,
     GerirCategoriasComponent,
     LoginComponent,
-    EditarCategoriaComponent
+    EditarCategoriaComponent,
+    GerirAcabamentosComponent,
+    EditAcabamentosComponent
 
 
     

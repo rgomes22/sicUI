@@ -30,6 +30,7 @@ import { AuthGuardService as AuthGuard } from './Services/auth-guard.service';
 
 import {   RoleGuardService as RoleGuard } from './Services/role-guard.service';
 
+import {GerirAcabamentosComponent} from './Component/gerir-acabamentos/gerir-acabamentos.component'
 const routes: Routes = [
   {path: 'catalogo', component : CatalogoComponent},
   {path: 'encomenda', component : EncomendasComponent},
@@ -47,9 +48,11 @@ const routes: Routes = [
 
   {path:'restricao-edicao' , component : RestricaoEditComponent},
   {path:'gerirCategoria' , component : GerirCategoriasComponent},
-  {path:'criarCategoria' , component : CriarCategoriaComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor'}},
+  //{path:'criarCategoria' , component : CriarCategoriaComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor'}},
   {path: 'login', component: LoginComponent},
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' },
+  {path:'criarCategoria' , component : CriarCategoriaComponent},
+  {path:'gerirAcabamentos' , component : GerirAcabamentosComponent}
 ];
 
 @NgModule({
