@@ -14,6 +14,7 @@ export class CatalogoComponent implements OnInit {
   dimensoes = 'Gerir Dimensoes';
   criarCategorias = 'Criar Categoria';
   gerirCategorias = 'Gerir Categoria';
+  gerirAcabamentos = 'Gerir Acabamentos'; 
   constructor() { }
 
   ngOnInit() {

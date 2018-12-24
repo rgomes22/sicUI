@@ -1,0 +1,19 @@
+<div *ngIf="finish">
+
+  <div style="width: 600px; float: left; margin-left: 50px">
+    <h2>{{finish.finishName | uppercase}} Editor</h2>
+
+    <label>New Name:
+      <input type="text" #NameE />
+    </label>
+    <button style="margin-bottom: 50px" (click)="editarFinish(finish,NameE.value)">
+        Submeter Edição
+      </button>
+    <p></p>
+    <h3>DADOS DO ACABAMENTO:</h3>
+    <span>NOME: </span>{{finish.finishName}}
+    <p></p>
+    <span>id: </span>{{finish.idFinish}}
+   
+  </div>
+</div>

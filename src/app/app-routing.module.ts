@@ -26,6 +26,7 @@ import { GerirCategoriasComponent } from './Component/gerir-categorias/gerir-cat
 
 import { LoginComponent } from './Component/login/login.component';
 
+import {GerirAcabamentosComponent} from './Component/gerir-acabamentos/gerir-acabamentos.component'
 const routes: Routes = [
   {path: 'catalogo', component : CatalogoComponent},
   {path: 'encomenda', component : EncomendasComponent},
@@ -44,6 +45,7 @@ const routes: Routes = [
   {path:'restricao-edicao' , component : RestricaoEditComponent},
   {path:'gerirCategoria' , component : GerirCategoriasComponent},
   {path:'criarCategoria' , component : CriarCategoriaComponent},
+  {path:'gerirAcabamentos' , component : GerirAcabamentosComponent},
   {path: 'login', component: LoginComponent}
 ];
 
