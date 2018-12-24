@@ -49,10 +49,10 @@ const routes: Routes = [
   {path:'restricao-edicao' , component : RestricaoEditComponent},
   {path:'gerirCategoria' , component : GerirCategoriasComponent},
   //{path:'criarCategoria' , component : CriarCategoriaComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor'}},
-  {path: 'login', component: LoginComponent},
-  { path: '**', redirectTo: '' },
   {path:'criarCategoria' , component : CriarCategoriaComponent},
-  {path:'gerirAcabamentos' , component : GerirAcabamentosComponent}
+  {path:'gerirAcabamentos' , component : GerirAcabamentosComponent},
+  {path: 'login', component: LoginComponent},
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
