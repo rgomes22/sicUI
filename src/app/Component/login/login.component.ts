@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { LoginService } from '../../Services/login.service';
+import { AuthServiceService } from 'src/app/Services/auth-service.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   private loginErrorFact2: boolean;
   private loginSecondFactorMessage: string;
 
-  constructor(private loginService: LoginService) {
+  constructor(private loginService: LoginService, private authService: AuthServiceService) {
     this.loginFirstFactor = true;
     this.loginSecondFactor = false;
     this.loginError = false;
@@ -81,8 +82,10 @@ export class LoginComponent implements OnInit {
       this.loginService.constructUserLoginFact2DTO(email, codigo).then(result => {
         this.loginService.loginCheckFactorTwo(result).subscribe(message => {
           if (message.status === 200) {
-            
-            localStorage.setItem('token', JSON.parse(message.body).accessToken);
+            this.authService.setToken(JSON.parse(message.body).accessToken);
+            this.authService.setRefreshToken(JSON.parse(message.body).refreshToken);
+            console.log(this.authService.getTokenExpirationDate(this.authService.getToken()));
+            //localStorage.setItem('token', JSON.parse(message.body).accessToken);
           } else if (message.status === 400) {
             this.loginSecondFactorMessage = JSON.parse(message.error).message;
             this.loginErrorFact2 = true;

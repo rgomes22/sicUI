@@ -1,5 +1,5 @@
 import { NgModule, Component } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, CanActivate  } from '@angular/router';
 
 import { EncomendasComponent } from './Component/encomendas/encomendas.component';
 import { CatalogoComponent } from './Component/catalogo/catalogo.component';
@@ -26,6 +26,10 @@ import { GerirCategoriasComponent } from './Component/gerir-categorias/gerir-cat
 
 import { LoginComponent } from './Component/login/login.component';
 
+import { AuthGuardService as AuthGuard } from './Services/auth-guard.service';
+
+import {   RoleGuardService as RoleGuard } from './Services/role-guard.service';
+
 const routes: Routes = [
   {path: 'catalogo', component : CatalogoComponent},
   {path: 'encomenda', component : EncomendasComponent},
@@ -43,8 +47,9 @@ const routes: Routes = [
 
   {path:'restricao-edicao' , component : RestricaoEditComponent},
   {path:'gerirCategoria' , component : GerirCategoriasComponent},
-  {path:'criarCategoria' , component : CriarCategoriaComponent},
-  {path: 'login', component: LoginComponent}
+  {path:'criarCategoria' , component : CriarCategoriaComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor'}},
+  {path: 'login', component: LoginComponent},
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

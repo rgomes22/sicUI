@@ -29,6 +29,12 @@ import { EditarCategoriaComponent } from './Component/editar-categoria/editar-ca
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DemoMaterialModule} from './material.module';
+import { JwtModule } from '@auth0/angular-jwt';
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +67,12 @@ import {DemoMaterialModule} from './material.module';
     BrowserAnimationsModule,
     DemoMaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter
+      }
+    })
   ],
   exports: [
     DemoMaterialModule
