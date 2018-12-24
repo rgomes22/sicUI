@@ -1,4 +1,4 @@
 export class Finish{
-    idFinish: number;
+    finishId: number;
     finishName: string;
  }

@@ -58,7 +58,7 @@ export class FinishService {
     }
 
     delete(finish:Finish | number ): Observable<Finish>{
-      const id = typeof finish === 'number' ? finish : finish.idFinish;
+      const id = typeof finish === 'number' ? finish : finish.finishId;
       const url = `${this.url}/${id}`;
       return this.http.delete<Finish>(url, httpOptions).pipe(
         tap(_=> this.log(`Delete do finish id`)),

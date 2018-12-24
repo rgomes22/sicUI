@@ -22,11 +22,10 @@ export class EditAcabamentosComponent implements OnInit {
       alert("Todos os parametros tem de estar preenchidos");
       return;
     }
-    console.log("TESTE:::::::::::" + fin.idFinish);
 
-    let finishId = fin.idFinish;
+    let finishId = fin.finishId;
     let finishName = name;
-    this.finishService.putFinish(fin.idFinish,
+    this.finishService.putFinish(fin.finishId,
       {finishId,finishName} as finishPutDTO).subscribe(f => this.finish = f);
     return
   }
