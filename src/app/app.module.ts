@@ -79,7 +79,8 @@ export function tokenGetter() {
     })
   ],
   exports: [
-    DemoMaterialModule
+    DemoMaterialModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
