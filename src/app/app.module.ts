@@ -31,6 +31,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DemoMaterialModule} from './material.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { DashComponent } from './Component/dash/dash.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -71,6 +72,7 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     DemoMaterialModule,
     FormsModule,
+    NgMultiSelectDropDownModule.forRoot(),
     ReactiveFormsModule,
     JwtModule.forRoot({
       config: {
