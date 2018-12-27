@@ -12,8 +12,8 @@ import { AuthDataService } from 'src/app/Services/auth-data.service';
 })
 export class LoginComponent implements OnInit {
 
-  private loginFirstFactor: boolean;
-  private loginSecondFactor: boolean;
+  public loginFirstFactor: boolean;
+  public loginSecondFactor: boolean;
   private loginError: boolean;
   private loginFirstFactorMessage: string;
   private loginErrorFact2: boolean;

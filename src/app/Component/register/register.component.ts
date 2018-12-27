@@ -9,8 +9,8 @@ import { RegisterService } from 'src/app/Services/register.service';
 })
 export class RegisterComponent implements OnInit {
 
-  private registerError: boolean;
-  private registerSuccess: boolean;
+  public registerError: boolean;
+  public registerSuccess: boolean;
   private registerMessage: string;
 
   constructor(private registerService: RegisterService) {

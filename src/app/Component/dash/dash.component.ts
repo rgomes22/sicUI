@@ -10,7 +10,7 @@ import { AuthDataService } from 'src/app/Services/auth-data.service';
 })
 export class DashComponent implements OnInit {
 
-  private isAuth: boolean;
+  public isAuth: boolean;
 
   constructor(public router: Router, private authService: AuthServiceService, private authDataService: AuthDataService) {
     if (this.authService.isAuthenticated()) {
