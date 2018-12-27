@@ -31,7 +31,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DemoMaterialModule} from './material.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { DashComponent } from './Component/dash/dash.component';
+
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+
+import { RegisterComponent } from './Component/register/register.component';
+
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -60,7 +64,8 @@ export function tokenGetter() {
     EditarCategoriaComponent,
     GerirAcabamentosComponent,
     EditAcabamentosComponent,
-    DashComponent
+    DashComponent,
+    RegisterComponent
 
 
     
@@ -81,9 +86,10 @@ export function tokenGetter() {
     })
   ],
   exports: [
-    DemoMaterialModule
+    DemoMaterialModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [DashComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -33,6 +33,7 @@ import {   RoleGuardService as RoleGuard } from './Services/role-guard.service';
 import { AuthGuardLoginService as AuthLogin } from './Services/auth-guard-login.service'
 
 import {GerirAcabamentosComponent} from './Component/gerir-acabamentos/gerir-acabamentos.component'
+import { RegisterComponent } from './Component/register/register.component';
 const routes: Routes = [
   {path: 'catalogo', component : CatalogoComponent},
   {path: 'encomenda', component : EncomendasComponent},
@@ -51,9 +52,10 @@ const routes: Routes = [
   {path:'restricao-edicao' , component : RestricaoEditComponent},
   {path:'gerirCategoria' , component : GerirCategoriasComponent},
   //{path:'criarCategoria' , component : CriarCategoriaComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor'}},
-  {path:'criarCategoria' , component : CriarCategoriaComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor'}},
+  {path:'criarCategoria' , component : CriarCategoriaComponent, canActivate: [RoleGuard], data: {expectedRole: 'cliente'}},
   {path:'gerirAcabamentos' , component : GerirAcabamentosComponent},
   {path: 'login', component: LoginComponent, canActivate: [AuthLogin]},
+  {path: 'register', component: RegisterComponent, canActivate: [AuthLogin]},
   { path: '**', redirectTo: '' }
 ];
 

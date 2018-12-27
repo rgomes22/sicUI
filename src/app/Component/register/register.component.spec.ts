@@ -1,23 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoginComponent } from './login.component';
+import { RegisterComponent } from './register.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatFormFieldModule, MatInputModule, MatCardModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule, MatInputModule } from '@angular/material';
+import { tokenGetter } from 'src/app/app.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-export function tokenGetter() {
-  return localStorage.getItem('token');
-}
-describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
+
+describe('RegisterComponent', () => {
+  let component: RegisterComponent;
+  let fixture: ComponentFixture<RegisterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginComponent ],
+      declarations: [ RegisterComponent ],
       imports: [RouterTestingModule, BrowserAnimationsModule, ReactiveFormsModule, MatCardModule, MatInputModule, HttpClientTestingModule, HttpClientModule,JwtModule.forRoot({
         config: {
           tokenGetter: tokenGetter }
@@ -28,12 +27,12 @@ describe('LoginComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
+    fixture = TestBed.createComponent(RegisterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create login component', () => {
+  it('should create register component', () => {
     expect(component).toBeTruthy();
   });
 });

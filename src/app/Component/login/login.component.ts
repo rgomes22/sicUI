@@ -3,24 +3,23 @@ import { FormControl, Validators } from '@angular/forms';
 import { LoginService } from '../../Services/login.service';
 import { AuthServiceService } from 'src/app/Services/auth-service.service';
 import { Router } from '@angular/router';
-import { DashComponent } from '../dash/dash.component';
+import { AuthDataService } from 'src/app/Services/auth-data.service';
 
 @Component({
-  providers: [DashComponent],
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 
-  private loginFirstFactor: boolean;
-  private loginSecondFactor: boolean;
+  public loginFirstFactor: boolean;
+  public loginSecondFactor: boolean;
   private loginError: boolean;
   private loginFirstFactorMessage: string;
   private loginErrorFact2: boolean;
   private loginSecondFactorMessage: string;
 
-  constructor(private loginService: LoginService, private authService: AuthServiceService, public router: Router, private dash: DashComponent) {
+  constructor(private loginService: LoginService, private authService: AuthServiceService, public router: Router, private authDataService: AuthDataService) {
     this.loginFirstFactor = true;
     this.loginSecondFactor = false;
     this.loginError = false;
@@ -87,8 +86,7 @@ export class LoginComponent implements OnInit {
           if (message.status === 200) {
             this.authService.setToken(JSON.parse(message.body).accessToken);
             this.authService.setRefreshToken(JSON.parse(message.body).refreshToken);
-            this.dash.ngOnInit();
-            this.dash.updateIsAuth();
+            this.authDataService.changeAuth(true);
             this.router.navigate(['']);
           } else if (message.status === 400) {
             this.loginSecondFactorMessage = JSON.parse(message.error).message;
