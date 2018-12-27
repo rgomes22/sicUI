@@ -54,4 +54,22 @@ export class MateriaisService {
       catchError(this.handleError<Material>('ADICIONAR Material'))
     );
   }
+
+  
+  deleteMaterial(material : Material): Observable<Material>{
+    const url2 = `${this.urlGetMateriais}/${material.materialId}`;
+    return this.httpClient.delete<Material>(url2,httpOptions).pipe(
+      tap(_ => this.log(`Material delete`)),
+      catchError(this.handleError<Material>('ERRO DELETE MATERIAL'))
+    );
+  }
+
+  editMaterial(material :Material): Observable<Material>{
+    const url2 = `${this.urlGetMateriais}/${material.materialId}`;
+    return this.httpClient.put<Material>(url2,material,httpOptions).pipe(
+      tap((material: Material)=> this.log('ALterado')),
+      catchError(this.handleError<Material>('Erro Ao Alterar'))
+    );
+  }
+
 }
