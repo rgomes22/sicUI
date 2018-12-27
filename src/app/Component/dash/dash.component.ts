@@ -38,5 +38,6 @@ export class DashComponent implements OnInit {
   logout(): void {
     this.authService.destroyTokens();
     this.isAuth = false;
+    this.router.navigate[''];
   }
 }
