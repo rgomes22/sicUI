@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EncomendasComponent } from './Component/encomendas/encomendas.component';
 import { CatalogoComponent } from './Component/catalogo/catalogo.component';
+import { GerirColecaoComponent } from './Component/gerir-colecao/gerir-colecao.component';
 import { EncomendaGestaoComponent } from './Component/encomenda-gestao/encomenda-gestao.component';
 import { EncomendaDetailComponent } from './Component/encomenda-detail/encomenda-detail.component';
 import { ItemGestaoComponent } from './Component/item-gestao/item-gestao.component';
@@ -32,6 +33,10 @@ import {DemoMaterialModule} from './material.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { DashComponent } from './Component/dash/dash.component';
 
+import { CriarColecaoComponent } from './Component/criar-colecao/criar-colecao.component';
+import { EditColecaoComponent } from './Component/edit-colecao/edit-colecao.component';
+import { CollectionEditComponent } from './Component/editar-colecao/editar-colecao.component';
+
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
@@ -41,6 +46,7 @@ export function tokenGetter() {
     AppComponent,
     EncomendasComponent,
     CatalogoComponent,
+    GerirColecaoComponent,
     EncomendaGestaoComponent,
     EncomendaDetailComponent,
     ItemGestaoComponent,
@@ -50,6 +56,9 @@ export function tokenGetter() {
     ItemFilhoDetailComponent,
     ProductEditComponent,
     CriarProdutoComponent,
+    CriarColecaoComponent,
+    EditColecaoComponent,
+    CollectionEditComponent,
     RestricaoGestaoComponent,
     DimensoesGestaoComponent,
     RestricaoEditComponent,

@@ -3,6 +3,7 @@ import { Routes, RouterModule, CanActivate  } from '@angular/router';
 
 import { EncomendasComponent } from './Component/encomendas/encomendas.component';
 import { CatalogoComponent } from './Component/catalogo/catalogo.component';
+import { GerirColecaoComponent } from './Component/gerir-colecao/gerir-colecao.component';
 import { EncomendaGestaoComponent } from './Component/encomenda-gestao/encomenda-gestao.component';
 import { EncomendaDetailComponent } from './Component/encomenda-detail/encomenda-detail.component';
 import { ItemGestaoComponent } from './Component/item-gestao/item-gestao.component';
@@ -22,6 +23,12 @@ import {  RestricaoEditComponent } from './Component/restricao-edit/restricao-ed
 
 import { CriarCategoriaComponent } from './Component/criar-categoria/criar-categoria.component';
 
+import { CriarColecaoComponent } from './Component/criar-colecao/criar-colecao.component';
+
+import { EditColecaoComponent } from './Component/edit-colecao/edit-colecao.component';
+
+import { CollectionEditComponent } from './Component/editar-colecao/editar-colecao.component';
+
 import { GerirCategoriasComponent } from './Component/gerir-categorias/gerir-categorias.component';
 
 import { LoginComponent } from './Component/login/login.component';
@@ -36,6 +43,9 @@ import {GerirAcabamentosComponent} from './Component/gerir-acabamentos/gerir-aca
 const routes: Routes = [
   {path: 'catalogo', component : CatalogoComponent},
   {path: 'encomenda', component : EncomendasComponent},
+  {path: 'gerir-colecao', component : GerirColecaoComponent},
+  {path: 'edit-colecao', component : EditColecaoComponent},
+  {path: 'editar-colecao', component : CollectionEditComponent},
   {path: 'encomendas', component : EncomendaGestaoComponent},
   {path: 'encomendas/:id', component : EncomendaDetailComponent},
   {path: 'itens', component : ItemGestaoComponent},
@@ -52,6 +62,7 @@ const routes: Routes = [
   {path:'gerirCategoria' , component : GerirCategoriasComponent},
   //{path:'criarCategoria' , component : CriarCategoriaComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor'}},
   {path:'criarCategoria' , component : CriarCategoriaComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor'}},
+  {path:'criar-colecao' , component : CriarColecaoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor'}},
   {path:'gerirAcabamentos' , component : GerirAcabamentosComponent},
   {path: 'login', component: LoginComponent, canActivate: [AuthLogin]},
   { path: '**', redirectTo: '' }

@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['../../app.component.css']
 })
 export class CatalogoComponent implements OnInit {
-  titulo = ' SIC Gestão de Catalogo';
+  titulo = ' SIC Gestão de Produtos';
   produtos = 'Gerir Produtos';
   materiais = 'Gerir Materiais';
   criarProdutos = 'Criar Novo Produto';
