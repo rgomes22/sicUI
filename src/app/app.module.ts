@@ -32,6 +32,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DemoMaterialModule} from './material.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { DashComponent } from './Component/dash/dash.component';
+import { ToastrModule } from 'ngx-toastr';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { RegisterComponent } from './Component/register/register.component';
+import { CriarAcabamentoComponent } from './Component/criar-acabamento/criar-acabamento.component';
+
 
 import { CriarColecaoComponent } from './Component/criar-colecao/criar-colecao.component';
 import { EditColecaoComponent } from './Component/edit-colecao/edit-colecao.component';
@@ -68,7 +73,9 @@ export function tokenGetter() {
     EditarCategoriaComponent,
     GerirAcabamentosComponent,
     EditAcabamentosComponent,
-    DashComponent
+    DashComponent,
+    RegisterComponent,
+    CriarAcabamentoComponent
 
 
     
@@ -80,17 +87,20 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     DemoMaterialModule,
     FormsModule,
+    NgMultiSelectDropDownModule.forRoot(),
     ReactiveFormsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter
       }
-    })
+    }),
+    ToastrModule.forRoot(),
   ],
   exports: [
-    DemoMaterialModule
+    DemoMaterialModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [DashComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

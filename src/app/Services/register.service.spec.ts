@@ -1,17 +1,13 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { RoleGuardService } from './role-guard.service';
+import { RegisterService } from './register.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 import { tokenGetter } from '../app.module';
-import { 
-  Router,
-  CanActivate,
-  ActivatedRouteSnapshot
-} from '@angular/router';
-describe('RoleGuardService', () => {
+
+describe('RegisterService', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [RouterTestingModule, HttpClientTestingModule, HttpClientModule,JwtModule.forRoot({
       config: {
@@ -21,15 +17,19 @@ describe('RoleGuardService', () => {
   }));
 
   it('should be created', () => {
-    const service: RoleGuardService = TestBed.get(RoleGuardService);
+    const service: RegisterService = TestBed.get(RegisterService);
     expect(service).toBeTruthy();
   });
 
-  it('canActivate - Not authenticated, should return false', () => {
-    inject([RoleGuardService], (service: RoleGuardService) => {
-      inject([ActivatedRouteSnapshot], (service2: ActivatedRouteSnapshot)=>{
-        expect(service.canActivate(service2)).toBe(false);
-      })      
+  it('checkInputValidation - Its invalid, should return false', () => {
+    inject([RegisterService], (service: RegisterService) => {
+      expect(service.checkInputValidation("INVALID")).toBe(false);
+    })
+  });
+
+  it('checkInputValidation - Its valid, should return true', () => {
+    inject([RegisterService], (service: RegisterService) => {
+      expect(service.checkInputValidation("VALID")).toBe(true);
     })
   });
 });

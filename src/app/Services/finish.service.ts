@@ -5,6 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Finish } from '../model/Finish';
 import { finishPutDTO } from '../DTOS/finishPutDTO';
+import { criarFinishDTO } from '../DTOS/criarFinishDTO';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -63,6 +64,15 @@ export class FinishService {
       return this.http.delete<Finish>(url, httpOptions).pipe(
         tap(_=> this.log(`Delete do finish id`)),
         catchError(this.handleError<Finish>('DELETE FINISH'))
+      );
+    }
+
+    
+
+    postFinish(finish:criarFinishDTO): Observable<Finish>{
+      return this.http.post<Finish>(this.url,finish,httpOptions).pipe(
+        tap((finish:Finish)=> this.log('Acabamento adicionado')),
+        catchError(this.handleError<Finish>('Post acabamento'))
       );
     }
 }

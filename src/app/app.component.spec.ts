@@ -2,15 +2,26 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { browser } from 'protractor';
-
+import { DashComponent } from './Component/dash/dash.component';
+import { MatChipsModule, MatToolbarModule } from '@angular/material';
+import { JwtModule } from '@auth0/angular-jwt';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpClientModule } from '@angular/common/http';
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule, MatChipsModule, MatToolbarModule, JwtModule.forRoot({
+          config: {
+            tokenGetter: tokenGetter
+          }
+        }), HttpClientTestingModule, HttpClientModule
       ],
       declarations: [
-        AppComponent
+        AppComponent, DashComponent
       ],
     }).compileComponents();
   }));

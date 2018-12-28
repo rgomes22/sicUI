@@ -1,5 +1,5 @@
 export class Material{
     materialName: string;
-    idMaterial: string;
+    materialId: string;
      
  }
