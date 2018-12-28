@@ -10,6 +10,7 @@ import { MaterialFinishService } from '../../Services/material-finish.service';
 import { CategoryServiceService } from '../../Services/category-service.service';
 import { Material } from 'src/app/model/Material';
 import { MateriaisService} from '../../Services/materiais.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-criar-produto',
@@ -40,7 +41,8 @@ export class CriarProdutoComponent implements OnInit {
     private location: Location,
     private produtoService: ProdutosService,
     private categoryService:CategoryServiceService,
-    private materialService: MateriaisService
+    private materialService: MateriaisService,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit() {
@@ -68,14 +70,9 @@ export class CriarProdutoComponent implements OnInit {
 
   //post do produto para criar um novo
   post(productName:string,productDescription:string):void{
-    console.log(this.selectedMaterials)
-    console.log("category", this.category);
-    console.log("name", productName);
-    console.log("desc", productDescription);
-    console.log("dimension", this.dimensions);
    
     if(!productName || !productDescription || this.dimensions.length == 0 || this.category == undefined || this.selectedMaterials.length == 0) {
-      alert("Parametros em falta");
+      this.toastr.error("All spaces must contain elements", "Error"); 
       return;
     }
     let mat: number[] = [];
@@ -90,18 +87,17 @@ export class CriarProdutoComponent implements OnInit {
       productMaterialWithFinish: mat,
       dimensions : this.dimensions
     };
-    console.log(p);
-    this.produtoService.postProduto(p).subscribe(prod=>console.log(p));
+    
+    this.produtoService.postProduto(p).subscribe(prod=>this.toastr.success("Product Added", "Success"));
     
   }
 
   getMateriais(): void {
-    this.materialService.getMateriais().subscribe(data => {this.materiais = data; console.log(data)});
+    this.materialService.getMateriais().subscribe(data => {this.materiais = data});
   }
 
   getCategories(): void {
     this.categoryService.getCategories().subscribe(data =>{
-      console.log('Materiais'+data);
       this.allCategories = data;
     });
   }
@@ -111,7 +107,7 @@ export class CriarProdutoComponent implements OnInit {
   }
 
   onItemSelect(item: Material){
-    console.log('onItemSelect', this.selectedMaterials);
+    
   }
 
   addCont(minW:number, maxW:number, minH:number, maxH:number, minD:number, maxD:number){
@@ -120,24 +116,24 @@ export class CriarProdutoComponent implements OnInit {
       || (minW==maxW || minH==maxH || minD==maxD)
       ||( minH<=0 || minD<=0 || minW<=0 || maxW<=0 || maxD<=0 || maxH<=0)// verificacao min max 
       ){
-      alert("Wrongly formatted dimensions");
+      this.toastr.info("Wrongly formatted dimensions")
     }else{
       let d : Array<number> = [] ;
       d = [2,minH,maxH,minD,maxD,minW,maxW];
       this.dimensions.push(d);
-      alert("Dimensao adicionada") ;
+      this.toastr.success("Dimensao adicionada") ;
     }
     
   }
 
   addDisc(width:number,depth:number,h:number){
     if(!width || !depth || !h || width<=0 || depth<=0 || h<=0){
-      alert("Wrongly formated dimensions") 
+      this.toastr.info("Wrongly formatted dimensions");
     }else{
       let d :Array<number> =  [];
       d = [1,depth,width,h];
       this.dimensions.push(d);
-      alert("Dimensao adicionada") ;
+      this.toastr.success("Dimensao adicionada") ;
     } 
   }
   
