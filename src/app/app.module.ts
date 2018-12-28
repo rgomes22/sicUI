@@ -34,6 +34,7 @@ import { DashComponent } from './Component/dash/dash.component';
 import { ToastrModule } from 'ngx-toastr';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { RegisterComponent } from './Component/register/register.component';
+import { CriarAcabamentoComponent } from './Component/criar-acabamento/criar-acabamento.component';
 
 
 export function tokenGetter() {
@@ -64,7 +65,8 @@ export function tokenGetter() {
     GerirAcabamentosComponent,
     EditAcabamentosComponent,
     DashComponent,
-    RegisterComponent
+    RegisterComponent,
+    CriarAcabamentoComponent
 
 
     

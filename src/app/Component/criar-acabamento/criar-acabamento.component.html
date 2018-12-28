@@ -1,0 +1,14 @@
+<div style="text-align:left">
+  <h2>{{titulo}}</h2> 
+  <button (click)="goBack()">Back</button >
+</div>
+<div style="text-align:center">
+  <p>
+    <label>Nome Acabamento:
+      <input #Nome/>
+    </label>
+  </p>
+  <p>
+    <button (click)=" post(Nome.value)">Adicionar Acabamento</button>
+  </p>
+</div>
