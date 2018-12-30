@@ -41,6 +41,7 @@ import { CriarAcabamentoComponent } from './Component/criar-acabamento/criar-aca
 import { CriarColecaoComponent } from './Component/criar-colecao/criar-colecao.component';
 import { EditColecaoComponent } from './Component/edit-colecao/edit-colecao.component';
 import { CollectionEditComponent } from './Component/editar-colecao/editar-colecao.component';
+import { ErrorPageComponent } from './Component/error-page/error-page.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -75,7 +76,8 @@ export function tokenGetter() {
     EditAcabamentosComponent,
     DashComponent,
     RegisterComponent,
-    CriarAcabamentoComponent
+    CriarAcabamentoComponent,
+    ErrorPageComponent
 
 
     

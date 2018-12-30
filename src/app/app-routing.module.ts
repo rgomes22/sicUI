@@ -40,6 +40,7 @@ import {   RoleGuardService as RoleGuard } from './Services/role-guard.service';
 import { AuthGuardLoginService as AuthLogin } from './Services/auth-guard-login.service'
 
 import {GerirAcabamentosComponent} from './Component/gerir-acabamentos/gerir-acabamentos.component'
+import { ErrorPageComponent } from './Component/error-page/error-page.component';
 const routes: Routes = [
   {path: 'catalogo', component : CatalogoComponent},
   {path: 'encomenda', component : EncomendasComponent},
@@ -61,8 +62,9 @@ const routes: Routes = [
   {path:'restricao-edicao' , component : RestricaoEditComponent},
   {path:'gerirCategoria' , component : GerirCategoriasComponent},
   //{path:'criarCategoria' , component : CriarCategoriaComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor'}},
-  {path:'criarCategoria' , component : CriarCategoriaComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor'}},
-  {path:'criar-colecao' , component : CriarColecaoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor'}},
+  {path:'criarCategoria' , component : CriarCategoriaComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'criarCategoria'}},
+  {path:'criar-colecao' , component : CriarColecaoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'criar-colecao'}},
+  { path: 'error', component:ErrorPageComponent },
   {path:'gerirAcabamentos' , component : GerirAcabamentosComponent},
   {path: 'login', component: LoginComponent, canActivate: [AuthLogin]},
   { path: '**', redirectTo: '' }
