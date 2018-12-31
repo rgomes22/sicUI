@@ -39,6 +39,7 @@ export class ItemDetailComponent implements OnInit {
     this.getItem();
     this.getMfs();
     this.getProdutos();
+    
 
 
   }
