@@ -2,7 +2,7 @@
   <h2>Detalhes do Item</h2>
   <button (click)="goBack()">Back</button>
 </div>
-<div style="text-align:center">
+<div style="text-align:left">
 
   <div *ngIf="item">
     <hr>
@@ -129,4 +129,12 @@
     <button (click)="createFilho(Nome.value,Height.value,Depth.value,Width.value)">Criar</button>
   </div>
 
+<div>
+  <app-three [size]="200"
+  [rotationSpeedX]="0.005"
+  [rotationSpeedY]="0.01"
+  [cameraZ]="400"
+  [fieldOfView]="70"
+  [nearClipping]="1"
+  [farClipping]="1000"></app-three>
 </div>

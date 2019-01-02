@@ -43,6 +43,7 @@ import { EditColecaoComponent } from './Component/edit-colecao/edit-colecao.comp
 import { CollectionEditComponent } from './Component/editar-colecao/editar-colecao.component';
 import { ErrorPageComponent } from './Component/error-page/error-page.component';
 import { LogService } from './shared/log.service';
+import { ThreeComponent } from './Component/three/three.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -78,7 +79,8 @@ export function tokenGetter() {
     DashComponent,
     RegisterComponent,
     CriarAcabamentoComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    ThreeComponent
 
 
     
