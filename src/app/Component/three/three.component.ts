@@ -187,7 +187,7 @@ export class ThreeComponent implements AfterViewInit {
     // Use canvas element in template
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
     this.renderer.setPixelRatio(devicePixelRatio);
-    this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
+    this.renderer.setSize(this.canvas.clientWidth *0.5, this.canvas.clientHeight*0.5);
     //document.getElementById("container").appendChild(this.renderer.domElement);
     //"objeto"
    
