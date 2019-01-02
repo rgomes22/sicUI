@@ -1,5 +1,12 @@
 import {  AfterViewInit, Component, OnInit, ElementRef, Input, ViewChild } from '@angular/core';
 import * as THREE from 'three';
+import { directiveDef } from '@angular/core/src/view';
+import { DirectionalLight, AxesHelper } from 'three';
+import { OrbitControls } from 'three/examples/js/controls/OrbitControls';
+
+
+
+import {ColladaLoader } from "three/examples/js/loaders/ColladaLoader";
 
 @Component({
   selector: 'app-three',
@@ -9,6 +16,8 @@ import * as THREE from 'three';
 export class ThreeComponent implements AfterViewInit {
   /* HELPER PROPERTIES (PRIVATE PROPERTIES) */
   private camera: THREE.PerspectiveCamera;
+
+  private controls: OrbitControls;
 
   private get canvas() : HTMLCanvasElement {
     return this.canvasRef.nativeElement;
@@ -24,6 +33,16 @@ export class ThreeComponent implements AfterViewInit {
   private scene: THREE.Scene;
 
   private ambientLight: THREE.AmbientLight;
+
+  private pointLight: THREE.PointLight;
+
+  private directionalLight: THREE.DirectionalLight;
+
+  private plane: THREE.Mesh;
+
+  private axis: AxesHelper;
+
+  //private plane: THREE.PlaneGeometry;
 
    /* CUBE PROPERTIES */
   @Input()
@@ -44,13 +63,19 @@ export class ThreeComponent implements AfterViewInit {
   public cameraZ: number = 400;
 
   @Input()
+  public cameraY: number = 10;
+
+  @Input()
+  public cameraX: number = 0;
+
+  @Input()
   public fieldOfView: number = 70;
 
   @Input('nearClipping')
   public nearClippingPane: number = 1;
 
   @Input('farClipping')
-  public farClippingPane: number = 1000
+  public farClippingPane: number = 4000
 
   /* DEPENDENCY INJECTION (CONSTRUCTOR) */
   constructor() { }
@@ -68,11 +93,15 @@ export class ThreeComponent implements AfterViewInit {
   private createCube() {
     //let texture = new THREE.TextureLoader().load(this.texture);
     //let material = new THREE.MeshBasicMaterial({ map: texture });
-    let material = new THREE.MeshPhongMaterial({ color:0x600907 });
+    var material = new THREE.MeshPhongMaterial({ color:0x600907 });
     
-    let geometry = new THREE.BoxBufferGeometry(this.size, this.size, this.size);
+    var geometry = new THREE.BoxBufferGeometry(this.size, this.size, this.size);
     this.cube = new THREE.Mesh(geometry, material);
-
+    this.cube.castShadow=true;
+    this.cube.receiveShadow=true;
+    this.cube.position.x = 0;
+    this.cube.position.y = 0;
+    this.cube.position.z = 0;
     // Add cube to scene
     this.scene.add(this.cube);
   }
@@ -94,13 +123,58 @@ export class ThreeComponent implements AfterViewInit {
       this.farClippingPane
     );
     this.camera.position.z = this.cameraZ;
-    this.ambientLight = new THREE.AmbientLight( 0xffffff, 1);
-    this.scene.add(this.ambientLight);
+    this.camera.position.x = this.cameraX;
+    this.camera.position.y = this.cameraY;
+    this.camera.lookAt(this.scene.position)
+    //this.controls = new OrbitControls(this.camera,this.renderer.domElement);
+
+
+    this.axis = new THREE.AxesHelper(2000); // add axis to the scene
+    this.scene.add(this.axis);
+    
   }
 
   private getAspectRatio() {
     return this.canvas.clientWidth / this.canvas.clientHeight;
   }
+
+  private createStudio (){
+    /* LUZES */
+    this.ambientLight = new THREE.AmbientLight( 0xffffff, 1);
+    this.scene.add(this.ambientLight);
+
+    this.pointLight = new THREE.PointLight(0xffffff,0.9,200);
+    //this.pointLight.position.x = 0;
+    //this.pointLight.position.y = 9; 
+    //this.pointLight.position.z = 9; 
+    //this.pointLight.castShadow = true;
+    this.scene.add(this.pointLight);
+
+    this.directionalLight = new THREE.DirectionalLight(0xffffff, 1.0)
+    this.scene.add(this.directionalLight);
+
+    /* PAREDES */
+    var planeGeometry = new THREE.PlaneGeometry(4000,4000);
+    var planeMaterial = new THREE.MeshPhongMaterial( {color:0x282627,side: THREE.DoubleSide});
+    this.plane = new THREE.Mesh(planeGeometry,planeMaterial);
+    this.plane.rotation.x += Math.PI/2;
+    this.plane.position.x=0;
+    this.plane.position.y=0;
+    this.plane.position.z=0;
+    this.plane.receiveShadow=true;
+    this.scene.add(this.plane);
+
+  }
+
+  private addControls (){
+    this.controls = new OrbitControls(this.camera,this.renderer.domElement);
+    this.controls.rotateSpeed = 1.0;
+    this.controls.zoomSpeed = 1.2;
+    this.controls.addEventListener('change', this.renderer.domElement);
+
+  }
+
+ 
 
   
   /**
@@ -112,14 +186,20 @@ export class ThreeComponent implements AfterViewInit {
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
     this.renderer.setPixelRatio(devicePixelRatio);
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
-
+    //document.getElementById("container").appendChild(this.renderer.domElement);
     //"objeto"
+   
     let component: ThreeComponent = this;
     (function render() {
       requestAnimationFrame(render);
       component.animateCube();
-      component.renderer.render(component.scene, component.camera);
+      component.render();
+      
     }());
+  }
+
+  private render (){
+    this.renderer.render(this.scene, this.camera);
   }
 
   
@@ -146,7 +226,9 @@ export class ThreeComponent implements AfterViewInit {
   public ngAfterViewInit() {
     this.createScene();
     this.createCube();
+    this.createStudio();
     this.startRenderingLoop();
+    this.addControls();
   }
 
 }
