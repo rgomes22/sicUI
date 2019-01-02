@@ -2,8 +2,7 @@ import {  AfterViewInit, Component, OnInit, ElementRef, Input, ViewChild } from 
 import * as THREE from 'three';
 import { directiveDef } from '@angular/core/src/view';
 import { DirectionalLight, AxesHelper } from 'three';
-import { OrbitControls } from 'three/examples/js/controls/OrbitControls';
-
+import OrbitControls from 'three-orbitcontrols';
 
 
 import {ColladaLoader } from "three/examples/js/loaders/ColladaLoader";
@@ -78,7 +77,9 @@ export class ThreeComponent implements AfterViewInit {
   public farClippingPane: number = 4000
 
   /* DEPENDENCY INJECTION (CONSTRUCTOR) */
-  constructor() { }
+  constructor() {
+    this.render = this.render.bind(this);
+   }
 
   /**
    * Animate the cube
@@ -167,10 +168,11 @@ export class ThreeComponent implements AfterViewInit {
   }
 
   private addControls (){
+  
     this.controls = new OrbitControls(this.camera,this.renderer.domElement);
     this.controls.rotateSpeed = 1.0;
     this.controls.zoomSpeed = 1.2;
-    this.controls.addEventListener('change', this.renderer.domElement);
+    this.controls.addEventListener('change', this.render);
 
   }
 
