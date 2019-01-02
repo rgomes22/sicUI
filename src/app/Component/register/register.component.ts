@@ -13,32 +13,35 @@ export class RegisterComponent implements OnInit {
   public registerSuccess: boolean;
   private registerMessage: string;
 
+  pwdPattern = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}';
+
   constructor(private registerService: RegisterService) {
     this.registerError = false;
     this.registerSuccess = false;
   }
 
   email = new FormControl('', [Validators.required, Validators.email]);
-  pass = new FormControl('', [Validators.required]);
+  pass = new FormControl('', [Validators.required, Validators.pattern(this.pwdPattern)]);
   passMatch = new FormControl('', [Validators.required])
 
   ngOnInit() {
   }
 
   getErrorMessage() {
-    return this.email.hasError('required') ? 'You must enter a value' :
-      this.email.hasError('email') ? 'Not a valid email' :
+    return this.email.hasError('required') ? 'Introduz um valor' :
+      this.email.hasError('email') ? 'Email Inválido' :
         '';
   }
 
   getErrorMessagePass() {
-    return this.pass.hasError('required') ? 'You must enter a value' :
-      '';
+    return this.pass.hasError('required') ? 'Introduz um valor' :
+      this.pass.hasError('pattern') ? 'A password tem de ter no mínimo 8 caracteres com pelo menos uma letra maiúscula, uma letra minúscula, um número e um caracter especial' :
+        '';
   }
 
   getErrorMessagePassMatch() {
-    return this.passMatch.hasError('required') ? 'You must enter a value' :
-      this.passMatch.hasError('matchPassword') ? 'Your passwords do not match' :
+    return this.passMatch.hasError('required') ? 'Introduz um valor' :
+      this.passMatch.hasError('matchPassword') ? 'Passwords não condizentes' :
         '';
   }
 

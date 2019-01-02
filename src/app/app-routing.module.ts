@@ -41,6 +41,7 @@ import { AuthGuardLoginService as AuthLogin } from './Services/auth-guard-login.
 
 import {GerirAcabamentosComponent} from './Component/gerir-acabamentos/gerir-acabamentos.component'
 import { ErrorPageComponent } from './Component/error-page/error-page.component';
+import { RegisterComponent } from './Component/register/register.component';
 const routes: Routes = [
   {path: 'catalogo', component : CatalogoComponent},
   {path: 'encomenda', component : EncomendasComponent},
@@ -67,6 +68,7 @@ const routes: Routes = [
   { path: 'error', component:ErrorPageComponent },
   {path:'gerirAcabamentos' , component : GerirAcabamentosComponent},
   {path: 'login', component: LoginComponent, canActivate: [AuthLogin]},
+  {path: 'register', component: RegisterComponent, canActivate: [AuthLogin]},
   { path: '**', redirectTo: '' }
 ];
 

@@ -42,6 +42,7 @@ import { CriarColecaoComponent } from './Component/criar-colecao/criar-colecao.c
 import { EditColecaoComponent } from './Component/edit-colecao/edit-colecao.component';
 import { CollectionEditComponent } from './Component/editar-colecao/editar-colecao.component';
 import { ErrorPageComponent } from './Component/error-page/error-page.component';
+import { LogService } from './shared/log.service';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -102,7 +103,7 @@ export function tokenGetter() {
     DemoMaterialModule,
     FormsModule
   ],
-  providers: [DashComponent],
+  providers: [DashComponent, LogService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
