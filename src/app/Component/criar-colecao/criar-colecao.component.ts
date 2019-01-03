@@ -3,36 +3,80 @@ import { Location } from '@angular/common';
 
 import { ProdutosService } from 'src/app/Services/produtos.service';
 import { Produto } from 'src/app/model/Produto';
+import { ColecoesService } from 'src/app/Services/colecoesService';
+import { ToastrService } from 'ngx-toastr';
+import { criarColecaoDTO } from 'src/app/DTOS/criarColecaoDTO';
 
 @Component({
-  selector: 'app-criar-colecao',
-  templateUrl: './criar-colecao.component.html',
-  styleUrls: ['../../app.component.css']
+    selector: 'app-criar-colecao',
+    templateUrl: './criar-colecao.component.html',
+    styleUrls: ['../../app.component.css']
 })
 
 export class CriarColecaoComponent implements OnInit {
     titulo = 'Criar Coleção';
-    
-  
+    allProducts: Produto[];
 
-    constructor( 
+    //dropdown variables
+    disable = false;
+    ShowFilter = false;
+    limiteSelection = false;
+    selectedProdutos: Produto[] = [];
+    dropdownSettings: any = {};
+    dropdownList = [];
+
+    constructor(
         private location: Location,
-        private  produtosService: ProdutosService,
-        private allProdutos: Produto[]
-    ){ }
+        private produtosService: ProdutosService,
+        private colecoesService: ColecoesService,
+        private toastr: ToastrService,
+    ) { }
 
     ngOnInit() {
         this.getProdutos();
+        this.selectedProdutos = [];
+        this.dropdownSettings = {
+            singleSelection: false,
+            idField: 'productlId',
+            textField: 'productName',
+            selectAllText: 'Select All',
+            unSelectAllText: 'UnSelect All',
+            itemsShowLimit: 10,
+            allowSearchFilter: true
+        };
     }
 
-    getProdutos(): void {  
-        this.produtosService.getProdutos().subscribe(data =>{
-        console.log('Produtos'+data);
-        this.allProdutos = data;
-        });
-    }
 
     goBack(): void {
         this.location.back();
     }
+
+    post(colectionName: string, colectionDescription: string): void {
+
+        if (!colectionName || !colectionDescription || this.selectedProdutos.length == 0) {
+            this.toastr.error("All spaces must contain elements", "Error");
+            return;
+        }
+        let prod: number[] = [];
+        for (let p of this.selectedProdutos) {
+            prod.push(parseInt(p.productId));
+        }
+
+        let c: criarColecaoDTO = {
+            colectionName: colectionName,
+            colectionDescription: colectionDescription,
+            colecaoProductsId: prod,
+        };
+
+        this.colecoesService.postColecao(c).subscribe(col => this.toastr.success("Collection Added", "Success"));
+
+    }
+
+    getProdutos(): void {
+        this.produtosService.getProdutos().subscribe(data => {
+            console.log('Produtos' + data);
+            this.allProducts = data;
+        });
+    }
+
 }

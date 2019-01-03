@@ -28,15 +28,16 @@
       <input #pais />
   </label>
   <p></p>
-  <label >Cidade:
-      <input #cidade />
-  </label>
+  <select name="cidadeSelecionada" (change)="selectCity($event.target.value)" class="select-width form-control">
+    <option value="-1">Escolha uma cidade</option>
+    <option *ngFor="let cid of cidades" value="{{cid}}">{{cid}}</option>
+  </select>
   <p></p>
   <label >Rua:
       <input #rua />
   </label>  
   <p></p>
-  <button (click)="createEncomenda(nome.value,pais.value,cidade.value,rua.value)">Criar</button>
+  <button (click)="createEncomenda(nome.value,pais.value,rua.value)">Criar</button>
 </div>
 
 

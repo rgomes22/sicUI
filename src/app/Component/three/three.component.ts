@@ -3,6 +3,8 @@ import * as THREE from 'three';
 import { directiveDef } from '@angular/core/src/view';
 import { DirectionalLight, AxesHelper } from 'three';
 import OrbitControls from 'three-orbitcontrols';
+import {SceneSetup} from './three-files/scene';
+import {Wall} from './three-files/Wall';
 
 
 import {ColladaLoader } from "three/examples/js/loaders/ColladaLoader";
@@ -89,23 +91,6 @@ export class ThreeComponent implements AfterViewInit {
     this.cube.rotation.y += this.rotationSpeedY;
   }
 
-  /* Funçao para criar o armario */
-  
-  private createCube() {
-    //let texture = new THREE.TextureLoader().load(this.texture);
-    //let material = new THREE.MeshBasicMaterial({ map: texture });
-    var material = new THREE.MeshPhongMaterial({ color:0x600907 });
-    
-    var geometry = new THREE.BoxBufferGeometry(this.size, this.size, this.size);
-    this.cube = new THREE.Mesh(geometry, material);
-    this.cube.castShadow=true;
-    this.cube.receiveShadow=true;
-    this.cube.position.x = 0;
-    this.cube.position.y = 0;
-    this.cube.position.z = 0;
-    // Add cube to scene
-    this.scene.add(this.cube);
-  }
 
 
   /**
@@ -155,25 +140,17 @@ export class ThreeComponent implements AfterViewInit {
     this.scene.add(this.directionalLight);
 
     /* PAREDES */
-    var planeGeometry = new THREE.PlaneGeometry(4000,4000);
-    var planeMaterial = new THREE.MeshPhongMaterial( {color:0x282627,side: THREE.DoubleSide});
-    this.plane = new THREE.Mesh(planeGeometry,planeMaterial);
-    this.plane.rotation.x += Math.PI/2;
-    this.plane.position.x=0;
-    this.plane.position.y=0;
-    this.plane.position.z=0;
-    this.plane.receiveShadow=true;
-    this.scene.add(this.plane);
+    var wall = new Wall(4000,4000);
+    this.scene.add(wall.mesh());
 
   }
 
-  private addControls (){
   
+  private addControls (){
     this.controls = new OrbitControls(this.camera,this.renderer.domElement);
     this.controls.rotateSpeed = 1.0;
     this.controls.zoomSpeed = 1.2;
     this.controls.addEventListener('change', this.render);
-
   }
 
  
@@ -187,7 +164,7 @@ export class ThreeComponent implements AfterViewInit {
     // Use canvas element in template
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
     this.renderer.setPixelRatio(devicePixelRatio);
-    this.renderer.setSize(this.canvas.clientWidth *0.5, this.canvas.clientHeight*0.5);
+    this.renderer.setSize(this.canvas.clientWidth * 0.5, this.canvas.clientHeight*0.5);
     //document.getElementById("container").appendChild(this.renderer.domElement);
     //"objeto"
    
@@ -227,7 +204,6 @@ export class ThreeComponent implements AfterViewInit {
    */
   public ngAfterViewInit() {
     this.createScene();
-    this.createCube();
     this.createStudio();
     this.startRenderingLoop();
     this.addControls();

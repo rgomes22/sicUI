@@ -15,7 +15,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class RestricoesService {
-  private urlRes = 'https://sic3df.azurewebsites.net/api/Restriction';
+  private urlRes = 'https://3db-sic-webapi.azurewebsites.net/api/Restriction';
   
   constructor(
     private http:HttpClient

@@ -19,9 +19,9 @@ const httpOptions = {
 export class ProdutosService {
 
   //private urlSicCatalogo ='' ; 
-  private urlGetProdutos = 'https://sic3df.azurewebsites.net/api/Product';
-  private urlPostProduto = 'https://sic3df.azurewebsites.net/api/Product';
-  private urlPutProduto = 'https://sic3df.azurewebsites.net/api/Product';
+  private urlGetProdutos = 'https://3db-sic-webapi.azurewebsites.net/api/Product';
+  private urlPostProduto = 'https://3db-sic-webapi.azurewebsites.net/api/Product';
+  private urlPutProduto = 'https://3db-sic-webapi.azurewebsites.net/api/Product';
   constructor(private httpClient: HttpClient) { }
 
   getProdutos(): Observable<Produto[]>{

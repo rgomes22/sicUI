@@ -45,6 +45,9 @@ import { ErrorPageComponent } from './Component/error-page/error-page.component'
 import { LogService } from './shared/log.service';
 import { ThreeComponent } from './Component/three/three.component';
 
+import { PlanoGestaoComponent } from './Component/plano-gestao/plano-gestao.component';
+import { PlanoDetailComponent } from './Component/plano-detail/plano-detail.component';
+
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
@@ -81,7 +84,12 @@ export function tokenGetter() {
     CriarAcabamentoComponent,
     ErrorPageComponent,
     ThreeComponent,
-    DialogContent    
+    DialogContent,
+    PlanoGestaoComponent,
+    PlanoDetailComponent
+
+
+    
   ],
   imports: [
     BrowserModule,

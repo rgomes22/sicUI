@@ -11,7 +11,54 @@ import { EncomendaService } from '../../Services/encomenda.service';
 })
 export class EncomendaGestaoComponent implements OnInit {
   allEncomendas: Encomenda[];
-
+  cidades = ["brussels",
+  "tirana",
+  "andorra",
+  "vienna",
+  "minsk",
+  "sarajevo",
+  "sofia",
+  "prague",
+  "nicosia",
+  "copenhagen",
+  "tallinn",
+  "helsinki",
+  "paris",
+  "marseille",
+  "tbilisi",
+  "berlin",
+  "athens",
+  "budapest",
+  "reykjavik",
+  "dublin",
+  "pristina",
+  "riga",
+  "vaduz",
+  "vilnius",
+  "luxembourg",
+  "skopje",
+  "valletta",
+  "chisinau",
+  "monaco",
+  "podgorica",
+  "amsterdam",
+  "belfast",
+  "oslo",
+  "warsaw",
+  "lisbon",
+  "bucharest",
+  "moscow",
+  "san_marino",
+  "edinburgh",
+  "belgrade",
+  "bratislava",
+  "ljubljana",
+  "madrid",
+  "stockholm",
+  "bern",
+  "kiev",
+  "cardiff"];
+cidadeSelecionada : string;
   constructor(
     private location : Location,
     private encomendaService : EncomendaService
@@ -34,16 +81,25 @@ export class EncomendaGestaoComponent implements OnInit {
     this.encomendaService.deleteEncomenda(encomenda).subscribe();
   }
 
-  createEncomenda(nome: string, pais: string, cidade: string, rua: string):void {
+  createEncomenda(nome: string, pais: string, rua: string):void {
     
-    if(!nome || !pais || !cidade || !rua){
+    if(!nome || !pais || !rua){
       alert('MISSING PARAMETERS')
       return;}
+      let cidade = this.cidadeSelecionada;
     this.encomendaService.createEncomenda({nome,pais,cidade,rua} as Encomenda).subscribe(enc => {this.allEncomendas.push(enc)});
   }
   
   goBack(): void {
     this.location.back();
   }
+
+  
+  selectCity(value: string): void {
+    this.cidadeSelecionada = value;
+    console.log(value);
+    // alert(value);
+  }
+
 
 }

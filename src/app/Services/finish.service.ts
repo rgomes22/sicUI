@@ -16,7 +16,7 @@ const httpOptions = {
 })
 export class FinishService {
 
-  private url = 'https://sic3df.azurewebsites.net/api/Finish';
+  private url = 'https://3db-sic-webapi.azurewebsites.net/api/Finish';
   constructor(
     private http:HttpClient) { }
     
