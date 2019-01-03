@@ -15,7 +15,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class CategoryServiceService {
-  private url = 'https://sic3df.azurewebsites.net/api/Category';
+  private url = 'https://3db-sic-webapi.azurewebsites.net/api/Category';
   constructor(
     private http:HttpClient
   ) { }

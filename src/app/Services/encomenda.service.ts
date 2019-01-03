@@ -13,7 +13,7 @@ const httpOptions = {
 })
 export class EncomendaService {
   
-  private urlSic = 'https://encomendassic.herokuapp.com';
+  private urlSic = 'http://localhost:8080';
   constructor(private httpClient: HttpClient) { }
   
   getEncomendas(): Observable<Encomenda[]> {
