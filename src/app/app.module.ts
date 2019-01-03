@@ -34,7 +34,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { DashComponent } from './Component/dash/dash.component';
 import { ToastrModule } from 'ngx-toastr';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { RegisterComponent } from './Component/register/register.component';
+import { RegisterComponent, DialogContent } from './Component/register/register.component';
 import { CriarAcabamentoComponent } from './Component/criar-acabamento/criar-acabamento.component';
 
 
@@ -80,10 +80,8 @@ export function tokenGetter() {
     RegisterComponent,
     CriarAcabamentoComponent,
     ErrorPageComponent,
-    ThreeComponent
-
-
-    
+    ThreeComponent,
+    DialogContent    
   ],
   imports: [
     BrowserModule,
@@ -105,6 +103,7 @@ export function tokenGetter() {
     DemoMaterialModule,
     FormsModule
   ],
+  entryComponents:[DialogContent],
   providers: [DashComponent, LogService],
   bootstrap: [AppComponent]
 })
