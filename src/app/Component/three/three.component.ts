@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { directiveDef } from '@angular/core/src/view';
 import { DirectionalLight, AxesHelper } from 'three';
 import OrbitControls from 'three-orbitcontrols';
-import {SceneSetup} from './three-files/scene';
+import {StudioSetup} from './three-files/StudioSetup';
 import {Wall} from './three-files/Wall';
 
 
@@ -87,27 +87,10 @@ export class ThreeComponent implements AfterViewInit {
    * Animate the cube
    */
   private animateCube() {
-    this.cube.rotation.x += this.rotationSpeedX;
-    this.cube.rotation.y += this.rotationSpeedY;
+//    this.cube.rotation.x += this.rotationSpeedX;
+  //  this.cube.rotation.y += this.rotationSpeedY;
   }
 
-  /* Funçao para criar o armario */
-  
-  private createCube() {
-    //let texture = new THREE.TextureLoader().load(this.texture);
-    //let material = new THREE.MeshBasicMaterial({ map: texture });
-    var material = new THREE.MeshPhongMaterial({ color:0x600907 });
-    
-    var geometry = new THREE.BoxBufferGeometry(this.size, this.size, this.size);
-    this.cube = new THREE.Mesh(geometry, material);
-    this.cube.castShadow=true;
-    this.cube.receiveShadow=true;
-    this.cube.position.x = 0;
-    this.cube.position.y = 0;
-    this.cube.position.z = 0;
-    // Add cube to scene
-    this.scene.add(this.cube);
-  }
 
 
   /**
@@ -120,14 +103,14 @@ export class ThreeComponent implements AfterViewInit {
     /* Camera */
     let aspectRatio = this.getAspectRatio();
     this.camera = new THREE.PerspectiveCamera(
-      this.fieldOfView,
+      90,
       aspectRatio,
-      this.nearClippingPane,
-      this.farClippingPane
+      1,
+      1000000
     );
-    this.camera.position.z = this.cameraZ;
-    this.camera.position.x = this.cameraX;
-    this.camera.position.y = this.cameraY;
+    this.camera.position.z = 1200;
+    this.camera.position.x = -100;
+    this.camera.position.y = 500;
     this.camera.lookAt(this.scene.position)
     //this.controls = new OrbitControls(this.camera,this.renderer.domElement);
 
@@ -142,34 +125,17 @@ export class ThreeComponent implements AfterViewInit {
   }
 
   private createStudio (){
-    /* LUZES */
-    this.ambientLight = new THREE.AmbientLight( 0xffffff, 1);
-    this.scene.add(this.ambientLight);
-
-    this.pointLight = new THREE.PointLight(0xffffff,0.9,200);
-    //this.pointLight.position.x = 0;
-    //this.pointLight.position.y = 9; 
-    //this.pointLight.position.z = 9; 
-    //this.pointLight.castShadow = true;
-    this.scene.add(this.pointLight);
-
-    this.directionalLight = new THREE.DirectionalLight(0xffffff, 1.0)
-    this.scene.add(this.directionalLight);
-
-    /* PAREDES */
-    var wall = new Wall(4000,4000);
-    this.scene.add(wall.mesh());
-
+    var studioSetup = new StudioSetup();
+    studioSetup.addLightsToScene(this.scene);
+    studioSetup.addWallsToScene(this.scene);
   }
 
   
   private addControls (){
-  
     this.controls = new OrbitControls(this.camera,this.renderer.domElement);
     this.controls.rotateSpeed = 1.0;
     this.controls.zoomSpeed = 1.2;
     this.controls.addEventListener('change', this.render);
-
   }
 
  
@@ -223,7 +189,6 @@ export class ThreeComponent implements AfterViewInit {
    */
   public ngAfterViewInit() {
     this.createScene();
-    this.createCube();
     this.createStudio();
     this.startRenderingLoop();
     this.addControls();

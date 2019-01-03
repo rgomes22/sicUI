@@ -1,0 +1,24 @@
+<p></p>
+<div style="text-align:left">
+  <h2>Planos</h2>
+  <button (click)="goBack()">Back</button>
+</div>
+<div style="text-align:center">
+  <p></p>
+  <hr>
+  <h2>PLANOS</h2>
+  <hr>
+
+  <p align="center">
+   <li *ngFor="let plano of allPlanos">
+      <div >
+       <nav>
+        <a routerLink="/planos/{{plano._id}}">
+          <span class="badge">FABRICA: {{plano.fabrica}}-{{plano.localizacao}} DATA:{{plano.data}} </span>
+        </a>
+        </nav>
+      </div>
+    </li> 
+  </p>
+
+</div>

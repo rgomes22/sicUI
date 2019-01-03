@@ -1,27 +1,35 @@
 <div *ngIf="category">
 
   <div style="width: 600px; float: left; margin-left: 50px">
+      <div *ngIf="category.categoryParentId != null">
     <h2>{{category.categoryName | uppercase}} Editor</h2>
-
-    <label>New Name:
-      <input type="text" #NameE />
-    </label>
     <div>
+      
+        <label>New Name:
+          <input type="text" #NameE />
+        </label>
+        <p></p>
         <select name="selectedCategoryId" (change)="addParentCategory($event.target.value)" class="select-width form-control">
-            <option value="-1">Escolha uma categoria pai</option>
-            <option *ngFor="let cat of allCategories" value="{{cat.categoryId}}">{{cat.categoryId}}
-              {{cat.categoryName}}</option>
-          </select>
+          <option value="-1">Escolha uma categoria pai</option>
+          <option *ngFor="let cat of allCategories" value="{{cat.categoryId}}">{{cat.categoryId}}
+            {{cat.categoryName}}</option>
+        </select>
+<p></p>
+        <button style="margin-bottom: 50px" (click)="editarCategory(category,NameE.value)">
+          Submeter Edição
+        </button>
+      </div>
     </div>
-    <button style="margin-bottom: 50px" (click)="editarCategory(category,NameE.value)">
-        Submeter Edição
-      </button>
+
     <p></p>
     <h3>DADOS DA CATEGORIA:</h3>
     <span>NOME: </span>{{category.categoryName}}
     <p></p>
-    <span>PARENT: </span>{{category.categoryParentId}}
-
-   
+    <div *ngFor="let c of allCategories">
+      <div *ngIf="c.categoryId == category.categoryParentId">
+        <span>PARENT: </span>{{category.categoryParentId}}-{{c.categoryName}}
+      </div>
+    </div>
+    <div *ngIf="category.categoryParentId == null">CATEGORIA DEFAULT: nao pode realizar alteracoes</div>
   </div>
 </div>

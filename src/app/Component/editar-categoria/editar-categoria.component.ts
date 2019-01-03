@@ -25,11 +25,15 @@ export class EditarCategoriaComponent implements OnInit {
       alert("Todos os parametros tem de estar preenchidos");
       return;
     }
+    if(this.parentCategoryID == cat.categoryId){
+      alert("O Pai desta categoria nao pode ser a mesma");
+      return;
+    }
     let categoryId = cat.categoryId;
     let categoryName = name;
     let categoryParentId = this.parentCategoryID;
     this.categoryService.putCategoria(cat.categoryId,
-      {categoryId,categoryName,categoryParentId} as categoryPutDTO).subscribe(c => this.category = c);
+      {categoryId,categoryName,categoryParentId} as categoryPutDTO).subscribe(c => this.category = c,()=>alert("Editada com sucesso"),()=>this.ngOnInit());
     return
   }
 

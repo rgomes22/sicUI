@@ -34,7 +34,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { DashComponent } from './Component/dash/dash.component';
 import { ToastrModule } from 'ngx-toastr';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { RegisterComponent } from './Component/register/register.component';
+import { RegisterComponent, DialogContent } from './Component/register/register.component';
 import { CriarAcabamentoComponent } from './Component/criar-acabamento/criar-acabamento.component';
 
 
@@ -45,9 +45,14 @@ import { ErrorPageComponent } from './Component/error-page/error-page.component'
 import { LogService } from './shared/log.service';
 import { ThreeComponent } from './Component/three/three.component';
 
+
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
 import { AngularDateTimePickerModule } from 'angular2-datetimepicker'
+
+import { PlanoGestaoComponent } from './Component/plano-gestao/plano-gestao.component';
+import { PlanoDetailComponent } from './Component/plano-detail/plano-detail.component';
+
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -84,7 +89,10 @@ export function tokenGetter() {
     RegisterComponent,
     CriarAcabamentoComponent,
     ErrorPageComponent,
-    ThreeComponent
+    ThreeComponent,
+    DialogContent,
+    PlanoGestaoComponent,
+    PlanoDetailComponent
 
 
     
@@ -112,6 +120,7 @@ export function tokenGetter() {
     DemoMaterialModule,
     FormsModule
   ],
+  entryComponents:[DialogContent],
   providers: [DashComponent, LogService],
   bootstrap: [AppComponent]
 })

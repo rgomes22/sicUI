@@ -28,7 +28,7 @@ export class FinishService {
     
         // TODO: better job of transforming error for user consumption
         this.log(`${operation} failed: ${error.message}`);
-        alert(`failed: ${error.message}`);
+        alert(`${operation}: Nao e possivel realizar a operacao`);
         // Let the app keep running by returning an empty result.
         return of(result as T);
       };
@@ -51,9 +51,9 @@ export class FinishService {
 
     putFinish(id:number, finish: finishPutDTO): Observable<Finish>{
       const url2 = `${this.url}/${id}`;
-      alert("put url "+url2);
+    
       return this.http.put<Finish>(url2,finish,httpOptions).pipe(
-        tap(_ => this.log(`put id`)),
+        tap(_ => alert("Acabamento editado com sucesso")),
         catchError(this.handleError<Finish>(`put id`))
       );
     }
@@ -62,7 +62,7 @@ export class FinishService {
       const id = typeof finish === 'number' ? finish : finish.finishId;
       const url = `${this.url}/${id}`;
       return this.http.delete<Finish>(url, httpOptions).pipe(
-        tap(_=> this.log(`Delete do finish id`)),
+        tap(_=>alert("Acabamento apagado com sucesso")),
         catchError(this.handleError<Finish>('DELETE FINISH'))
       );
     }
@@ -71,7 +71,7 @@ export class FinishService {
 
     postFinish(finish:criarFinishDTO): Observable<Finish>{
       return this.http.post<Finish>(this.url,finish,httpOptions).pipe(
-        tap((finish:Finish)=> this.log('Acabamento adicionado')),
+        tap((finish:Finish)=> alert("Acabamento adicionado com sucesso")),
         catchError(this.handleError<Finish>('Post acabamento'))
       );
     }
