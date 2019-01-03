@@ -18,7 +18,18 @@
       <input #nome />
   </label>
   <p></p>
-  <button (click)="createMaterial(nome.value)">Criar Material</button>
+  <label >Price:
+    <input #preco type="number" step="any" min="0"/>
+  </label>
+  <!--<label >Date:
+    <input name="date" [(ngModel)]="dateOfPrice" type="date"/>
+  </label>-->
+  
+  <h2><p>Date for Price</p></h2>
+  <label for="datetimepicker">Date Time</label>
+  <angular2-date-picker [(ngModel)]="dateOfPrice" [settings]="settings" style="padding: 0.2 rem 0.1 rem"></angular2-date-picker>
+
+  <button (click)="createMaterial(nome.value, preco.value)">Criar Material</button>
 </div>
   <!-- DESCOMENTAR QUANDO MUDAR O METODO PUT DO SIC GC 
 <div *ngIf="selectedMaterial" style="text-align: center">

@@ -45,6 +45,10 @@ import { ErrorPageComponent } from './Component/error-page/error-page.component'
 import { LogService } from './shared/log.service';
 import { ThreeComponent } from './Component/three/three.component';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { DlDateTimePickerDateModule } from 'angular-bootstrap-datetimepicker';
+import { AngularDateTimePickerModule } from 'angular2-datetimepicker'
+
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
@@ -86,6 +90,9 @@ export function tokenGetter() {
     
   ],
   imports: [
+    NgbModule,
+    AngularDateTimePickerModule,
+    DlDateTimePickerDateModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
