@@ -34,12 +34,13 @@ export class GerirAcabamentosComponent implements OnInit {
   }
 
   onSelect(finish: Finish): void {
+   // this.ngOnInit();
     this.selectedAcabamento = finish;
   }
   
   delete(finish:Finish): void {
     this.allAcabamentos = this.allAcabamentos.filter(h => h !== finish);
-    this.finishService.delete(finish).subscribe();
+    this.finishService.delete(finish).subscribe(()=>this.ngOnInit(),()=>alert("ACABAMENTO APAGADO COM SUCESSO"));
   }
 
 }
