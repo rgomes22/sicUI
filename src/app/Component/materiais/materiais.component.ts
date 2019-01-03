@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { Material } from '../../model/Material';
@@ -17,6 +17,7 @@ export class MateriaisComponent implements OnInit {
   titulo = 'Gestão de Materias';
   allMateriais: Material[];
   listagem = 'Materiais Disponiveis';
+
   dateOfPrice : Date;
   priceOfMaterial : Price 
   settings : any;
@@ -54,7 +55,16 @@ export class MateriaisComponent implements OnInit {
       this.toastr.error("Arguments Missing");
       return;
     }
-    const timestamp = this.dateOfPrice.getTime();
+    var timestamp;
+    
+    if(this.dateOfPrice instanceof Date){
+      timestamp = this.dateOfPrice.getTime();
+    }else{
+      timestamp = new Date(this.dateOfPrice).getTime();
+    }
+
+    timestamp = Math.floor( timestamp /1000);
+
     console.log(timestamp," time ");
 
     this.priceOfMaterial = new Price();
