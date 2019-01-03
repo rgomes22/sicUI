@@ -1,0 +1,27 @@
+<div style="text-align:left">
+  <h2>Detalhes do Plano</h2>
+  <button (click)="goBack()">Back</button>
+</div>
+
+<div style="text-align:left">
+  <div *ngIf="plano">
+
+    <h4>Fabrica: {{plano.fabrica}}</h4>
+    <h4>Localizacao: {{plano.localizacao}}</h4>
+    <h4>Caminho: {{plano.caminho}}</h4>
+    <h4>custo: {{plano.custo}}</h4>
+    <h4>data: {{plano.data}}</h4>
+    <hr>
+    <h3>ENCOMENDAS:</h3>
+    <li *ngFor="let enc of plano.encomendas">
+      <div>
+       <nav>
+         
+        <a>
+          <span class="badge">{{enc.nome}}:{{enc.cidade}}</span>
+        </a>
+        </nav>
+      </div>
+    </li>
+  </div>
+</div>

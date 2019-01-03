@@ -39,6 +39,9 @@ import {   RoleGuardService as RoleGuard } from './Services/role-guard.service';
 
 import { AuthGuardLoginService as AuthLogin } from './Services/auth-guard-login.service'
 
+import { PlanoGestaoComponent} from './Component/plano-gestao/plano-gestao.component';
+import { PlanoDetailComponent } from './Component/plano-detail/plano-detail.component';
+
 import {GerirAcabamentosComponent} from './Component/gerir-acabamentos/gerir-acabamentos.component'
 import { ErrorPageComponent } from './Component/error-page/error-page.component';
 import { RegisterComponent } from './Component/register/register.component';
@@ -58,9 +61,9 @@ const routes: Routes = [
   {path:  'materiais', component : MateriaisComponent},
   {path:  'criar-produto', component : CriarProdutoComponent},
   {path: 'restricao' , component : RestricaoGestaoComponent},
-
+  {path: 'planos', component : PlanoGestaoComponent},
+  {path: 'planos/:id', component: PlanoDetailComponent},
   {path: 'dimensoes', component : DimensoesGestaoComponent},
-
   {path:'restricao-edicao' , component : RestricaoEditComponent},
   {path:'gerirCategoria' , component : GerirCategoriasComponent},
   //{path:'criarCategoria' , component : CriarCategoriaComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor'}},
