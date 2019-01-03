@@ -1,3 +1,14 @@
 <h2>Encomenda: </h2>
 
+<p>
+    <ng-multiselect-dropdown
+    [placeholder]="'Select Items'"
+    [data]="items"
+    [(ngModel)]="selectedItems"
+    [settings]="dropdownSettings"
+    (onSelect)="onItemSelect($event)"
+  >
+  </ng-multiselect-dropdown>
+</p>
+
 <button (click)="goBack()">Back</button >

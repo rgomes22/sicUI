@@ -13,7 +13,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class MaterialFinishService {
-  private mfUrl = 'https://sic3df.azurewebsites.net/api/materialfinish';
+  private mfUrl = 'https://3db-sic-webapi.azurewebsites.net/api/materialfinish';
   constructor(private http: HttpClient,) { }
 
   getMaterialFinishes (): Observable<MaterialFinish[]>{

@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import {Location, CommonModule } from '@angular/common';
 import { CriarAcabamentoComponent } from './criar-acabamento.component';
 
 describe('CriarAcabamentoComponent', () => {
@@ -8,7 +9,8 @@ describe('CriarAcabamentoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CriarAcabamentoComponent ]
+      declarations: [ CriarAcabamentoComponent ],
+      imports: [CommonModule]
     })
     .compileComponents();
   }));

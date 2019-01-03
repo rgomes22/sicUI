@@ -17,8 +17,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class DimensionsService {
-  urlContinuousDimensions = 'https://sic3df.azurewebsites.net/api/ContinuousDimension';
-  urlDiscreetDimensions = 'https://sic3df.azurewebsites.net/api/DiscreetDimension';
+  urlContinuousDimensions = 'https://3db-sic-webapi.azurewebsites.net/api/ContinuousDimension';
+  urlDiscreetDimensions = 'https://3db-sic-webapi.azurewebsites.net/api/DiscreetDimension';
   constructor(
     private httpClient: HttpClient
   ) { }

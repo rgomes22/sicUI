@@ -14,8 +14,8 @@ const httpOptions = {
 })
 export class MateriaisService {
 
-  private urlGetMateriais = 'https://sic3df.azurewebsites.net/api/Material';
-  private urlPostMateriais ='https://sic3df.azurewebsites.net/api/Material';
+  private urlGetMateriais = 'https://3db-sic-webapi.azurewebsites.net/api/Material';
+  private urlPostMateriais ='https://3db-sic-webapi.azurewebsites.net/api/Material';
   //private urlDelete = 
 
   constructor(
