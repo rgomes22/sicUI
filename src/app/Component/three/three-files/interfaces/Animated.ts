@@ -1,5 +1,5 @@
 export interface Animated {
-    toogleAnimation();
-    stopAnimation();
-    startAnimation();
+    toogleAnimation():void;
+    stopAnimation():void;
+    startAnimation():void
 }
