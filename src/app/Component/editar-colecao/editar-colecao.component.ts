@@ -27,7 +27,7 @@ export class CollectionEditComponent implements OnInit {
     this.getProducts();
   }
 
-  editarColecao(col:Colecao,name:string, description:string, produtos:Array<number>){
+  editarColecao(col:Colecao,name:string, description:string){
     if(!name || 
       !description){
       alert("Todos os parametros tem de estar preenchidos");
@@ -36,11 +36,10 @@ export class CollectionEditComponent implements OnInit {
     let colecaoId = col.colecaoId;
     let colecaoName = name;
     let colecaoDescription = description;
-    let colecaoProductsId = produtos;
     
 
     this.colecoesService.putColecao(col.colecaoId,
-      {colecaoId,colecaoName,colecaoDescription,colecaoProductsId} as colecaoPutDTO).subscribe(c => this.colection = c);
+      {colecaoId,colecaoName,colecaoDescription} as colecaoPutDTO).subscribe(c => this.colection = c);
 
     
     return

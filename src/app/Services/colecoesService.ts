@@ -5,6 +5,7 @@ import { catchError, tap } from 'rxjs/operators';
 
 import { Colecao } from '../model/Colecao';
 import { colecaoPutDTO } from '../DTOS/colecaoPutDTO';
+import { criarColecaoDTO } from '../DTOS/criarColecaoDTO';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -51,12 +52,12 @@ export class ColecoesService {
   //it calls HttpClient.post()
   //it expects the server to generates an id for the new collection, which it returns 
   //in the Observable<Colecao> to the caller.
-  /*postProduto(colecao:criarColecaoDTO): Observable<Colecao>{
+  postColecao(colecao:criarColecaoDTO): Observable<Colecao>{
       return this.httpClient.post<Colecao>(this.urlPostColecao,colecao,httpOptions).pipe(
-      tap((produto:Colecao)=> this.log('Coleção adicionada')),
+      tap((colecao:Colecao)=> this.log('Coleção adicionada')),
       catchError(this.handleError<Colecao>('Post colecao'))
       );
-  }*/
+  }
 
   //Delete
   /*

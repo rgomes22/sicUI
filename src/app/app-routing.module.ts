@@ -68,7 +68,7 @@ const routes: Routes = [
   {path:'gerirCategoria' , component : GerirCategoriasComponent},
   //{path:'criarCategoria' , component : CriarCategoriaComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor'}},
   {path:'criarCategoria' , component : CriarCategoriaComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'criarCategoria'}},
-  {path:'criar-colecao' , component : CriarColecaoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'criar-colecao'}},
+  {path:'criar-colecao' , component : CriarColecaoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'criarCategoria'}},
   { path: 'error', component:ErrorPageComponent },
   {path:'gerirAcabamentos' , component : GerirAcabamentosComponent},
   {path: 'login', component: LoginComponent, canActivate: [AuthLogin]},

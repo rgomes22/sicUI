@@ -91,23 +91,6 @@ export class ThreeComponent implements AfterViewInit {
     this.cube.rotation.y += this.rotationSpeedY;
   }
 
-  /* Funçao para criar o armario */
-  
-  private createCube() {
-    //let texture = new THREE.TextureLoader().load(this.texture);
-    //let material = new THREE.MeshBasicMaterial({ map: texture });
-    var material = new THREE.MeshPhongMaterial({ color:0x600907 });
-    
-    var geometry = new THREE.BoxBufferGeometry(this.size, this.size, this.size);
-    this.cube = new THREE.Mesh(geometry, material);
-    this.cube.castShadow=true;
-    this.cube.receiveShadow=true;
-    this.cube.position.x = 0;
-    this.cube.position.y = 0;
-    this.cube.position.z = 0;
-    // Add cube to scene
-    this.scene.add(this.cube);
-  }
 
 
   /**
@@ -164,12 +147,10 @@ export class ThreeComponent implements AfterViewInit {
 
   
   private addControls (){
-  
     this.controls = new OrbitControls(this.camera,this.renderer.domElement);
     this.controls.rotateSpeed = 1.0;
     this.controls.zoomSpeed = 1.2;
     this.controls.addEventListener('change', this.render);
-
   }
 
  
@@ -223,7 +204,6 @@ export class ThreeComponent implements AfterViewInit {
    */
   public ngAfterViewInit() {
     this.createScene();
-    this.createCube();
     this.createStudio();
     this.startRenderingLoop();
     this.addControls();
