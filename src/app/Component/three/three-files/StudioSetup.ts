@@ -22,10 +22,10 @@ export class StudioSetup {
 
 
     constructor() {
-        this.pointLight1 = StudioSetup.pointLightSetup(new Vector3(2500, 2700, 2500), 0xffffff);
-        this.pointLight2 = StudioSetup.pointLightSetup(new Vector3( -2500, 2700, 2500), 0xffffff);
-        this.pointLight3 = StudioSetup.pointLightSetup(new Vector3(2500, 2700, -2500), 0xffffff);
-        this.pointLight4 = StudioSetup.pointLightSetup(new Vector3(-2500, 2700, -2500), 0xffffff);
+        this.pointLight1 = StudioSetup.pointLightSetup(new Vector3(2500, 4000, 2500), 0xffffff);
+        this.pointLight2 = StudioSetup.pointLightSetup(new Vector3( -2500, 4000, 2500), 0xffffff);
+        this.pointLight3 = StudioSetup.pointLightSetup(new Vector3(2500, 4000, -2500), 0xffffff);
+        this.pointLight4 = StudioSetup.pointLightSetup(new Vector3(-2500, 4000, -2500), 0xffffff);
 
         this.spotlight1 = StudioSetup.spotLightSetup(new Vector3(1500, 3000, 0), 0xffffff);
         this.spotlight2 = StudioSetup.spotLightSetup(new Vector3(-1500, 3000, 0), 0xffffff);
@@ -88,7 +88,7 @@ export class StudioSetup {
         this.floor.position(new Vector3(0,0,0));
         this.floor.rotate(-Math.PI/2,new Vector3(1,0,0));
         
-        this.ceiling.position(new Vector3(0,3000,0));
+        this.ceiling.position(new Vector3(0,4500,0));
         this.ceiling.rotate(Math.PI/2,new Vector3(1,0,0));
 
         this.floor.applyTexture("assets/material/floor.jpg");
