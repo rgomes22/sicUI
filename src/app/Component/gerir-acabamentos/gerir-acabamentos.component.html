@@ -1,0 +1,16 @@
+<div style="text-align:left">
+    <h2>{{titulo}}</h2> 
+    <button (click)="goBack()">Back</button >
+  </div>
+  
+<div style="text-align: center">
+    <h3>{{listagem}}</h3> 
+    <li *ngFor="let ac of allAcabamentos" [class.selected]="ac === selectedAcabamento" (click)="onSelect(ac)" >
+      <span class="badge">{{ac.finishName}}</span> 
+      <button class="delete" title="delete acabamento"
+      (click)="delete(ac)"> x </button>
+    </li>
+</div>
+  
+  
+  <app-edit-acabamentos [finish]="selectedAcabamento"></app-edit-acabamentos>

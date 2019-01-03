@@ -1,0 +1,38 @@
+<div style="text-align:left">
+    <h2>{{titulo}}</h2> 
+    <button (click)="goBack()">Back</button >
+  </div>
+  <div style="text-align:center">
+    <p>
+      <label>Nome Coleção:
+        <input #colectionName />
+      </label>
+    </p>
+    <p>
+        <label>Descrição Coleção:
+          <input #colectionDescription />
+        </label>
+      </p>
+  <p></p>
+  <p>
+    <label>Produtos:
+  
+      <select name="selectedProductId" (change)="addProduct($event.target.value)" class="select-width form-control">
+        <option value="-1">Escolha um produto</option>
+        <option *ngFor="let cat of allProducts" value="{{cat.productId}}">{{cat.productId}}
+          {{cat.productName}}</option>
+      </select>
+      
+    </label>
+  </p>
+  <p>
+      <button (click)=" post(colectionName.value,colectionDescription.value)">Adicionar Coleção</button>
+  </p>
+  
+  
+   
+   
+  
+  
+  
+  </div>

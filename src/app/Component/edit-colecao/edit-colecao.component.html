@@ -1,0 +1,14 @@
+<div style="text-align:left">
+  <h2>{{titulo}}</h2>
+  <button (click)="goBack()">Back</button>
+</div>
+
+<div style="text-align: center">
+  <h3>{{listagem}}</h3>
+  <li *ngFor="let col of allColecoes" [class.selected]="col === selectedColecao" (click)="onSelect(col)">
+    <span class="badge">{{col.colecaoName}}</span>
+    <button class="delete" title="delete colecão" (click)="delete(col)"> x </button>
+  </li>
+</div>
+
+<app-editar-colecao [colection]="selectedColecao"></app-editar-colecao>

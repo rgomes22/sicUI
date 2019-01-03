@@ -1,0 +1,27 @@
+<div *ngIf="category">
+
+  <div style="width: 600px; float: left; margin-left: 50px">
+    <h2>{{category.categoryName | uppercase}} Editor</h2>
+
+    <label>New Name:
+      <input type="text" #NameE />
+    </label>
+    <div>
+        <select name="selectedCategoryId" (change)="addParentCategory($event.target.value)" class="select-width form-control">
+            <option value="-1">Escolha uma categoria pai</option>
+            <option *ngFor="let cat of allCategories" value="{{cat.categoryId}}">{{cat.categoryId}}
+              {{cat.categoryName}}</option>
+          </select>
+    </div>
+    <button style="margin-bottom: 50px" (click)="editarCategory(category,NameE.value)">
+        Submeter Edição
+      </button>
+    <p></p>
+    <h3>DADOS DA CATEGORIA:</h3>
+    <span>NOME: </span>{{category.categoryName}}
+    <p></p>
+    <span>PARENT: </span>{{category.categoryParentId}}
+
+   
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div style="text-align:left">
+  <h2>{{titulo}}</h2> 
+  <button (click)="goBack()">Back</button >
+</div>
+
+<div style="text-align: center;">
+  <h2>{{listagem}}</h2> 
+  <li *ngFor="let mat of allMateriais" [class.selected]="mat === selectedMaterial" (click)="onSelect(mat)">
+    <span class="badge">{{mat.materialName}}</span>
+    <button class='badge' title="delete material"
+    (click)="delete(mat)"> delete </button> 
+  </li>
+</div>
+
+<div style="text-align: center;;">
+  <h2>CRIAR MATERIAL</h2>
+  <label >Nome:
+      <input #nome />
+  </label>
+  <p></p>
+  <button (click)="createMaterial(nome.value)">Criar Material</button>
+</div>
+  <!-- DESCOMENTAR QUANDO MUDAR O METODO PUT DO SIC GC 
+<div *ngIf="selectedMaterial" style="text-align: center">
+  <h2>Editar Material</h2>
+  <label>Nome:
+    <input type="text" #Name/>
+  </label>
+  <button (click)="editMaterial(Name.value)">
+    Editar
+  </button>
+</div>-->

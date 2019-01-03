@@ -1,15 +1,15 @@
 export class Restricao{
     restrictionId: string;
     restrictionDescription: string;
-    productParentId: string;
-    productPartId: string;
-    restrictionMandatory: string;
-    restrictionMaterial: string;
-    restrictionMaxOccupationHeight: number=1;
-    restrictionMaxOccupationDepth:number=1;
-    restrictionMaxOccupationWidth: number=1;
-    restrictionMinOccupationHeigth: number=0;
-    restrictionMinOccupationDepth: number=0;
-    restrictionMinOccupationWidth: number=0;
+    productParentId: number;
+    productPartId: number;
+    restrictionMandatory: boolean;
+    restrictionMaterial: boolean;
+    restrictionMaxOccupationHeight: number;
+    restrictionMaxOccupationDepth:number;
+    restrictionMaxOccupationWidth: number;
+    restrictionMinOccupationHeigth: number;
+    restrictionMinOccupationDepth: number;
+    restrictionMinOccupationWidth: number;
 
 }

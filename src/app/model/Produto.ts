@@ -6,7 +6,7 @@ export class Produto{
    productId: string;
    productDescription: string;
    productCategory: Category;
-   productMaterialWithFinish: MaterialFinish;
+   productMaterialWithFinish: MaterialFinish[];
    dimensions:[];
    subProducts:Produto[];
 

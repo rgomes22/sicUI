@@ -1,0 +1,27 @@
+<div *ngIf="colection">
+
+  <div style="width: 600px; float: left; margin-left: 50px">
+    <h2>{{colection.colectionName | uppercase}} Editor</h2>
+
+    <label>Name:
+      <input type="text" #NameE />
+    </label>
+    <div>
+      <label>Description:
+        <input type="text" #Description>
+      </label>
+    </div>
+    <button style="margin-bottom: 50px" (click)="editarColecao(colection,NameE.value,Description.value)">
+        Submeter Edição
+      </button>
+    <p></p>
+    <h3>DADOS DA COLEÇÃO:</h3>
+    <span>DESCRIÇÃO: </span>{{colection.colecaoDescription}}
+    <p></p>
+    <p>
+      PRODUTOS:
+    </p>
+    <li *ngFor="let p of colection.colecaoProdutos">
+      <span>{{p.productName}}</span>
+    </li>
+</div>

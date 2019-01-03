@@ -1,0 +1,24 @@
+<mat-card class="formCard">
+  <div *ngIf="registerError" class="alert alert-danger" role="alert">
+    {{registerMessage}}
+  </div>
+  <div class="example-container">
+    <mat-form-field>
+      <input #Email1 matInput placeholder="E-mail" [formControl]="email" required>
+      <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input #password matInput type="Password" [formControl]="pass" placeholder="Password" required>
+      <mat-error *ngIf="pass.invalid">{{getErrorMessagePass()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input #passwordMatch (change)="checkMatching(password.value, passwordMatch.value)" matInput type="Password" [formControl]="passMatch" placeholder="Repeat Password" required>
+      <mat-error *ngIf="passMatch.invalid">{{getErrorMessagePassMatch()}}</mat-error>
+    </mat-form-field>
+    <button (click)="register(Email1.value, password.value, passwordMatch.value)" mat-raised-button class="registerButton">Register</button>
+  </div>
+  <div *ngIf="registerSuccess" class="alert alert-success" role="alert">
+    {{registerMessage}}
+  </div>
+</mat-card>

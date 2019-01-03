@@ -1,0 +1,117 @@
+<div style="text-align:left">
+  <h2>{{titulo}}</h2> 
+  <button (click)="goBack()">Back</button >
+</div>
+<div style="text-align:center">
+  <p>
+    <label>Nome Produto:
+      <input #productName />
+    </label>
+  </p>
+  <p>
+      <label>Descrição Produto:
+        <input #productDescription />
+      </label>
+    </p>
+    <p>
+      <label>Categoria:
+    
+        <select name="selectedCategoryId" (change)="addCategory($event.target.value)" class="select-width form-control">
+          <option value="-1">Escolha uma categoria</option>
+          <option *ngFor="let cat of allCategories" value="{{cat.categoryId}}">
+            {{cat.categoryName}}</option>
+        </select>
+        
+      </label>
+    </p>
+    <!--
+<p>
+ <label>Material:    
+    
+    <select name="selectedMaterialId" (change)="adicionarMaterial($event.target.value)" class="select-width form-control">
+      <option value="-1">Escolha um material</option>
+      <option *ngFor="let mf of allMateriaisFinish" value="{{mf.materialId}}">{{mf.materialId}}
+        {{mf.materialName}}</option>
+    </select>
+  </label>
+  
+</p>
+-->
+<p>
+    <ng-multiselect-dropdown
+    [placeholder]="'Select Materials'"
+    [data]="materiais"
+    [(ngModel)]="selectedMaterials"
+    [settings]="dropdownSettings"
+    (onSelect)="onItemSelect($event)"
+  >
+  </ng-multiselect-dropdown>
+</p>
+
+<div style="width:100%; overflow: hidden;">
+  <div style="width:50%; float:left">
+  <h2>Dimensão Contínua</h2>
+        <div>
+            <label>Min width: 
+                <input type="text" #MinW />
+            </label>
+        </div>
+        <div>
+            <label>Max width: 
+                <input type="text" #MaxW />
+            </label>
+        </div>
+        <div>
+            <label>Min depth: 
+                <input type="text" #MinD />
+            </label>
+        </div>
+        <div>
+            <label>Max depth: 
+                <input type="text" #MaxD />
+            </label>
+        </div>
+        <div>
+            <label>Min height: 
+                <input type="text" #MinH />
+            </label>
+        </div>
+        <div>
+            <label>Max height: 
+                <input type="text" #MaxH />
+            </label>
+        </div>
+        <button (click)="addCont(MinW.value,MaxW.value,MinH.value,MaxH.value,MinD.value,MaxD.value)">Adicionar Dimensão</button> 
+  </div>
+
+  <div style="width:50%; float:left">
+  <h2>Dimensão Discreta</h2>
+        <div>
+            <label>width: 
+                <input type="text" #MinDW />
+            </label>
+        </div>
+        <div>
+            <label>depth: 
+                <input type="text" #MinDD />
+            </label>
+        </div>
+        <div>
+            <label>height: 
+                <input type="text" #MinDH />
+            </label>
+        </div>
+        <button (click)="addDisc(MinDW.value,MinDD.value,MinDH.value)">Adicionar Dimensão</button>
+  </div>
+</div>
+<p>
+    <button (click)=" post(productName.value,productDescription.value)">Adicionar Produto</button>
+</p>
+
+
+ 
+ 
+
+
+
+</div>
