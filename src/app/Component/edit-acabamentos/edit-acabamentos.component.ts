@@ -26,7 +26,7 @@ export class EditAcabamentosComponent implements OnInit {
     let finishId = fin.finishId;
     let finishName = name;
     this.finishService.putFinish(fin.finishId,
-      {finishId,finishName} as finishPutDTO).subscribe(f => this.finish = f);
+      {finishId,finishName} as finishPutDTO).subscribe(f => this.finish = f,()=>this.ngOnInit());
     return
   }
 

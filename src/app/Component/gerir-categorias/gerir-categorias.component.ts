@@ -45,6 +45,7 @@ listagem = 'Categorias Disponiveis';
   }
 
   onSelect(category: Category): void {
+    this.getCategories();
     this.selectedCategory = category;
   }
 
