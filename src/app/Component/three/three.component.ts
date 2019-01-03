@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { directiveDef } from '@angular/core/src/view';
 import { DirectionalLight, AxesHelper } from 'three';
 import OrbitControls from 'three-orbitcontrols';
-import {SceneSetup} from './three-files/scene';
+import {StudioSetup} from './three-files/StudioSetup';
 import {Wall} from './three-files/Wall';
 
 
@@ -125,24 +125,9 @@ export class ThreeComponent implements AfterViewInit {
   }
 
   private createStudio (){
-    /* LUZES */
-    this.ambientLight = new THREE.AmbientLight( 0xffffff, 1);
-    this.scene.add(this.ambientLight);
-
-    this.pointLight = new THREE.PointLight(0xffffff,0.9,200);
-    //this.pointLight.position.x = 0;
-    //this.pointLight.position.y = 9; 
-    //this.pointLight.position.z = 9; 
-    //this.pointLight.castShadow = true;
-    this.scene.add(this.pointLight);
-
-    this.directionalLight = new THREE.DirectionalLight(0xffffff, 1.0)
-    this.scene.add(this.directionalLight);
-
-    /* PAREDES */
-    var wall = new Wall(4000,4000);
-    this.scene.add(wall.mesh());
-
+    var studioSetup = new StudioSetup();
+    studioSetup.addLightsToScene(this.scene);
+    studioSetup.addWallsToScene(this.scene);
   }
 
   

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import {Obj3D} from './interfaces/Obj3D';
+
 export class Wall implements Obj3D {
    
     private objMesh : THREE.Mesh;
