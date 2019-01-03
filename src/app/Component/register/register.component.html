@@ -16,7 +16,8 @@
       <input #passwordMatch (change)="checkMatching(password.value, passwordMatch.value)" matInput type="Password" [formControl]="passMatch" placeholder="Repeat Password" required>
       <mat-error *ngIf="passMatch.invalid">{{getErrorMessagePassMatch()}}</mat-error>
     </mat-form-field>
-    <button (click)="register(Email1.value, password.value, passwordMatch.value)" mat-raised-button class="registerButton">Register</button>
+    <mat-checkbox #check>Concordo com os termos e serviços da aplicação. </mat-checkbox><div (click)="openDialog()">(Ver condições)</div>
+    <button (click)="register(Email1.value, password.value, passwordMatch.value, check.checked)" mat-raised-button class="registerButton">Register</button>
   </div>
   <div *ngIf="registerSuccess" class="alert alert-success" role="alert">
     {{registerMessage}}
