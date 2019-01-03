@@ -5,7 +5,7 @@ import { DirectionalLight, AxesHelper } from 'three';
 import OrbitControls from 'three-orbitcontrols';
 import {StudioSetup} from './three-files/StudioSetup';
 import {Wall} from './three-files/Wall';
-
+import { Closet } from './three-files/Closet';
 
 import {ColladaLoader } from "three/examples/js/loaders/ColladaLoader";
 
@@ -42,6 +42,12 @@ export class ThreeComponent implements AfterViewInit {
   private plane: THREE.Mesh;
 
   private axis: AxesHelper;
+
+  public length: number = 400; //linha vermelha
+
+  public height: number = 700; //linha 
+
+  public depth: number = 200;
 
   //private plane: THREE.PlaneGeometry;
 
@@ -87,8 +93,8 @@ export class ThreeComponent implements AfterViewInit {
    * Animate the cube
    */
   private animateCube() {
-    this.cube.rotation.x += this.rotationSpeedX;
-    this.cube.rotation.y += this.rotationSpeedY;
+//    this.cube.rotation.x += this.rotationSpeedX;
+  //  this.cube.rotation.y += this.rotationSpeedY;
   }
 
 
@@ -103,14 +109,14 @@ export class ThreeComponent implements AfterViewInit {
     /* Camera */
     let aspectRatio = this.getAspectRatio();
     this.camera = new THREE.PerspectiveCamera(
-      this.fieldOfView,
+      90,
       aspectRatio,
-      this.nearClippingPane,
-      this.farClippingPane
+      1,
+      1000000
     );
-    this.camera.position.z = this.cameraZ;
-    this.camera.position.x = this.cameraX;
-    this.camera.position.y = this.cameraY;
+    this.camera.position.z = 1200;
+    this.camera.position.x = -100;
+    this.camera.position.y = 500;
     this.camera.lookAt(this.scene.position)
     //this.controls = new OrbitControls(this.camera,this.renderer.domElement);
 
@@ -138,6 +144,11 @@ export class ThreeComponent implements AfterViewInit {
     this.controls.addEventListener('change', this.render);
   }
 
+  private addCloset(){
+    var closet = new Closet(this.length,this.height,this.depth);
+    closet.addClosetToScene(this.scene);
+  }
+
  
 
   
@@ -149,7 +160,7 @@ export class ThreeComponent implements AfterViewInit {
     // Use canvas element in template
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
     this.renderer.setPixelRatio(devicePixelRatio);
-    this.renderer.setSize(this.canvas.clientWidth * 0.5, this.canvas.clientHeight*0.5);
+    this.renderer.setSize(this.canvas.clientWidth * 0.7, this.canvas.clientHeight*0.7);
     //document.getElementById("container").appendChild(this.renderer.domElement);
     //"objeto"
    
@@ -190,6 +201,7 @@ export class ThreeComponent implements AfterViewInit {
   public ngAfterViewInit() {
     this.createScene();
     this.createStudio();
+    this.addCloset();
     this.startRenderingLoop();
     this.addControls();
   }

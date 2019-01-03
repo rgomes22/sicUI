@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { Material } from '../../model/Material';
 import { MateriaisService } from '../../Services/materiais.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-
+import { Price } from '../../model/Price';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-materiais',
   templateUrl: './materiais.component.html',
-   styleUrls: ['../../app.component.css']
+  styleUrls: ['../../app.component.css']
 
 })
 export class MateriaisComponent implements OnInit {
@@ -17,13 +17,26 @@ export class MateriaisComponent implements OnInit {
   titulo = 'Gestão de Materias';
   allMateriais: Material[];
   listagem = 'Materiais Disponiveis';
+
+  dateOfPrice : Date;
+  priceOfMaterial : Price 
+  settings : any;
   constructor( 
     private location: Location,
-    private materiaisService: MateriaisService
+    private materiaisService: MateriaisService,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit() {
     this.getMateriais();
+    this.dateOfPrice = new Date();
+    this.settings = {
+      bigBanner : true,
+      timePicker : true,
+      format: 'dd-MM-yyyy hh:mm a',
+      defaultOpen: false,
+      closeOnSelect: false
+    }
   }
 
   goBack(): void {
@@ -37,12 +50,28 @@ export class MateriaisComponent implements OnInit {
     });
   }
 
-  createMaterial(materialName: string):void{
-    if(!materialName){
-      alert('FALTA O NOME ')
+  createMaterial(materialName: string, preco : number):void{
+    if(!materialName || !preco){
+      this.toastr.error("Arguments Missing");
       return;
     }
-    this.materiaisService.createMaterial({materialName} as Material).subscribe(mat => this.getMateriais());
+    var timestamp;
+    
+    if(this.dateOfPrice instanceof Date){
+      timestamp = this.dateOfPrice.getTime();
+    }else{
+      timestamp = new Date(this.dateOfPrice).getTime();
+    }
+
+    timestamp = Math.floor( timestamp /1000);
+
+    console.log(timestamp," time ");
+
+    this.priceOfMaterial = new Price();
+    this.priceOfMaterial.Price = preco;
+    this.priceOfMaterial.activeDate = timestamp;
+
+    //this.materiaisService.createMaterial({materialName} as Material).subscribe(mat => {this.getMateriais(); console.log(mat)});
   }
 
   delete(mat : Material) : void{

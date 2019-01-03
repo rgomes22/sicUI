@@ -6,8 +6,8 @@
 <div style="text-align: center">
   <h3>{{listagem}}</h3> 
   <li *ngFor="let cat of allCategories" [class.selected]="cat === selectedCategory" (click)="onSelect(cat)" >
-    <span class="badge">{{cat.categoryName}}</span> 
-    <button class="delete" title="delete categoria"
+    <span class="badge">{{cat.categoryId}}-{{cat.categoryName}}</span> 
+    <button *ngIf="cat.categoryParentId != null" class="delete" title="delete categoria"
     (click)="delete(cat)"> x </button>
   </li>
 </div>

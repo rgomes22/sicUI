@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError,map, tap } from 'rxjs/operators';
 
 import { Material } from '../model/Material';
+import {Price } from '../model/Price';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -69,6 +70,14 @@ export class MateriaisService {
     return this.httpClient.put<Material>(url2,material,httpOptions).pipe(
       tap((material: Material)=> this.log('ALterado')),
       catchError(this.handleError<Material>('Erro Ao Alterar'))
+    );
+  }
+
+  addPriceMaterial(id:number, p:Price): Observable<Price>{
+    const url2 = `${this.urlGetMateriais}/${id}/addprice`
+    return this.httpClient.post<Price>(url2,p,httpOptions).pipe(
+      tap((p: Price)=> this.log('ADICIONADO')),
+      catchError(this.handleError<Price>('ADICIONAR Preco a Material'))
     );
   }
 
