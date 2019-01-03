@@ -8,6 +8,7 @@ import {Wall} from './three-files/Wall';
 import { Closet } from './three-files/Closet';
 
 import {ColladaLoader } from "three/examples/js/loaders/ColladaLoader";
+import { Shelf } from './three-files/Shelf';
 
 @Component({
   selector: 'app-three',
@@ -48,6 +49,8 @@ export class ThreeComponent implements AfterViewInit {
   public height: number = 700; //linha 
 
   public depth: number = 200;
+
+  public thickness: number = 2;
 
   //private plane: THREE.PlaneGeometry;
 
@@ -145,8 +148,14 @@ export class ThreeComponent implements AfterViewInit {
   }
 
   private addCloset(){
-    var closet = new Closet(this.length,this.height,this.depth);
+    var closet = new Closet(this.length,this.height,this.depth,this.thickness);
     closet.addClosetToScene(this.scene);
+  }
+
+  private addShlef(){
+
+    var shelf = new Shelf(this.length,this.thickness,this.depth);
+    shelf.addShelfToScene(this.scene);
   }
 
  
@@ -202,6 +211,7 @@ export class ThreeComponent implements AfterViewInit {
     this.createScene();
     this.createStudio();
     this.addCloset();
+    this.addShlef();
     this.startRenderingLoop();
     this.addControls();
   }
