@@ -5,7 +5,7 @@ import { DirectionalLight, AxesHelper } from 'three';
 import OrbitControls from 'three-orbitcontrols';
 import {StudioSetup} from './three-files/StudioSetup';
 import {Wall} from './three-files/Wall';
-
+import { Closet } from './three-files/Closet';
 
 import {ColladaLoader } from "three/examples/js/loaders/ColladaLoader";
 
@@ -42,6 +42,12 @@ export class ThreeComponent implements AfterViewInit {
   private plane: THREE.Mesh;
 
   private axis: AxesHelper;
+
+  public length: number = 400; //linha vermelha
+
+  public height: number = 700; //linha 
+
+  public depth: number = 200;
 
   //private plane: THREE.PlaneGeometry;
 
@@ -138,6 +144,11 @@ export class ThreeComponent implements AfterViewInit {
     this.controls.addEventListener('change', this.render);
   }
 
+  private addCloset(){
+    var closet = new Closet(this.length,this.height,this.depth);
+    closet.addClosetToScene(this.scene);
+  }
+
  
 
   
@@ -190,6 +201,7 @@ export class ThreeComponent implements AfterViewInit {
   public ngAfterViewInit() {
     this.createScene();
     this.createStudio();
+    this.addCloset();
     this.startRenderingLoop();
     this.addControls();
   }

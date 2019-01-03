@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { Scene } from 'three';
 import {Obj3D} from './interfaces/Obj3D';
 export class Closet implements Obj3D {
    
@@ -64,5 +65,9 @@ export class Closet implements Obj3D {
 
     rotate(angle: number, vector: THREE.Vector3) {
         this.closet.rotateOnAxis(vector,angle);
+    }
+
+    public addClosetToScene(scene:Scene){
+        scene.add(this.closet);
     }
 }
