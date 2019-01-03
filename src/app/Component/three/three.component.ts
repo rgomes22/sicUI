@@ -87,8 +87,8 @@ export class ThreeComponent implements AfterViewInit {
    * Animate the cube
    */
   private animateCube() {
-    this.cube.rotation.x += this.rotationSpeedX;
-    this.cube.rotation.y += this.rotationSpeedY;
+//    this.cube.rotation.x += this.rotationSpeedX;
+  //  this.cube.rotation.y += this.rotationSpeedY;
   }
 
 
@@ -103,14 +103,14 @@ export class ThreeComponent implements AfterViewInit {
     /* Camera */
     let aspectRatio = this.getAspectRatio();
     this.camera = new THREE.PerspectiveCamera(
-      this.fieldOfView,
+      90,
       aspectRatio,
-      this.nearClippingPane,
-      this.farClippingPane
+      1,
+      1000000
     );
-    this.camera.position.z = this.cameraZ;
-    this.camera.position.x = this.cameraX;
-    this.camera.position.y = this.cameraY;
+    this.camera.position.z = 1200;
+    this.camera.position.x = -100;
+    this.camera.position.y = 500;
     this.camera.lookAt(this.scene.position)
     //this.controls = new OrbitControls(this.camera,this.renderer.domElement);
 
