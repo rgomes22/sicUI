@@ -13,7 +13,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ItemService {
-  private itemUrl = 'http://localhost:8080';  // URL to web api
+  private itemUrl = 'https://sic-encomendas2018.herokuapp.com/itemdoproduto';  // URL to web api
 
   constructor(private http: HttpClient,) { }
 

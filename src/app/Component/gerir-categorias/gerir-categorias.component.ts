@@ -41,7 +41,7 @@ listagem = 'Categorias Disponiveis';
 
   delete(category:Category): void {
     this.allCategories = this.allCategories.filter(h => h !== category);
-    this.categoryService.delete(category).subscribe();
+    this.categoryService.delete(category).subscribe(()=>this.ngOnInit());
   }
 
   onSelect(category: Category): void {

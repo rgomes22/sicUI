@@ -28,7 +28,7 @@ export class CategoryServiceService {
   
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);
-      alert(`failed: ${error.message}`);
+      alert(` ${operation}: Lamentamos mas nao e possivel realizar esta operacao`);
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
@@ -36,6 +36,7 @@ export class CategoryServiceService {
   
   /** Log a HeroService message with the MessageService */
   private log(message: string) {
+
     console.log(`CategoryService: ${message}`);
   
   }
@@ -66,7 +67,7 @@ export class CategoryServiceService {
   }
   putCategoria(id:number, category: categoryPutDTO): Observable<Category>{
     const url2 = `${this.url}/${id}`;
-    alert("put url "+url2);
+   // alert("put url "+url2);
     return this.http.put<Category>(url2,category,httpOptions).pipe(
       tap(_ => this.log(`put id`)),
       catchError(this.handleError<Category>(`put id`))
