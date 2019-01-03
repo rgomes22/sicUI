@@ -6,6 +6,7 @@ import { Produto } from 'src/app/model/Produto';
 import { ColecoesService } from 'src/app/Services/colecoesService';
 import { ToastrService } from 'ngx-toastr';
 import { criarColecaoDTO } from 'src/app/DTOS/criarColecaoDTO';
+import { Colecao } from 'src/app/model/Colecao';
 
 @Component({
     selector: 'app-criar-colecao',
@@ -15,7 +16,7 @@ import { criarColecaoDTO } from 'src/app/DTOS/criarColecaoDTO';
 
 export class CriarColecaoComponent implements OnInit {
     titulo = 'Criar Coleção';
-    allProducts: Produto[];
+    produtos: Produto[];
 
     //dropdown variables
     disable = false;
@@ -72,10 +73,14 @@ export class CriarColecaoComponent implements OnInit {
 
     }
 
+    onItemSelect(item: Produto){
+    
+    }
+
     getProdutos(): void {
         this.produtosService.getProdutos().subscribe(data => {
             console.log('Produtos' + data);
-            this.allProducts = data;
+            this.produtos = data;
         });
     }
 

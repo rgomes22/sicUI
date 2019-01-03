@@ -19,9 +19,9 @@ const httpOptions = {
 export class ColecoesService {
 
   //private urlSicCatalogo ='' ; 
-  private urlGetColecoes = 'https://sic3df.azurewebsites.net/api/Collection';
-  private urlPostColecao = 'https://sic3df.azurewebsites.net/api/Collection';
-  private urlPutColecao = 'https://sic3df.azurewebsites.net/api/Collection';
+  private urlGetColecoes = 'https://3db-sic-webapi.azurewebsites.net/api/Collection';
+  private urlPostColecao = 'https://3db-sic-webapi.azurewebsites.net/api/Collection';
+  private urlPutColecao = 'https://3db-sic-webapi.azurewebsites.net/api/Collection';
   constructor(private httpClient: HttpClient) { }
 
   getColecoes(): Observable<Colecao[]> {
