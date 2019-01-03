@@ -22,13 +22,13 @@ export class StudioSetup {
 
 
     constructor() {
-        this.pointLight1 = StudioSetup.pointLightSetup(new Vector3(0, 0, 0), 0xffffff);
-        this.pointLight2 = StudioSetup.pointLightSetup(new Vector3(0, 0, 0), 0xffffff);
-        this.pointLight3 = StudioSetup.pointLightSetup(new Vector3(0, 0, 0), 0xffffff);
-        this.pointLight4 = StudioSetup.pointLightSetup(new Vector3(0, 0, 0), 0xffffff);
+        this.pointLight1 = StudioSetup.pointLightSetup(new Vector3(2000, 2700, 2000), 0xffffff);
+        this.pointLight2 = StudioSetup.pointLightSetup(new Vector3( -2000, 2700, 2000), 0xffffff);
+        this.pointLight3 = StudioSetup.pointLightSetup(new Vector3(2000, 2700, -2000), 0xffffff);
+        this.pointLight4 = StudioSetup.pointLightSetup(new Vector3(-2000, 2700, -2000), 0xffffff);
 
-        this.spotlight1 = StudioSetup.spotLightSetup(new Vector3(0, 0, 0), 0xffffff);
-        this.spotlight2 = StudioSetup.spotLightSetup(new Vector3(0, 0, 0), 0xffffff);
+        this.spotlight1 = StudioSetup.spotLightSetup(new Vector3(1500, 3000, 0), 0xffffff);
+        this.spotlight2 = StudioSetup.spotLightSetup(new Vector3(-1500, 3000, 0), 0xffffff);
 
         this.ambienteLight = new AmbientLight(0xffffff, 0.4);
 
@@ -90,6 +90,8 @@ export class StudioSetup {
         
         this.ceiling.position(new Vector3(0,3000,0));
         this.ceiling.rotate(Math.PI/2,new Vector3(1,0,0));
+
+        
 
         scene.add(this.leftWall.mesh());
         scene.add(this.rightWall.mesh());
