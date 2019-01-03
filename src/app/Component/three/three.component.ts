@@ -3,6 +3,8 @@ import * as THREE from 'three';
 import { directiveDef } from '@angular/core/src/view';
 import { DirectionalLight, AxesHelper } from 'three';
 import OrbitControls from 'three-orbitcontrols';
+import {SceneSetup} from './three-files/scene';
+import {Wall} from './three-files/Wall';
 
 
 import {ColladaLoader } from "three/examples/js/loaders/ColladaLoader";
@@ -155,18 +157,12 @@ export class ThreeComponent implements AfterViewInit {
     this.scene.add(this.directionalLight);
 
     /* PAREDES */
-    var planeGeometry = new THREE.PlaneGeometry(4000,4000);
-    var planeMaterial = new THREE.MeshPhongMaterial( {color:0x282627,side: THREE.DoubleSide});
-    this.plane = new THREE.Mesh(planeGeometry,planeMaterial);
-    this.plane.rotation.x += Math.PI/2;
-    this.plane.position.x=0;
-    this.plane.position.y=0;
-    this.plane.position.z=0;
-    this.plane.receiveShadow=true;
-    this.scene.add(this.plane);
+    var wall = new Wall(4000,4000);
+    this.scene.add(wall.mesh());
 
   }
 
+  
   private addControls (){
   
     this.controls = new OrbitControls(this.camera,this.renderer.domElement);
@@ -187,7 +183,7 @@ export class ThreeComponent implements AfterViewInit {
     // Use canvas element in template
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
     this.renderer.setPixelRatio(devicePixelRatio);
-    this.renderer.setSize(this.canvas.clientWidth *0.5, this.canvas.clientHeight*0.5);
+    this.renderer.setSize(this.canvas.clientWidth * 0.5, this.canvas.clientHeight*0.5);
     //document.getElementById("container").appendChild(this.renderer.domElement);
     //"objeto"
    
