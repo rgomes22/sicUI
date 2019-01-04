@@ -36,7 +36,7 @@ export class DrawerUnit implements Obj3D{
         
         /* TAMPOS */
         
-        geometry = new THREE.CubeGeometry(length,thickness,depth);
+        geometry = new THREE.CubeGeometry(length-thickness,thickness,depth);
         this.part = new THREE.Mesh(geometry,material);
         this.part.position.y=thickness/2;
         this.part.position.z=depth/2;
