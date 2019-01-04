@@ -1,7 +1,9 @@
 import * as THREE from 'three';
 import { Scene } from 'three';
 import {Obj3D} from './interfaces/Obj3D';
-export class Closet implements Obj3D {
+import { Texturable } from './interfaces/Texturable';
+export class Closet implements Obj3D ,Texturable {
+  
    
     //private objMesh : THREE.Mesh;
 
@@ -69,7 +71,8 @@ export class Closet implements Obj3D {
         this.closet.rotateOnAxis(vector,angle);
     }
 
-    public addClosetToScene(scene:Scene){
-        scene.add(this.closet);
+    applyTexture(texturePath: string) {
+        throw new Error("Method not implemented.");
     }
+
 }

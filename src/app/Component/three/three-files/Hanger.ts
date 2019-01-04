@@ -30,8 +30,5 @@ export class Hanger implements Obj3D{
         this.hanger.rotateOnAxis(vector,angle);
     }
 
-    public addHangerToScene(scene:Scene){
-        
-        scene.add(this.hanger);
-    }
+  
 }

@@ -32,7 +32,4 @@ export class Shelf implements Obj3D{
         this.shelf.rotateOnAxis(vector,angle);
     }
 
-    public addShelfToScene(scene:Scene){
-        scene.add(this.shelf);
-    }
 }

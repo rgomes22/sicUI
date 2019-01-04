@@ -30,7 +30,5 @@ export class Door implements Obj3D{
         this.door.rotateOnAxis(vector,angle);
     }
 
-    public addHangerToScene(scene:Scene){
-        scene.add(this.door);
-    }
+  
 }
