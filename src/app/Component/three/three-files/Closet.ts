@@ -55,9 +55,7 @@ export class Closet implements Obj3D {
         this.closet.castShadow=true;
     }
 
-    private addDrawers(){
-        
-    }
+    
 
     mesh(){
         return this.closet; 

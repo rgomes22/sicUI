@@ -7,12 +7,12 @@ export class Hanger implements Obj3D{
     private hanger : THREE.Mesh;
 
 
-    constructor(handlerRadius : number, length : number){
+    constructor(handlerRadius : number, length : number,thickness : number){
         let shelfMaterial = new THREE.MeshPhongMaterial({color: 0x559a99});
-        let shelfGeometry = new THREE.CylinderGeometry(handlerRadius,handlerRadius,length,32);
+        let shelfGeometry = new THREE.CylinderGeometry(handlerRadius,handlerRadius,length-thickness,32);
         
         this.hanger  = new THREE.Mesh(shelfGeometry,shelfMaterial);
-
+        this.hanger.rotateZ(Math.PI/2);
         this.hanger.receiveShadow=true;
         this.hanger.castShadow=true;
         
@@ -30,7 +30,8 @@ export class Hanger implements Obj3D{
         this.hanger.rotateOnAxis(vector,angle);
     }
 
-    public addShelfToScene(scene:Scene){
+    public addHangerToScene(scene:Scene){
+        
         scene.add(this.hanger);
     }
 }
