@@ -5,44 +5,49 @@ import { dependenciesFromGlobalMetadata } from '@angular/compiler/src/render3/r3
 
 export class DrawerUnit implements Obj3D{
     private unit : THREE.Group;
-    private cube : THREE.Mesh;
+    private part : THREE.Mesh;
 
     constructor(length : number, height : number, depth : number,thickness : number){
-
+        this.unit=new THREE.Group();
         let material = new THREE.MeshPhongMaterial({color: 0x559a99});
-        let geometry = new THREE.CubeGeometry(length,height,depth);
+        let geometry = new THREE.CubeGeometry(length-thickness,height,thickness);
         
-        this.cube = new THREE.Mesh(geometry,material);
+        this.part = new THREE.Mesh(geometry,material);
     
-        this.cube.position.x=length/2;
-        this.cube.position.y=height/2+thickness;
-        this.unit.add(this.cube);
+        this.part.position.x=length/2;
+        this.part.position.y=height/2+thickness;
+        this.part.position.z=thickness;
+        this.unit.add(this.part);
 
         /* LATERIAIS */
+        
         geometry = new THREE.CubeGeometry(thickness,height,depth);
-        this.cube = new THREE.Mesh(geometry,material);
-        this.cube.position.y=height/2+thickness;
-        this.cube.position.z=depth/2;
-        this.unit.add(this.cube);
-        this.cube = new THREE.Mesh(geometry,material);
-        this.cube.position.y=height/2+thickness;
-        this.cube.position.z=depth/2;
-        this.cube.position.x=length;
-        this.unit.add(this.cube);
-
+        this.part = new THREE.Mesh(geometry,material);
+        this.part.position.y=height/2+thickness;
+        this.part.position.z=depth/2;
+        this.part.position.x=thickness;
+        this.unit.add(this.part);
+        
+        this.part = new THREE.Mesh(geometry,material);
+        this.part.position.y=height/2+thickness;
+        this.part.position.z=depth/2;
+        this.part.position.x=length-thickness;
+        this.unit.add(this.part);
+        
         /* TAMPOS */
+        
         geometry = new THREE.CubeGeometry(length,thickness,depth);
-        this.cube = new THREE.Mesh(geometry,material);
-        this.cube.position.y=thickness/2;
-        this.cube.position.z=depth/2;
-        this.cube.position.x=length/2;
-        this.unit.add(this.cube);
+        this.part = new THREE.Mesh(geometry,material);
+        this.part.position.y=thickness/2;
+        this.part.position.z=depth/2;
+        this.part.position.x=length/2;
+        this.unit.add(this.part);
 
-        this.cube = new THREE.Mesh(geometry,material);
-        this.cube.position.y=height+thickness/2;
-        this.cube.position.z=depth/2;
-        this.cube.position.x=length/2;
-        this.unit.add(this.cube);
+        this.part = new THREE.Mesh(geometry,material);
+        this.part.position.y=height+thickness/2;
+        this.part.position.z=depth/2;
+        this.part.position.x=length/2;
+        this.unit.add(this.part);
 
     
 
@@ -50,6 +55,11 @@ export class DrawerUnit implements Obj3D{
         this.unit.receiveShadow=true;
         this.unit.castShadow=true;
         
+    }
+
+    private addDrawers(length : number, height : number, depth : number){
+        let shelfMaterial = new THREE.MeshPhongMaterial({color: 0x600907});
+        let shelfGeometry = new THREE.CubeGeometry(length,height,depth);
     }
 
     mesh(){
@@ -64,7 +74,7 @@ export class DrawerUnit implements Obj3D{
         this.unit.rotateOnAxis(vector,angle);
     }
 
-    public addShelfToScene(scene:Scene){
+    public addDrawerUnitToScene(scene:Scene){
         scene.add(this.unit);
     }
 }

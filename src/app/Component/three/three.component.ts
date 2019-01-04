@@ -9,6 +9,8 @@ import { Closet } from './three-files/Closet';
 
 import {ColladaLoader } from "three/examples/js/loaders/ColladaLoader";
 import { Shelf } from './three-files/Shelf';
+import { Hanger } from './three-files/Hanger';
+import { DrawerUnit } from './three-files/DrawerUnit';
 
 @Component({
   selector: 'app-three',
@@ -154,8 +156,40 @@ export class ThreeComponent implements AfterViewInit {
 
   private addShlef(){
 
-    var shelf = new Shelf(this.length,this.thickness,this.depth);
+    var shelf = new Shelf(this.length,this.thickness,this.depth,this.thickness);
+
+    /*Tirar as posiçoes depois */
+    var a = new THREE.Vector3( this.length/2, 500, this.depth/2 );
+    shelf.position(a);
+    /**** */
+
     shelf.addShelfToScene(this.scene);
+  }
+
+  private addHanger(){
+    var hanger = new Hanger (2,this.length,this.thickness);
+
+    /*Tirar as posiçoes depois */
+    var a = new THREE.Vector3( this.length/2, 600, this.depth/2 );
+    hanger.position(a);
+    /**** */
+
+    hanger.addHangerToScene(this.scene);
+
+  }
+
+  private addDrawer(){
+    var drawerUnit = new DrawerUnit(this.length,100,this.depth,this.thickness);
+    /*Tirar as posiçoes depois */
+    var a = new THREE.Vector3( 0, 300, 0);
+    drawerUnit.position(a);
+    /**** */
+
+    drawerUnit.addDrawerUnitToScene(this.scene);
+  }
+
+  private addDoor(){
+
   }
 
  
@@ -212,6 +246,9 @@ export class ThreeComponent implements AfterViewInit {
     this.createStudio();
     this.addCloset();
     this.addShlef();
+    this.addHanger();
+    this.addDrawer();
+    this.addDoor();
     this.startRenderingLoop();
     this.addControls();
   }
