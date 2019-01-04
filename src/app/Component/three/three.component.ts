@@ -153,7 +153,7 @@ export class ThreeComponent implements AfterViewInit {
 
   private addCloset(){
     var closet = new Closet(this.length,this.height,this.depth,this.thickness);
-    closet.addClosetToScene(this.scene);
+    this.scene.add(closet.mesh());
   }
 
   private addShlef(){
@@ -165,7 +165,7 @@ export class ThreeComponent implements AfterViewInit {
     shelf.position(a);
     /**** */
 
-    shelf.addShelfToScene(this.scene);
+    this.scene.add(shelf.mesh());
   }
 
   private addHanger(){
@@ -176,7 +176,7 @@ export class ThreeComponent implements AfterViewInit {
     hanger.position(a);
     /**** */
 
-    hanger.addHangerToScene(this.scene);
+    this.scene.add(hanger.mesh());
 
   }
 
@@ -187,7 +187,7 @@ export class ThreeComponent implements AfterViewInit {
     drawerUnit.position(a);
     /**** */
 
-    drawerUnit.addDrawerUnitToScene(this.scene);
+    this.scene.add(drawerUnit.mesh());
   }
 
   private addDoor(){
