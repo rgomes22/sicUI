@@ -143,7 +143,9 @@ export class ThreeComponent implements AfterViewInit {
 
   
   private addControls (){
-    this.controls = new OrbitControls(this.camera,this.renderer.domElement);
+    this.controls = new OrbitControls(this.camera,this.renderer.domElement,);
+    this.controls.maxPolarAngle = Math.PI/2 - 0.0523598776;
+    this.controls.maxDistance = 2500;
     this.controls.rotateSpeed = 1.0;
     this.controls.zoomSpeed = 1.2;
     this.controls.addEventListener('change', this.render);
