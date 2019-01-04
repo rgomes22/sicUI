@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EncomendasComponent } from './Component/encomendas/encomendas.component';
@@ -52,6 +52,7 @@ import { AngularDateTimePickerModule } from 'angular2-datetimepicker'
 
 import { PlanoGestaoComponent } from './Component/plano-gestao/plano-gestao.component';
 import { PlanoDetailComponent } from './Component/plano-detail/plano-detail.component';
+import { TokenInterceptorService } from './token-interceptor.service';
 
 
 export function tokenGetter() {
@@ -121,7 +122,11 @@ export function tokenGetter() {
     FormsModule
   ],
   entryComponents:[DialogContent],
-  providers: [DashComponent, LogService],
+  providers: [DashComponent, LogService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
