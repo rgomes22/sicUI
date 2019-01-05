@@ -109,7 +109,7 @@ export class ThreeComponent implements AfterViewInit, OnInit{
 
   private dot : THREE.Points;
 
-  private pick  : MousePicking ;
+  private pick  : MousePicking  ;
 
   private objectToBeAttached : Obj3D;
 
@@ -158,6 +158,8 @@ export class ThreeComponent implements AfterViewInit, OnInit{
 
 
     this.axis = new THREE.AxesHelper(2000); // add axis to the scene
+    this.pick = new MousePicking(this.camera,[]);
+ 
     this.scene.add(this.axis);
 
   }
@@ -295,6 +297,9 @@ public draw(){
     console.log('Catategoria' + data);
     this.rootCategoria = data;
   });
+  if(this.rootCategoria === undefined){
+    return;
+  }
 
   switch(this.rootCategoria.categoryName) { 
     case this.armario: { 
@@ -329,13 +334,13 @@ public draw(){
   public ngAfterViewInit() {
     this.createScene();
     this.createStudio();
-    
-    
-    
-    
     this.addDoor();
     this.startRenderingLoop();
     this.addControls();
+    window.setTimeout(() =>{
+      console.log("timeout");
+      this.draw();
+    }, 2000);
   }
 
 }
