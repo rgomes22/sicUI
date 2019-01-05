@@ -156,6 +156,7 @@ export class ThreeComponent implements AfterViewInit {
   private addCloset() {
     var closet = new Closet(this.length, this.height, this.depth, this.thickness);
     this.scene.add(closet.mesh());
+    this.pick = new MousePicking(this.camera,closet.attachSurfaces());
   }
 
   private addShlef() {
@@ -200,17 +201,11 @@ export class ThreeComponent implements AfterViewInit {
     this.dot = new THREE.Points(dotGeometry, dotMaterial);
 
     this.scene.add(this.dot);
-
-    var geometry = new THREE.PlaneGeometry( 1000, 1000);
-    var material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
-    this.plane = new THREE.Mesh( geometry, material );
-    this.scene.add( this.plane );
-    this.pick = new MousePicking(this.camera,[this.plane]);
+    
   }
 
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(e : MouseEvent) {
-    //console.log(e);
     this.pick.updateMouse(e.clientX,e.clientY,this.renderer);
     this.pick.intersect();
     var posV = this.pick.surfacePosition() ;
