@@ -4,6 +4,8 @@ import { ProdutosService } from '../../Services/produtos.service';
 import { Colecao } from 'src/app/model/Colecao';
 import { colecaoPutDTO } from 'src/app/DTOS/colecaoPutDTO';
 import { ColecoesService } from 'src/app/Services/colecoesService';
+import { ToastrService } from 'ngx-toastr';
+import { Alert } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-editar-colecao',
@@ -12,37 +14,82 @@ import { ColecoesService } from 'src/app/Services/colecoesService';
 })
 export class CollectionEditComponent implements OnInit {
 
-  @Input() colection : Colecao;
-  product : Produto;
-  allProducts: Produto[];
+  @Input() colection: Colecao;
+  selectedProductId: number;
+  produtos: Produto[];
 
-  constructor(private colecoesService: ColecoesService, private produtosService: ProdutosService ) {
+  constructor(
+    private colecoesService: ColecoesService,
+    private produtosService: ProdutosService,
+    private toastr: ToastrService,
+  ) { }
+
+  ngOnInit() {
+    this.getProdutos();    
   }
 
-  getProducts(): void {
-    this.produtosService.getProdutos().subscribe(p =>this.allProducts = p);
-  }
+  removeP(p: Produto){
 
-  ngOnInit() {  
-    this.getProducts();
-  }
-
-  editarColecao(col:Colecao,name:string, description:string){
-    if(!name || 
-      !description){
-      alert("Todos os parametros tem de estar preenchidos");
-      return;
+    if(this.selectedProductId == 0){
+      this.toastr.error("The space must contain an element", "Error");
+    }else{
+      let productId = parseInt(p.productId);
+      this.colecoesService.removeProduto(this.colection.collectionId, productId).subscribe(c => this.colection = c);
     }
-    let colecaoId = col.colecaoId;
-    let colecaoName = name;
-    let colecaoDescription = description;
-    
+  }
 
-    this.colecoesService.putColecao(col.colecaoId,
-      {colecaoId,colecaoName,colecaoDescription} as colecaoPutDTO).subscribe(c => this.colection = c);
 
-    
+  editarColecao(col: Colecao, name: string, description: string) {
+    if (!name &&!description) {
+        this.toastr.error("All spaces must contain elements", "Error");
+        return;
+    }
+
+    if(!name){
+      name=col.collectionName;
+    }
+
+    if(!description){
+      description=col.collectionDescription;
+    }
+
+    let collectionId = col.collectionId;
+    let collectionName = name;
+    let collectionDescription = description;
+
+    this.colecoesService.putColecao(col.collectionId,
+      {collectionId, collectionName, collectionDescription} as colecaoPutDTO).subscribe(c => this.colection = c);
+
     return
+  
+  }
+
+  selectProduct(value: number): void{
+    this.selectedProductId = value;
+    console.log(value);
+  }
+
+  addProduct(col: Colecao){
+    let collectionId = col.collectionId;
+
+    if(this.selectedProductId == 0){
+      this.toastr.error("The space must contain an element", "Error");
+    }else{
+      let productId = this.selectedProductId;
+      this.colecoesService.addProduto(col.collectionId, productId).subscribe(c => this.colection = c);
+    }
+    
+  }
+
+  onItemSelect(item: Produto) {
+
+  }
+
+  getProdutos(): void {
+    this.produtosService.getProdutos().subscribe(data => {
+      console.log('Produtos' + data);
+      this.produtos = data;
+    });
 
   }
 }

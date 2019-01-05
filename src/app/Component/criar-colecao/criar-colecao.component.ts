@@ -52,24 +52,15 @@ export class CriarColecaoComponent implements OnInit {
         this.location.back();
     }
 
-    post(colectionName: string, colectionDescription: string): void {
-
-        if (!colectionName || !colectionDescription || this.selectedProdutos.length == 0) {
+    post(collectionName: string, collectionDescription: string): void {
+        alert(collectionName);
+        if (!collectionName || !collectionDescription) {
             this.toastr.error("All spaces must contain elements", "Error");
             return;
         }
-        let prod: number[] = [];
-        for (let p of this.selectedProdutos) {
-            prod.push(parseInt(p.productId));
-        }
-
-        let c: criarColecaoDTO = {
-            colectionName: colectionName,
-            colectionDescription: colectionDescription,
-            colecaoProductsId: prod,
-        };
-
-        this.colecoesService.postColecao(c).subscribe(col => this.toastr.success("Collection Added", "Success"));
+       console.log(collectionName);
+       console.log(collectionDescription);
+        this.colecoesService.postColecao({collectionName,collectionDescription}as criarColecaoDTO).subscribe(col => this.toastr.success("Collection Added", "Success"));
 
     }
 
