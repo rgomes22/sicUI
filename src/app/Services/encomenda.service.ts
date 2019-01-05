@@ -41,10 +41,10 @@ export class EncomendaService {
     );
   }
 
-  encomenda_submit(encomenda : string): Observable<Encomenda>
+  encomenda_submit(id : string): Observable<Encomenda>
   {
-  
-     const url = `${this.urlSic}/encomendas/${encomenda}/submit`;
+    console.log("Service log: " + id);
+     const url = `${this.urlSic}/encomendas/${id}/submit`;
      return this.httpClient.get<Encomenda>(url).pipe(
        tap(_ => this.log(`submit`)),
        catchError(this.handleError<Encomenda>(``))
@@ -53,8 +53,8 @@ export class EncomendaService {
   getEncomenda( id: string ): Observable<Encomenda>{
     const url = `${this.urlSic}/encomendas/${id}`;
     return this.httpClient.get<Encomenda>(url).pipe(
-      tap(_ => this.log(`fetched item id=${id}`)),
-      catchError(this.handleError<Encomenda>(`get item id=${id}`))
+      tap(_ => this.log(`fetched item id`)),
+      catchError(this.handleError<Encomenda>(`get item id`))
     );
   }
 
