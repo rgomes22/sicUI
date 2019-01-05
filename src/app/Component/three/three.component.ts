@@ -1,16 +1,16 @@
-import {  AfterViewInit, Component, OnInit, ElementRef, Input, ViewChild } from '@angular/core';
+import {  AfterViewInit, Component, OnInit, ElementRef, Input, ViewChild, HostListener } from '@angular/core';
 import * as THREE from 'three';
 import { directiveDef } from '@angular/core/src/view';
 import { DirectionalLight, AxesHelper } from 'three';
 import OrbitControls from 'three-orbitcontrols';
 import {StudioSetup} from './three-files/StudioSetup';
-import {Wall} from './three-files/Wall';
-import { Closet } from './three-files/Closet';
+import {Wall} from './three-files/Objects3D/Wall';
+import { Closet } from './three-files/Objects3D/Closet';
 
 import {ColladaLoader } from "three/examples/js/loaders/ColladaLoader";
-import { Shelf } from './three-files/Shelf';
-import { Hanger } from './three-files/Hanger';
-import { DrawerUnit } from './three-files/DrawerUnit';
+import { Shelf } from './three-files/Objects3D/Shelf';
+import { Hanger } from './three-files/Objects3D/Hanger';
+import { DrawerUnit } from './three-files/Objects3D/DrawerUnit';
 
 @Component({
   selector: 'app-three',
@@ -117,7 +117,7 @@ export class ThreeComponent implements AfterViewInit {
       90,
       aspectRatio,
       1,
-      1000000
+      10000
     );
     this.camera.position.z = 1200;
     this.camera.position.x = -100;
@@ -149,6 +149,10 @@ export class ThreeComponent implements AfterViewInit {
     this.controls.rotateSpeed = 1.0;
     this.controls.zoomSpeed = 1.2;
     this.controls.addEventListener('change', this.render);
+  }
+  @HostListener('document:mousemove', ['$event']) 
+  onMouseMove(e) {
+    console.log(e);
   }
 
   private addCloset(){
