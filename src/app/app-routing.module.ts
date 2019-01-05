@@ -48,6 +48,11 @@ import { RegisterComponent } from './Component/register/register.component';
 import { CriarAcabamentoComponent } from './Component/criar-acabamento/criar-acabamento.component';
 import { SubmeterEncomendaComponent } from './Component/submeter-encomenda/submeter-encomenda.component';
 
+import { CriarCatalogoComponent } from './Component/criar-catalogo/criar-catalogo.component';
+import { GerirCatalogoComponent } from './Component/gerir-catalogo/gerir-catalogo.component'
+import { EditCatalogoComponent } from './Component/edit-catalogo/edit-catalogo.component';
+import { CatalogEditComponent } from './Component/editar-catalogo/editar-catalogo.component';
+
 const routes: Routes = [
   {path: 'catalogo', component : CatalogoComponent},
   {path: 'encomenda', component : EncomendasComponent},
@@ -72,6 +77,10 @@ const routes: Routes = [
   //{path:'criarCategoria' , component : CriarCategoriaComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'criarCategoria'}},
   //{path:'criar-colecao' , component : CriarColecaoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'criarCategoria'}},
   {path:'criar-colecao' , component : CriarColecaoComponent},
+  {path:'criar-catalogo' , component : CriarCatalogoComponent},
+  {path: 'gerir-catalogo', component : GerirCatalogoComponent},
+  {path: 'edit-catalogo', component : EditCatalogoComponent},
+  {path: 'editar-catalogo', component : CatalogEditComponent},
   { path: 'error', component:ErrorPageComponent },
   {path:'gerirAcabamentos' , component : GerirAcabamentosComponent},
   {path: 'login', component: LoginComponent, canActivate: [AuthLogin]},

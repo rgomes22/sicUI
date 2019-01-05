@@ -1,0 +1,46 @@
+<div *ngIf="catalog">
+
+  <div style="width: 600px; float: left; margin-left: 50px">
+    <h2>{{catalog.catalogName | uppercase}} Editor</h2>
+
+    <label>Name:
+      <input type="text" #NameE />
+    </label>
+    <div>
+      <label>Description:
+        <input type="text" #Description>
+      </label>
+    </div>
+    <button style="margin-bottom: 50px" (click)="editarCatalogo(catalog,NameE.value,Description.value)">
+      Submeter Edição
+    </button>
+    <p></p>
+    <div>
+      <label>Inserir Produto:
+        <select name="selectedProductId" (change)="selectProduct($event.target.value)" class="select-width form-control">
+          <option value="-1">Escolha um Produto</option>
+          <option *ngFor="let prod of produtos" value="{{prod.productId}}">{{prod.productId}}
+            {{prod.productName}}</option>
+        </select>
+      </label>
+    </div>
+    <button style="margin-bottom: 50px" (click)="addProduct(catalog)">
+      Adicionar Produto
+    </button>
+    <p></p>
+    <h3>DADOS DO CATÁLOGO:</h3>
+    <span>NOME: </span>{{catalog.catalogName}}
+    <p></p>
+    <span>DESCRIÇÃO: </span>{{catalog.catalogDescription}}
+    <p></p>
+    <p>
+      PRODUTOS:
+    </p>
+    <div>
+      <li *ngFor="let m of catalog.products">
+      <span>{{m.productId}}{{m.productName}}</span>
+      <button class="delete" title="Delete Catálogo" (click)="removeP(m)"> x </button>
+
+      </li>
+    </div>
+  </div>
