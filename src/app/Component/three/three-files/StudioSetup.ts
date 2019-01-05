@@ -1,5 +1,5 @@
 import { Vector3, PointLight, AmbientLight, SpotLight, Scene } from 'three';
-import { Wall } from './Wall';
+import { Wall } from './Objects3D/Wall';
 
 export class StudioSetup {
 

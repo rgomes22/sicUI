@@ -1,34 +1,40 @@
 import * as THREE from 'three';
 import { Scene } from 'three';
-import {Obj3D} from './interfaces/Obj3D';
-import { dependenciesFromGlobalMetadata } from '@angular/compiler/src/render3/r3_factory';
+import {Obj3D} from '../interfaces/Obj3D';
+import { Texturable } from '../interfaces/Texturable';
+export class Closet implements Obj3D ,Texturable {
+  
+   
+    //private objMesh : THREE.Mesh;
 
-export class DrawerUnit implements Obj3D{
-    private unit : THREE.Group;
     private cube : THREE.Mesh;
 
-    constructor(length : number, height : number, depth : number,thickness : number){
+    private closet : THREE.Group;
 
-        let material = new THREE.MeshPhongMaterial({color: 0x559a99});
-        let geometry = new THREE.CubeGeometry(length,height,depth);
-        
+    constructor(length : number , height : number, depth : number,thickness : number){
+
+        this.closet = new THREE.Group();
+        let material = new THREE.MeshPhongMaterial({ color:0x600907});
+
+        /* TRASEIRA */
+        let geometry = new THREE.CubeGeometry(length,height,thickness);
         this.cube = new THREE.Mesh(geometry,material);
     
         this.cube.position.x=length/2;
         this.cube.position.y=height/2+thickness;
-        this.unit.add(this.cube);
+        this.closet.add(this.cube);
 
         /* LATERIAIS */
         geometry = new THREE.CubeGeometry(thickness,height,depth);
         this.cube = new THREE.Mesh(geometry,material);
         this.cube.position.y=height/2+thickness;
         this.cube.position.z=depth/2;
-        this.unit.add(this.cube);
+        this.closet.add(this.cube);
         this.cube = new THREE.Mesh(geometry,material);
         this.cube.position.y=height/2+thickness;
         this.cube.position.z=depth/2;
         this.cube.position.x=length;
-        this.unit.add(this.cube);
+        this.closet.add(this.cube);
 
         /* TAMPOS */
         geometry = new THREE.CubeGeometry(length,thickness,depth);
@@ -36,35 +42,37 @@ export class DrawerUnit implements Obj3D{
         this.cube.position.y=thickness/2;
         this.cube.position.z=depth/2;
         this.cube.position.x=length/2;
-        this.unit.add(this.cube);
+        this.closet.add(this.cube);
 
         this.cube = new THREE.Mesh(geometry,material);
         this.cube.position.y=height+thickness/2;
         this.cube.position.z=depth/2;
         this.cube.position.x=length/2;
-        this.unit.add(this.cube);
+        this.closet.add(this.cube);
 
     
 
 
-        this.unit.receiveShadow=true;
-        this.unit.castShadow=true;
-        
+        this.closet.receiveShadow=true;
+        this.closet.castShadow=true;
     }
 
+    
+
     mesh(){
-        return this.unit; 
+        return this.closet; 
     }
 
     position(vector: THREE.Vector3) {
-        this.unit.position.set(vector.x,vector.y,vector.z);
+        this.closet.position.set(vector.x,vector.y,vector.z);
     }
 
     rotate(angle: number, vector: THREE.Vector3) {
-        this.unit.rotateOnAxis(vector,angle);
+        this.closet.rotateOnAxis(vector,angle);
     }
 
-    public addShelfToScene(scene:Scene){
-        scene.add(this.unit);
+    applyTexture(texturePath: string) {
+        throw new Error("Method not implemented.");
     }
+
 }

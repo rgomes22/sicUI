@@ -34,7 +34,7 @@ export class ProdutosService {
 
   putProduct(id:string, produto: produtoPutDTO): Observable<Produto>{
     const url2 = `${this.urlPutProduto}/${id}`;
-    alert("put url "+url2);
+    
     return this.httpClient.put<Produto>(url2,produto,httpOptions).pipe(
       tap(_ => this.log(`put id`)),
       catchError(this.handleError<Produto>(`put id`))
@@ -85,7 +85,7 @@ export class ProdutosService {
  
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
- 
+      alert("ERRO: ${operation}");
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);
  

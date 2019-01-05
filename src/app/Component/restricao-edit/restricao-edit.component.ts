@@ -4,6 +4,8 @@ import { Restricao } from '../../model/Restricao';
 import { RestricoesService } from '../../Services/restricoes.service';
 import { Produto } from '../../model/Produto';
 import { restricaoPutDTO } from '../../DTOS/restricaoPutDTO'
+import { ProdutosService} from '../../Services/produtos.service';
+
 
 @Component({
   selector: 'app-restricao-edit',
@@ -42,7 +44,7 @@ export class RestricaoEditComponent implements OnInit {
   }
 
   getProdutos():void{
-   // alert("oi");
+   
   }
 
   obOpEdit(value: boolean): void {

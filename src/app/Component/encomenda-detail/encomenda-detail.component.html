@@ -1,14 +1,44 @@
-<h2>Encomenda: </h2>
+<h3>Encomenda: </h3>
 
-<p>
-    <ng-multiselect-dropdown
-    [placeholder]="'Select Items'"
-    [data]="items"
-    [(ngModel)]="selectedItems"
-    [settings]="dropdownSettings"
-    (onSelect)="onItemSelect($event)"
-  >
-  </ng-multiselect-dropdown>
-</p>
+<p></p>
+<h3>DADOS DA CATEGORIA:</h3>
+<span>NOME: </span>{{encomenda.nome}}
+<p></p>
+<span>Pais: </span>{{encomenda.pais}}
+<p></p>
+<span>Cidade: </span>{{encomenda.cidade}}
+<p></p>
+<span>Rua: </span>{{encomenda.rua}}
+<p></p>
+<span>Estado: </span>{{encomenda.estado}}
+<p></p>
+
+<hr>
+
+<h2>Itens da Encomenda </h2>
+
+<h4>Acrescentar itens </h4>
+<p></p>
+<select name="itemAcrescentar" (change)="acrescentarItem($event.target.value)" class="select-width form-control">
+    <option value="-1">Escolha uma item para acrescentar</option>
+    <option *ngFor="let item of itemsAcrescentar" value="{{item.id}}">{{item.nome}}</option>
+  </select>
+  <p></p>
+  <p></p>
+  <button style="text-align:center;margin:auto;display: block" (click)="addItemToOrder()">Acrescentar</button >
+
+
+    <h4>Apagar itens </h4>
+    <hr>
+
+<p></p>
+<div style="text-align: center">
+  <li *ngFor="let item of itemsApagar">
+       <span  class="badge">{{item.nome}}</span>
+       <button class="delete" title="delete item" 
+       (click)="removeItemToOrder(item)">x</button>
+  </li>
+</div>
+
 
 <button (click)="goBack()">Back</button >
