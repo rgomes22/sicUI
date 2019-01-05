@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError,map, tap } from 'rxjs/operators';
 import { Encomenda } from '../model/Encomenda';
+import { Item } from '../model/Item';
+import { addItemEncomendaDTO } from '../DTOS/addItemEncomendaDTO';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -34,11 +36,47 @@ export class EncomendaService {
 
   createEncomenda(encomenda : Encomenda): Observable<Encomenda> {
     return this.httpClient.post<Encomenda>(`${this.urlSic}/encomendas/`,encomenda,httpOptions).pipe(
-      tap((encomenda: Encomenda) => this.log(`added Enc w/ id=${encomenda.id}`)),
+      tap((encomenda: Encomenda) => this.log(`added Enc w/ id`)),
       catchError(this.handleError<Encomenda>('addENC'))
     );
   }
 
+  encomenda_submit(encomenda : string): Observable<Encomenda>
+  {
+  
+     const url = `${this.urlSic}/encomendas/${encomenda}/submit`;
+     return this.httpClient.get<Encomenda>(url).pipe(
+       tap(_ => this.log(`submit`)),
+       catchError(this.handleError<Encomenda>(``))
+     );
+  }
+  getEncomenda( id: string ): Observable<Encomenda>{
+    const url = `${this.urlSic}/encomendas/${id}`;
+    return this.httpClient.get<Encomenda>(url).pipe(
+      tap(_ => this.log(`fetched item id=${id}`)),
+      catchError(this.handleError<Encomenda>(`get item id=${id}`))
+    );
+  }
+
+  addItem(id:string, item: addItemEncomendaDTO ): Observable<Encomenda>{
+    
+    const url2 = `${this.urlSic}/encomendas/${id}/addItem`;
+    
+    return this.httpClient.put<Encomenda>(url2,item,httpOptions).pipe(
+      tap(_ => alert("Item adicionado com sucesso")),
+      catchError(this.handleError<Encomenda>(`add item`))
+    );
+  }
+  
+  removeItem(id:string, item: addItemEncomendaDTO ): Observable<Encomenda>{
+    
+    const url2 = `${this.urlSic}/encomendas/${id}/removeItem`;
+    
+    return this.httpClient.put<Encomenda>(url2,item,httpOptions).pipe(
+      tap(_ => alert("Item removido com sucesso")),
+      catchError(this.handleError<Encomenda>(`removido item`))
+    );
+  }
   private log(message: string) {
     console.log(`HeroService: ${message}`);
   };
@@ -50,7 +88,7 @@ export class EncomendaService {
       console.error(error); // log to console instead
  
       // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
+      this.log(`${operation} failed`);
  
       // Let the app keep running by returning an empty result.
       return of(result as T);

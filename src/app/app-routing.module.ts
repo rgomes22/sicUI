@@ -46,6 +46,8 @@ import {GerirAcabamentosComponent} from './Component/gerir-acabamentos/gerir-aca
 import { ErrorPageComponent } from './Component/error-page/error-page.component';
 import { RegisterComponent } from './Component/register/register.component';
 import { CriarAcabamentoComponent } from './Component/criar-acabamento/criar-acabamento.component';
+import { SubmeterEncomendaComponent } from './Component/submeter-encomenda/submeter-encomenda.component';
+
 const routes: Routes = [
   {path: 'catalogo', component : CatalogoComponent},
   {path: 'encomenda', component : EncomendasComponent},
@@ -75,6 +77,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent, canActivate: [AuthLogin]},
   {path: 'register', component: RegisterComponent, canActivate: [AuthLogin]},
   {path: 'criarAcabamento', component: CriarAcabamentoComponent},
+  {path: 'submeterEncomenda', component: SubmeterEncomendaComponent},
   { path: '**', redirectTo: '' }
 ];
 

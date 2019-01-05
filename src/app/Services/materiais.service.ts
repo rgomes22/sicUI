@@ -5,6 +5,7 @@ import { catchError,map, tap } from 'rxjs/operators';
 
 import { Material } from '../model/Material';
 import {Price } from '../model/Price';
+import { priceDTO } from '../DTOS/priceDTO';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -73,12 +74,28 @@ export class MateriaisService {
     );
   }
 
-  addPriceMaterial(id:number, p:Price): Observable<Price>{
-    const url2 = `${this.urlGetMateriais}/${id}/addprice`
+  addPriceMaterial(id:string, p:Price): Observable<Price>{
+    const url2 = `${this.urlGetMateriais}/${id}/addPrice`;
     return this.httpClient.post<Price>(url2,p,httpOptions).pipe(
-      tap((p: Price)=> this.log('ADICIONADO')),
+      tap((p: Price)=> this.log('Preço ADICIONADO')),
       catchError(this.handleError<Price>('ADICIONAR Preco a Material'))
     );
+  }
+
+  getMaterialPrice(id:string): Observable<priceDTO>{
+    const url2 = `${this.urlGetMateriais}/${id}/activePrice`;
+    return this.httpClient.get<priceDTO>(url2).pipe(
+      tap(_ => this.log('Carrega Preco Material')),
+      catchError(this.handleError<priceDTO>('get Preco de Material'))
+    )
+  }
+
+  getMaterialPriceHistory(id:string): Observable<priceDTO[]>{
+    const url2 = `${this.urlGetMateriais}/${id}/priceHistory`;
+    return this.httpClient.get<priceDTO[]>(url2).pipe(
+      tap(_ => this.log('Loaded Price History')),
+      catchError(this.handleError('get preco history',[]))
+    )
   }
 
 }

@@ -78,7 +78,7 @@ cidadeSelecionada : string;
 
   deleteEncomenda(encomenda: Encomenda): void {
     this.allEncomendas = this.allEncomendas.filter(h => h !== encomenda);
-    this.encomendaService.deleteEncomenda(encomenda).subscribe();
+    this.encomendaService.deleteEncomenda(encomenda).subscribe(enc => alert("Apagado com sucesso"));
   }
 
   createEncomenda(nome: string, pais: string, rua: string):void {
@@ -87,7 +87,7 @@ cidadeSelecionada : string;
       alert('MISSING PARAMETERS')
       return;}
       let cidade = this.cidadeSelecionada;
-    this.encomendaService.createEncomenda({nome,pais,cidade,rua} as Encomenda).subscribe(enc => {this.allEncomendas.push(enc)});
+    this.encomendaService.createEncomenda({nome,pais,cidade,rua} as Encomenda).subscribe(enc => {this.allEncomendas.push(enc); alert("Criado com sucesso")});
   }
   
   goBack(): void {

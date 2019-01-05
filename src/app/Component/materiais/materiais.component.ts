@@ -14,11 +14,14 @@ import { ToastrService } from 'ngx-toastr';
 export class MateriaisComponent implements OnInit {
 
   selectedMaterial : Material;
+  selectedMaterialPrice : number;
+  priceHistoryArray = [];
   titulo = 'Gestão de Materias';
   allMateriais: Material[];
   listagem = 'Materiais Disponiveis';
 
   dateOfPrice : Date;
+  newPriceDate : Date;
   priceOfMaterial : Price 
   settings : any;
   constructor( 
@@ -30,6 +33,7 @@ export class MateriaisComponent implements OnInit {
   ngOnInit() {
     this.getMateriais();
     this.dateOfPrice = new Date();
+    this.priceOfMaterial = new Price();
     this.settings = {
       bigBanner : true,
       timePicker : true,
@@ -55,7 +59,7 @@ export class MateriaisComponent implements OnInit {
       this.toastr.error("Arguments Missing");
       return;
     }
-    var timestamp;
+    var timestamp : number;
     
     if(this.dateOfPrice instanceof Date){
       timestamp = this.dateOfPrice.getTime();
@@ -65,13 +69,17 @@ export class MateriaisComponent implements OnInit {
 
     timestamp = Math.floor( timestamp /1000);
 
-    console.log(timestamp," time ");
-
     this.priceOfMaterial = new Price();
     this.priceOfMaterial.Price = preco;
-    this.priceOfMaterial.activeDate = timestamp;
+    this.priceOfMaterial.ActiveDate = timestamp;
 
-    //this.materiaisService.createMaterial({materialName} as Material).subscribe(mat => {this.getMateriais(); console.log(mat)});
+    this.materiaisService.createMaterial({materialName} as Material).subscribe(mat => {
+      this.materiaisService.addPriceMaterial(mat.materialId,this.priceOfMaterial).subscribe(price =>{});
+      this.getMateriais(); 
+      this.toastr.info("sdsdds");
+    });
+    
+
   }
 
   delete(mat : Material) : void{
@@ -81,6 +89,27 @@ export class MateriaisComponent implements OnInit {
 
   onSelect(material: Material): void {
     this.selectedMaterial = material;
+    this.getMaterialPrice(this.selectedMaterial.materialId);
+    this.getMaterialPriceHistory(this.selectedMaterial.materialId);
+  }
+
+  getMaterialPriceHistory(id:string):void{
+    this.materiaisService.getMaterialPriceHistory(id).subscribe(prices =>{
+      this.priceHistoryArray.splice(0,this.priceHistoryArray.length);
+      for(var i = 0; i < prices.length; i++){
+        var temp = new Date(prices[i].activeDate*1000).toString().split(" ");
+        this.priceHistoryArray.push({
+          price: prices[i].price,
+          date: temp[1]+" "+temp[2]+" "+temp[3]+" "+temp[4],//shows month day year hour min sec
+        })
+      }
+    });
+  }
+
+  getMaterialPrice(id:string):void{
+    this.materiaisService.getMaterialPrice(id).subscribe(price =>{ 
+      this.selectedMaterialPrice = price.price;
+    });
   }
   
   editMaterial(name : string){
@@ -88,6 +117,28 @@ export class MateriaisComponent implements OnInit {
     this.materiaisService.editMaterial(this.selectedMaterial).subscribe(mat => this.getMateriais());
   }
   
+  alterPrice(preco: number): void{
+    if(!preco){
+     this.toastr.error("specify a price","Error");
+     return;
+    }
 
+    var timestamp : number;
+    
+    if(this.newPriceDate instanceof Date){
+      timestamp = this.newPriceDate.getTime();
+    }else{
+      timestamp = new Date(this.newPriceDate).getTime();
+    }
+
+    timestamp = Math.floor( timestamp /1000);
+
+    this.priceOfMaterial.Price = preco;
+    this.priceOfMaterial.ActiveDate = timestamp;
+
+    this.materiaisService.addPriceMaterial(this.selectedMaterial.materialId,this.priceOfMaterial).subscribe(price =>{ 
+      this.getMaterialPrice(this.selectedMaterial.materialId);
+    });
+  }
 
 }
