@@ -5,7 +5,7 @@
 </div>
 <div style="text-align:center">
 
-  <select name="encomendaSelecionada" (change)="selectOrder($event.target.value)" class="select-width form-control">
+  <select name="encomendaSelecionada" (change)="getEncomenda($event.target.value)" class="select-width form-control">
     <option value="-1">Escolha uma encomenda</option>
     <option *ngFor="let enc of allEncomendas" value="{{enc.id}}">{{enc.nome}}</option>
   </select>
