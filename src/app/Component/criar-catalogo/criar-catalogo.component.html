@@ -1,0 +1,20 @@
+<div style="text-align:left">
+  <h2>{{titulo}}</h2>
+  <button (click)="goBack()">Back</button>
+</div>
+<div style="text-align:center">
+  <p>
+    <label>Nome Catálogo:
+      <input #catalogName />
+    </label>
+  </p>
+  <p>
+    <label>Descrição do Catálogo:
+      <input #catalogDescription />
+    </label>
+  </p>
+  <p></p>
+  <p>
+    <button (click)=" post(catalogName.value,catalogDescription.value)">Criar Catálogo</button>
+  </p>
+</div>
