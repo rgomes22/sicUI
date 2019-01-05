@@ -53,7 +53,7 @@ import { AngularDateTimePickerModule } from 'angular2-datetimepicker'
 import { PlanoGestaoComponent } from './Component/plano-gestao/plano-gestao.component';
 import { PlanoDetailComponent } from './Component/plano-detail/plano-detail.component';
 import { TokenInterceptorService } from './token-interceptor.service';
-
+import{    SubmeterEncomendaComponent} from './Component/submeter-encomenda/submeter-encomenda.component'
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -93,7 +93,9 @@ export function tokenGetter() {
     ThreeComponent,
     DialogContent,
     PlanoGestaoComponent,
-    PlanoDetailComponent
+    PlanoDetailComponent,
+    SubmeterEncomendaComponent
+
 
 
     

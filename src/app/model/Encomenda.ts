@@ -5,6 +5,7 @@ export class Encomenda{
     pais: string;
     cidade: string;
     rua: string;
-    estado: boolean;
+    estado: string;
+    itens : Item[];
     
 }
