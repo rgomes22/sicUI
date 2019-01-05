@@ -28,7 +28,7 @@ export class RestricoesService {
       console.error(error); // log to console instead
   
       // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
+      this.log(`${operation}: Agregacao invalida`);
       alert(`failed: ${error.message}`);
       // Let the app keep running by returning an empty result.
       return of(result as T);
@@ -53,7 +53,7 @@ export class RestricoesService {
   createRestricao(restricao: Restricao): Observable<Restricao>{
 
     return this.http.post<Restricao>(this.urlRes,restricao,httpOptions).pipe(
-      tap((restricao: Restricao)=> alert(`added item ${restricao.restrictionId}`)),
+      tap((restricao: Restricao)=> alert(`Restricao criada`)),
       catchError(this.handleError<Restricao>('ADICIONAR Restriçao'))
     );
   }
@@ -73,7 +73,7 @@ export class RestricoesService {
   putRestricao(id:number,restricaoPutDTO:restricaoPutDTO): Observable<Restricao>{
     const urlPut = `${this.urlRes}/${id}`;
     return this.http.put<Restricao>(urlPut,restricaoPutDTO,httpOptions).pipe(
-      tap(_=> this.log(`put id=${id}`)),
+      tap(_=> alert(`Alterada a Agragacao`)),
       catchError(this.handleError<Restricao>(`put id=${id}`))
     );
   }
