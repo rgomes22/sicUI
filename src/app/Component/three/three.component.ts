@@ -1,14 +1,16 @@
-import {  AfterViewInit, Component, OnInit, ElementRef, Input, ViewChild } from '@angular/core';
+import {  AfterViewInit, Component, OnInit, ElementRef, Input, ViewChild, HostListener } from '@angular/core';
 import * as THREE from 'three';
 import { directiveDef } from '@angular/core/src/view';
 import { DirectionalLight, AxesHelper } from 'three';
 import OrbitControls from 'three-orbitcontrols';
 import {StudioSetup} from './three-files/StudioSetup';
-import {Wall} from './three-files/Wall';
-import { Closet } from './three-files/Closet';
+import {Wall} from './three-files/Objects3D/Wall';
+import { Closet } from './three-files/Objects3D/Closet';
 
 import {ColladaLoader } from "three/examples/js/loaders/ColladaLoader";
-import { Shelf } from './three-files/Shelf';
+import { Shelf } from './three-files/Objects3D/Shelf';
+import { Hanger } from './three-files/Objects3D/Hanger';
+import { DrawerUnit } from './three-files/Objects3D/DrawerUnit';
 
 @Component({
   selector: 'app-three',
@@ -115,7 +117,7 @@ export class ThreeComponent implements AfterViewInit {
       90,
       aspectRatio,
       1,
-      1000000
+      10000
     );
     this.camera.position.z = 1200;
     this.camera.position.x = -100;
@@ -141,21 +143,59 @@ export class ThreeComponent implements AfterViewInit {
 
   
   private addControls (){
-    this.controls = new OrbitControls(this.camera,this.renderer.domElement);
+    this.controls = new OrbitControls(this.camera,this.renderer.domElement,);
+    this.controls.maxPolarAngle = Math.PI/2 - 0.0523598776;
+    this.controls.maxDistance = 2500;
     this.controls.rotateSpeed = 1.0;
     this.controls.zoomSpeed = 1.2;
     this.controls.addEventListener('change', this.render);
   }
+  @HostListener('document:mousemove', ['$event']) 
+  onMouseMove(e) {
+    console.log(e);
+  }
 
   private addCloset(){
     var closet = new Closet(this.length,this.height,this.depth,this.thickness);
-    closet.addClosetToScene(this.scene);
+    this.scene.add(closet.mesh());
   }
 
   private addShlef(){
 
-    var shelf = new Shelf(this.length,this.thickness,this.depth);
-    shelf.addShelfToScene(this.scene);
+    var shelf = new Shelf(this.length,this.thickness,this.depth,this.thickness);
+
+    /*Tirar as posiçoes depois */
+    var a = new THREE.Vector3( this.length/2, 500, this.depth/2 );
+    shelf.position(a);
+    /**** */
+
+    this.scene.add(shelf.mesh());
+  }
+
+  private addHanger(){
+    var hanger = new Hanger (2,this.length,this.thickness);
+
+    /*Tirar as posiçoes depois */
+    var a = new THREE.Vector3( this.length/2, 600, this.depth/2 );
+    hanger.position(a);
+    /**** */
+
+    this.scene.add(hanger.mesh());
+
+  }
+
+  private addDrawer(){
+    var drawerUnit = new DrawerUnit(this.length,100,this.depth,this.thickness);
+    /*Tirar as posiçoes depois */
+    var a = new THREE.Vector3( 0, 300, 0);
+    drawerUnit.position(a);
+    /**** */
+
+    this.scene.add(drawerUnit.mesh());
+  }
+
+  private addDoor(){
+
   }
 
  
@@ -212,6 +252,9 @@ export class ThreeComponent implements AfterViewInit {
     this.createStudio();
     this.addCloset();
     this.addShlef();
+    this.addHanger();
+    this.addDrawer();
+    this.addDoor();
     this.startRenderingLoop();
     this.addControls();
   }
