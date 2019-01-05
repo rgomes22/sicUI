@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { Scene } from 'three';
-import {Obj3D} from './interfaces/Obj3D';
-import { Texturable } from './interfaces/Texturable';
+import {Obj3D} from '../interfaces/Obj3D';
+import { Texturable } from '../interfaces/Texturable';
 export class Closet implements Obj3D ,Texturable {
   
    
