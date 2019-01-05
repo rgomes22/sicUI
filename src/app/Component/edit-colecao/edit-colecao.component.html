@@ -6,7 +6,7 @@
 <div style="text-align: center">
   <h3>{{listagem}}</h3>
   <li *ngFor="let col of allColecoes" [class.selected]="col === selectedColecao" (click)="onSelect(col)">
-    <span class="badge">{{col.colecaoName}}</span>
+    <span class="badge">{{col.collectionName}}</span>
     <button class="delete" title="delete colecão" (click)="delete(col)"> x </button>
   </li>
 </div>

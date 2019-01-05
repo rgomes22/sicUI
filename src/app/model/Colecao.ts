@@ -1,8 +1,8 @@
 import { Produto } from './Produto';
 
 export class Colecao{
-    colecaoId: string;
-    colecaoName: string;
-    colecaoDescription: string;
-    colecaoProdutos: Produto[];
+    collectionId: string;
+    collectionName: string;
+    collectionDescription: string;
+    products: Produto[];
 }
