@@ -94,7 +94,7 @@ export class RestricaoGestaoComponent implements OnInit {
       this.restricaoDmin=restrictionMinOccupationDepth;
       this.restricaoWmin= restrictionMinOccupationWidth;
 
-      this.restricaoService.createRestricao({restrictionDescription,productParentId,productPartId, restrictionMandatory,restrictionMaterial,restrictionMaxOccupationHeight,restrictionMaxOccupationDepth,restrictionMaxOccupationWidth,restrictionMinOccupationHeigth,restrictionMinOccupationDepth, restrictionMinOccupationWidth} as Restricao).subscribe(res=>{this.allRestricoes.push(res)});
+      this.restricaoService.createRestricao({restrictionDescription,productParentId,productPartId, restrictionMandatory,restrictionMaterial,restrictionMaxOccupationHeight,restrictionMaxOccupationDepth,restrictionMaxOccupationWidth,restrictionMinOccupationHeigth,restrictionMinOccupationDepth, restrictionMinOccupationWidth} as Restricao).subscribe(res=>{this.allRestricoes.push(res)},()=>this.getRestricoes());
   }
 
   }

@@ -61,7 +61,7 @@ export class ProductEditComponent implements OnInit {
     
 
     this.productService.putProduct(pro.productId,
-      {productId,productName,productDescription,productCategoryId} as produtoPutDTO).subscribe(p => this.product = p);
+      {productId,productName,productDescription,productCategoryId} as produtoPutDTO).subscribe(p => this.product = p,()=>alert("Produto editado"));
 
     
     return
