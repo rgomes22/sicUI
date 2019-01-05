@@ -13,6 +13,11 @@ import { Hanger } from './three-files/Objects3D/Hanger';
 import { DrawerUnit } from './three-files/Objects3D/DrawerUnit';
 import MousePicking from './three-files/MousePicking';
 
+import { Category } from 'src/app/model/Category';
+
+import { CategoryServiceService } from '../../Services/category-service.service';
+
+
 @Component({
   selector: 'app-three',
   templateUrl: './three.component.html',
@@ -47,26 +52,32 @@ export class ThreeComponent implements AfterViewInit {
 
   private axis: AxesHelper;
 
-  public length: number = 400; //linha vermelha
+  @Input() length: number = 400; //linha vermelha
 
-  public height: number = 700; //linha 
+  @Input() height: number = 700; //linha 
 
-  public depth: number = 200;
+  @Input() depth: number = 200;
 
   public thickness: number = 2;
 
   //private plane: THREE.PlaneGeometry;
 
-  /* CUBE PROPERTIES */
-  @Input()
-  public rotationSpeedX: number = 0.005;
-
-  @Input()
-  public rotationSpeedY: number = 0.01;
-
   @Input()
   public size: number = 200;
 
+  @Input() categoria: Category;
+
+  public rootCategoria: Category;
+
+  private armario : string = "armario";
+
+  private prateleira : string = "prateleira";
+
+  private gavetas : string = "gavetas";
+
+  private cabide : string = "cabide";
+
+  
   //@Input()
   //public texture: string = '/assets/textures/crate.gif';
 
@@ -91,7 +102,7 @@ export class ThreeComponent implements AfterViewInit {
   public farClippingPane: number = 4000
 
   /* DEPENDENCY INJECTION (CONSTRUCTOR) */
-  constructor() {
+  constructor(private categoryService: CategoryServiceService) {
     this.render = this.render.bind(this);
   }
 
@@ -256,7 +267,37 @@ export class ThreeComponent implements AfterViewInit {
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
   }
 
+/**Metodo para desenhar de acordo com a categoria */
+public draw(){
+    
+  this.categoryService.getCategoryById(this.categoria.categoryParentId).subscribe(data =>{
+    console.log('Catategoria' + data);
+    this.rootCategoria = data;
+  });
 
+  switch(this.rootCategoria.categoryName) { 
+    case this.armario: { 
+       //statements; 
+       break; 
+    } 
+    case this.prateleira: { 
+       //statements; 
+       break; 
+    }
+    case this.cabide: { 
+      //statements; 
+      break; 
+    }  
+    case this.gavetas: { 
+    //statements; 
+      break; 
+    } 
+    default: { 
+       //statements; 
+      break; 
+    } 
+  }
+}
   /* LIFECYCLE */
 
   /**
