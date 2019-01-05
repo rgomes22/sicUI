@@ -277,19 +277,19 @@ public draw(){
 
   switch(this.rootCategoria.categoryName) { 
     case this.armario: { 
-       //statements; 
-       break; 
+      this.addCloset();
+      break; 
     } 
     case this.prateleira: { 
-       //statements; 
-       break; 
+      this.addShlef();
+      break; 
     }
     case this.cabide: { 
-      //statements; 
+      this.addHanger();
       break; 
     }  
     case this.gavetas: { 
-    //statements; 
+      this.addDrawer();
       break; 
     } 
     default: { 
@@ -308,10 +308,10 @@ public draw(){
   public ngAfterViewInit() {
     this.createScene();
     this.createStudio();
-    this.addCloset();
-    this.addShlef();
-    this.addHanger();
-    this.addDrawer();
+    
+    
+    
+    
     this.addDoor();
     this.startRenderingLoop();
     this.addControls();
