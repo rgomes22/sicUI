@@ -56,7 +56,7 @@ export class EncomendaDetailComponent implements OnInit {
 
   removeItemToOrder( item : Item):void{
     let idItem = item.id;
-    this.encomendaService.removeItem( this.encomenda.id, {idItem} as addItemEncomendaDTO).subscribe(i => this.encomenda = i,()=>this.ngOnInit());
+    this.encomendaService.removeItem( this.encomenda.id, {idItem} as addItemEncomendaDTO).subscribe(i => {this.encomenda = i;this.ngOnInit();});
     return
 }
 
