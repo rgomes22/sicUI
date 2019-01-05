@@ -1,16 +1,22 @@
-import {  AfterViewInit, Component, OnInit, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ElementRef, Input, ViewChild, HostListener } from '@angular/core';
 import * as THREE from 'three';
 import { directiveDef } from '@angular/core/src/view';
 import { DirectionalLight, AxesHelper } from 'three';
 import OrbitControls from 'three-orbitcontrols';
-import {StudioSetup} from './three-files/StudioSetup';
-import {Wall} from './three-files/Wall';
-import { Closet } from './three-files/Closet';
+import { StudioSetup } from './three-files/StudioSetup';
+import { Wall } from './three-files/Objects3D/Wall';
+import { Closet } from './three-files/Objects3D/Closet';
 
-import {ColladaLoader } from "three/examples/js/loaders/ColladaLoader";
-import { Shelf } from './three-files/Shelf';
-import { Hanger } from './three-files/Hanger';
-import { DrawerUnit } from './three-files/DrawerUnit';
+import { ColladaLoader } from "three/examples/js/loaders/ColladaLoader";
+import { Shelf } from './three-files/Objects3D/Shelf';
+import { Hanger } from './three-files/Objects3D/Hanger';
+import { DrawerUnit } from './three-files/Objects3D/DrawerUnit';
+import MousePicking from './three-files/MousePicking';
+
+import { Category } from 'src/app/model/Category';
+
+import { CategoryServiceService } from '../../Services/category-service.service';
+
 
 @Component({
   selector: 'app-three',
@@ -23,10 +29,10 @@ export class ThreeComponent implements AfterViewInit {
 
   private controls: OrbitControls;
 
-  private get canvas() : HTMLCanvasElement {
+  private get canvas(): HTMLCanvasElement {
     return this.canvasRef.nativeElement;
   }
-  
+
   @ViewChild('canvas')
   private canvasRef: ElementRef;
 
@@ -46,26 +52,32 @@ export class ThreeComponent implements AfterViewInit {
 
   private axis: AxesHelper;
 
-  public length: number = 400; //linha vermelha
+  @Input() length: number = 400; //linha vermelha
 
-  public height: number = 700; //linha 
+  @Input() height: number = 700; //linha 
 
-  public depth: number = 200;
+  @Input() depth: number = 200;
 
   public thickness: number = 2;
 
   //private plane: THREE.PlaneGeometry;
 
-   /* CUBE PROPERTIES */
-  @Input()
-  public rotationSpeedX: number = 0.005;
-
-  @Input()
-  public rotationSpeedY: number = 0.01;
-
   @Input()
   public size: number = 200;
 
+  @Input() categoria: Category;
+
+  public rootCategoria: Category;
+
+  private armario : string = "armario";
+
+  private prateleira : string = "prateleira";
+
+  private gavetas : string = "gavetas";
+
+  private cabide : string = "cabide";
+
+  
   //@Input()
   //public texture: string = '/assets/textures/crate.gif';
 
@@ -90,16 +102,16 @@ export class ThreeComponent implements AfterViewInit {
   public farClippingPane: number = 4000
 
   /* DEPENDENCY INJECTION (CONSTRUCTOR) */
-  constructor() {
+  constructor(private categoryService: CategoryServiceService) {
     this.render = this.render.bind(this);
-   }
+  }
 
   /**
    * Animate the cube
    */
   private animateCube() {
-//    this.cube.rotation.x += this.rotationSpeedX;
-  //  this.cube.rotation.y += this.rotationSpeedY;
+    //    this.cube.rotation.x += this.rotationSpeedX;
+    //  this.cube.rotation.y += this.rotationSpeedY;
   }
 
 
@@ -117,7 +129,7 @@ export class ThreeComponent implements AfterViewInit {
       90,
       aspectRatio,
       1,
-      1000000
+      10000
     );
     this.camera.position.z = 1200;
     this.camera.position.x = -100;
@@ -128,73 +140,95 @@ export class ThreeComponent implements AfterViewInit {
 
     this.axis = new THREE.AxesHelper(2000); // add axis to the scene
     this.scene.add(this.axis);
-    
+
   }
 
   private getAspectRatio() {
     return this.canvas.clientWidth / this.canvas.clientHeight;
   }
 
-  private createStudio (){
+  private createStudio() {
     var studioSetup = new StudioSetup();
     studioSetup.addLightsToScene(this.scene);
     studioSetup.addWallsToScene(this.scene);
   }
 
-  
-  private addControls (){
-    this.controls = new OrbitControls(this.camera,this.renderer.domElement);
+
+  private addControls() {
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.maxPolarAngle = Math.PI / 2 - 0.0523598776;
+    this.controls.maxDistance = 2500;
     this.controls.rotateSpeed = 1.0;
     this.controls.zoomSpeed = 1.2;
     this.controls.addEventListener('change', this.render);
   }
 
-  private addCloset(){
-    var closet = new Closet(this.length,this.height,this.depth,this.thickness);
-    closet.addClosetToScene(this.scene);
+
+  private addCloset() {
+    var closet = new Closet(this.length, this.height, this.depth, this.thickness);
+    this.scene.add(closet.mesh());
+    this.pick = new MousePicking(this.camera,closet.attachSurfaces());
   }
 
-  private addShlef(){
+  private addShlef() {
 
-    var shelf = new Shelf(this.length,this.thickness,this.depth,this.thickness);
+    var shelf = new Shelf(this.length, this.thickness, this.depth, this.thickness);
 
     /*Tirar as posiçoes depois */
-    var a = new THREE.Vector3( this.length/2, 500, this.depth/2 );
+    var a = new THREE.Vector3(this.length / 2, 500, this.depth / 2);
     shelf.position(a);
     /**** */
 
-    shelf.addShelfToScene(this.scene);
+    this.scene.add(shelf.mesh());
   }
 
-  private addHanger(){
-    var hanger = new Hanger (2,this.length,this.thickness);
+  private addHanger() {
+    var hanger = new Hanger(2, this.length, this.thickness);
 
     /*Tirar as posiçoes depois */
-    var a = new THREE.Vector3( this.length/2, 600, this.depth/2 );
+    var a = new THREE.Vector3(this.length / 2, 600, this.depth / 2);
     hanger.position(a);
     /**** */
 
-    hanger.addHangerToScene(this.scene);
+    this.scene.add(hanger.mesh());
 
   }
 
-  private addDrawer(){
-    var drawerUnit = new DrawerUnit(this.length,100,this.depth,this.thickness);
+  private addDrawer() {
+    var drawerUnit = new DrawerUnit(this.length, 100, this.depth, this.thickness);
     /*Tirar as posiçoes depois */
-    var a = new THREE.Vector3( 0, 300, 0);
+    var a = new THREE.Vector3(0, 300, 0);
     drawerUnit.position(a);
     /**** */
 
-    drawerUnit.addDrawerUnitToScene(this.scene);
+    this.scene.add(drawerUnit.mesh());
+  }
+  private dot : THREE.Points;
+  private pick  : MousePicking ;
+  private addDoor() {
+    var dotGeometry = new THREE.Geometry();
+    dotGeometry.vertices.push(new THREE.Vector3(0, 0, 0));
+    var dotMaterial = new THREE.PointsMaterial({ size: 25, sizeAttenuation: false ,color : 0xff});
+    this.dot = new THREE.Points(dotGeometry, dotMaterial);
+
+    this.scene.add(this.dot);
+    
   }
 
-  private addDoor(){
-
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e : MouseEvent) {
+    this.pick.updateMouse(e.clientX,e.clientY,this.renderer);
+    this.pick.intersect();
+    var posV = this.pick.surfacePosition() ;
+    if(posV!=null){
+      this.dot.position.copy(posV);
+    }
+    
   }
 
- 
 
-  
+
+
   /**
    * Start the rendering loop
    */
@@ -203,24 +237,24 @@ export class ThreeComponent implements AfterViewInit {
     // Use canvas element in template
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
     this.renderer.setPixelRatio(devicePixelRatio);
-    this.renderer.setSize(this.canvas.clientWidth * 0.7, this.canvas.clientHeight*0.7);
+    this.renderer.setSize(this.canvas.clientWidth * 0.7, this.canvas.clientHeight * 0.7);
     //document.getElementById("container").appendChild(this.renderer.domElement);
     //"objeto"
-   
+
     let component: ThreeComponent = this;
     (function render() {
       requestAnimationFrame(render);
       component.animateCube();
       component.render();
-      
+
     }());
   }
 
-  private render (){
+  private render() {
     this.renderer.render(this.scene, this.camera);
   }
 
-  
+
   /* EVENTS */
 
   /**
@@ -233,7 +267,37 @@ export class ThreeComponent implements AfterViewInit {
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
   }
 
-  
+/**Metodo para desenhar de acordo com a categoria */
+public draw(){
+    
+  this.categoryService.getCategoryById(this.categoria.categoryParentId).subscribe(data =>{
+    console.log('Catategoria' + data);
+    this.rootCategoria = data;
+  });
+
+  switch(this.rootCategoria.categoryName) { 
+    case this.armario: { 
+      this.addCloset();
+      break; 
+    } 
+    case this.prateleira: { 
+      this.addShlef();
+      break; 
+    }
+    case this.cabide: { 
+      this.addHanger();
+      break; 
+    }  
+    case this.gavetas: { 
+      this.addDrawer();
+      break; 
+    } 
+    default: { 
+       //statements; 
+      break; 
+    } 
+  }
+}
   /* LIFECYCLE */
 
   /**
@@ -244,10 +308,10 @@ export class ThreeComponent implements AfterViewInit {
   public ngAfterViewInit() {
     this.createScene();
     this.createStudio();
-    this.addCloset();
-    this.addShlef();
-    this.addHanger();
-    this.addDrawer();
+    
+    
+    
+    
     this.addDoor();
     this.startRenderingLoop();
     this.addControls();

@@ -28,10 +28,12 @@
       <input #pais />
   </label>
   <p></p>
+  <label >Cidade:
   <select name="cidadeSelecionada" (change)="selectCity($event.target.value)" class="select-width form-control">
     <option value="-1">Escolha uma cidade</option>
     <option *ngFor="let cid of cidades" value="{{cid}}">{{cid}}</option>
   </select>
+  </label>
   <p></p>
   <label >Rua:
       <input #rua />

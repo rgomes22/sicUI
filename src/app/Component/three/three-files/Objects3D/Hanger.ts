@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { Scene } from 'three';
-import {Obj3D} from './interfaces/Obj3D';
+import {Obj3D} from '../interfaces/Obj3D';
 import { dependenciesFromGlobalMetadata } from '@angular/compiler/src/render3/r3_factory';
 
 export class Hanger implements Obj3D{
@@ -30,8 +30,5 @@ export class Hanger implements Obj3D{
         this.hanger.rotateOnAxis(vector,angle);
     }
 
-    public addHangerToScene(scene:Scene){
-        
-        scene.add(this.hanger);
-    }
+  
 }

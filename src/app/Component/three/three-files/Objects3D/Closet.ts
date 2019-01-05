@@ -1,17 +1,22 @@
 import * as THREE from 'three';
 import { Scene } from 'three';
-import {Obj3D} from './interfaces/Obj3D';
-export class Closet implements Obj3D {
-   
+import {Obj3D} from '../interfaces/Obj3D';
+import { Texturable } from '../interfaces/Texturable';
+import Attachable from '../interfaces/Attachable';
+export class Closet implements Obj3D ,Texturable,Attachable {
+ 
     //private objMesh : THREE.Mesh;
 
     private cube : THREE.Mesh;
 
     private closet : THREE.Group;
 
+    private attachPlane : THREE.Mesh;
+
     constructor(length : number , height : number, depth : number,thickness : number){
 
         this.closet = new THREE.Group();
+
         let material = new THREE.MeshPhongMaterial({ color:0x600907});
 
         /* TRASEIRA */
@@ -48,8 +53,13 @@ export class Closet implements Obj3D {
         this.cube.position.x=length/2;
         this.closet.add(this.cube);
 
-    
-
+        //AttachmentPlane
+        var planeGeometry = new THREE.PlaneGeometry( length, height);
+        var planeMaterial = new THREE.MeshBasicMaterial( {wireframe : true , visible:true} );
+        this.attachPlane = new THREE.Mesh( planeGeometry, planeMaterial );
+        this.attachPlane.position.x=length/2;
+        this.attachPlane.position.y=height/2+thickness;
+        this.closet.add(this.attachPlane);
 
         this.closet.receiveShadow=true;
         this.closet.castShadow=true;
@@ -69,7 +79,12 @@ export class Closet implements Obj3D {
         this.closet.rotateOnAxis(vector,angle);
     }
 
-    public addClosetToScene(scene:Scene){
-        scene.add(this.closet);
+    applyTexture(texturePath: string) {
+        throw new Error("Method not implemented.");
     }
+
+    attachSurfaces(): THREE.Object3D[] {
+        return [this.attachPlane];
+    }
+
 }

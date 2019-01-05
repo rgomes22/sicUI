@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { Item } from 'src/app/model/Item';
 import {ItemService} from 'src/app/Services/item.service'
+import { Encomenda } from 'src/app/model/Encomenda';
+import { ActivatedRoute } from '@angular/router';
+import { EncomendaService } from 'src/app/Services/encomenda.service';
+import { addItemEncomendaDTO } from 'src/app/DTOS/addItemEncomendaDTO';
 @Component({
   selector: 'app-encomenda-detail',
   templateUrl: './encomenda-detail.component.html',
@@ -9,43 +13,57 @@ import {ItemService} from 'src/app/Services/item.service'
 })
 export class EncomendaDetailComponent implements OnInit {
 
-  allItens: Item[];
-  items: Item[]=[];
-
-    //dropdown variables
-    disable = false;
-    ShowFilter = false;
-    limiteSelection = false;
-    selectedItems: Item[] = [];
-    dropdownSettings : any = {};
-    dropdownList = [];
+  @Input() encomenda: Encomenda;
+  itemsAcrescentar: Item[]=[];
+  itemsApagar:Item[];
+  itemAcresentar: string;
+  
   constructor(private location : Location,
-              private itemService : ItemService
+              private itemService : ItemService,
+              private route: ActivatedRoute,
+              private encomendaService: EncomendaService
     ) { }
 
   ngOnInit() {
-    this.getItens();
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'id',
-      textField: 'nome',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
-      allowSearchFilter: true
-    };
+    this.getEncomenda();
+    this.getItensAcrescentar();
   }
   goBack(): void {
     this.location.back();
   }
+  getEncomenda(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.encomendaService.getEncomenda(id)
+      .subscribe(encomenda => {this.encomenda = encomenda;  this.itemsApagar = this.encomenda.itens;});
 
-  getItens(): void {
+  }
+
+  getItensAcrescentar(): void {
     this.itemService.getItens().subscribe(data =>{
-      this.items = data;
+      this.itemsAcrescentar = data;
     });
+    
   }
 
   onItemSelect(item: Item){
-    
   }
+
+  addItemToOrder():void{
+      let idItem = this.itemAcresentar;
+      this.encomendaService.addItem( this.encomenda.id, {idItem} as addItemEncomendaDTO).subscribe(i => {this.encomenda = i; this.ngOnInit();});
+      return
+  }
+
+  removeItemToOrder( item : Item):void{
+    let idItem = item.id;
+    this.encomendaService.removeItem( this.encomenda.id, {idItem} as addItemEncomendaDTO).subscribe(i => {this.encomenda = i;this.ngOnInit();});
+    return
+}
+
+
+  acrescentarItem(value: string): void {
+    this.itemAcresentar = value;
+    console.log(value);
+  }
+
 }

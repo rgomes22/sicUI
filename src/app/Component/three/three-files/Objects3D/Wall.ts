@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import {Obj3D} from './interfaces/Obj3D';
-import {Texturable} from './interfaces/Texturable';
+import {Obj3D} from '../interfaces/Obj3D';
+import {Texturable} from '../interfaces/Texturable';
 
 
 export class Wall implements Obj3D , Texturable{

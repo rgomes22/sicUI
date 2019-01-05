@@ -1,11 +1,13 @@
 import * as THREE from 'three';
 import { Scene } from 'three';
-import {Obj3D} from './interfaces/Obj3D';
+import {Obj3D} from '../interfaces/Obj3D';
 import { dependenciesFromGlobalMetadata } from '@angular/compiler/src/render3/r3_factory';
 
 export class DrawerUnit implements Obj3D{
     private unit : THREE.Group;
     private part : THREE.Mesh;
+    private drawerQuant: number = 3;
+    private drawer : THREE.Mesh;
 
     constructor(length : number, height : number, depth : number,thickness : number){
         this.unit=new THREE.Group();
@@ -54,12 +56,27 @@ export class DrawerUnit implements Obj3D{
 
         this.unit.receiveShadow=true;
         this.unit.castShadow=true;
+
+        this.addDrawers(length,height/this.drawerQuant,depth,thickness);
         
     }
 
-    private addDrawers(length : number, height : number, depth : number){
-        let shelfMaterial = new THREE.MeshPhongMaterial({color: 0x600907});
-        let shelfGeometry = new THREE.CubeGeometry(length,height,depth);
+    private addDrawers(length : number, height : number, depth : number,thickness : number){
+        let drawerMaterial = new THREE.MeshPhongMaterial({color: 0xffc700});
+        let drawerGeometry = new THREE.CubeGeometry(length-thickness,height-(thickness/2),depth-(thickness/2));
+        
+        
+
+
+        /**Ter cuidado com a posiçao das gavetas tera de ser mudado? */
+        for(var i =0;i<this.drawerQuant;i++){
+           
+            this.drawer = new THREE.Mesh(drawerGeometry,drawerMaterial);
+            this.drawer.position.set(length/2,(height/2)+i*height,depth/2);
+
+            this.unit.add(this.drawer);
+            
+        }
     }
 
     mesh(){

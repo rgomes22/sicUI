@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { Scene } from 'three';
-import {Obj3D} from './interfaces/Obj3D';
+import {Obj3D} from '../interfaces/Obj3D';
 import { dependenciesFromGlobalMetadata } from '@angular/compiler/src/render3/r3_factory';
 
 export class Shelf implements Obj3D{
@@ -32,7 +32,4 @@ export class Shelf implements Obj3D{
         this.shelf.rotateOnAxis(vector,angle);
     }
 
-    public addShelfToScene(scene:Scene){
-        scene.add(this.shelf);
-    }
 }
