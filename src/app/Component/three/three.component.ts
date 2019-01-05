@@ -13,6 +13,7 @@ import { Hanger } from './three-files/Objects3D/Hanger';
 import { DrawerUnit } from './three-files/Objects3D/DrawerUnit';
 import MousePicking from './three-files/MousePicking';
 
+import { ThreeServiceService } from '../../Services/three-Service.service';
 import { Category } from 'src/app/model/Category';
 
 import { CategoryServiceService } from '../../Services/category-service.service';
@@ -23,7 +24,11 @@ import { CategoryServiceService } from '../../Services/category-service.service'
   templateUrl: './three.component.html',
   styleUrls: ['./three.component.css']
 })
-export class ThreeComponent implements AfterViewInit {
+export class ThreeComponent implements AfterViewInit, OnInit{
+
+  private message: Category;
+
+
   /* HELPER PROPERTIES (PRIVATE PROPERTIES) */
   private camera: THREE.PerspectiveCamera;
 
@@ -65,7 +70,7 @@ export class ThreeComponent implements AfterViewInit {
   @Input()
   public size: number = 200;
 
-  @Input() categoria: Category;
+  
 
   public rootCategoria: Category;
 
@@ -102,9 +107,16 @@ export class ThreeComponent implements AfterViewInit {
   public farClippingPane: number = 4000
 
   /* DEPENDENCY INJECTION (CONSTRUCTOR) */
-  constructor(private categoryService: CategoryServiceService) {
+  constructor(private categoryService: CategoryServiceService,
+    private ThreeService: ThreeServiceService) {
     this.render = this.render.bind(this);
   }
+
+
+  ngOnInit() {
+    this.ThreeService.currentMessage.subscribe(message => this.message = message);
+  }
+
 
   /**
    * Animate the cube
@@ -270,7 +282,7 @@ export class ThreeComponent implements AfterViewInit {
 /**Metodo para desenhar de acordo com a categoria */
 public draw(){
     
-  this.categoryService.getCategoryById(this.categoria.categoryParentId).subscribe(data =>{
+  this.categoryService.getCategoryById(this.message.categoryId).subscribe(data =>{
     console.log('Catategoria' + data);
     this.rootCategoria = data;
   });

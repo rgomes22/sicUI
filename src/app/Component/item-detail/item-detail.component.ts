@@ -10,6 +10,9 @@ import { Produto } from '../../model/Produto';
 import { ProdutosService } from '../../Services/produtos.service';
 import { MaterialFinishService } from '../../Services/material-finish.service';
 
+import { ThreeServiceService } from '../../Services/three-Service.service';
+import { Category } from 'src/app/model/Category';
+
 
 @Component({
   selector: 'app-item-detail',
@@ -27,19 +30,22 @@ export class ItemDetailComponent implements OnInit {
   MaterialIdEdit: number;
   FinishIdEdit: number;
 
+  private message: Category;
+
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private itemService: ItemService
     , private materialFinishService: MaterialFinishService,
-    private ProdutosService: ProdutosService) { }
+    private ProdutosService: ProdutosService,
+    private ThreeService: ThreeServiceService) { }
 
   ngOnInit() {
 
     this.getItem();
     this.getMfs();
     this.getProdutos();
-    
+    this.ThreeService.currentMessage.subscribe(message => this.message = message);
 
 
   }
@@ -160,6 +166,10 @@ export class ItemDetailComponent implements OnInit {
     this.FinishIdEdit = value;
     console.log(value);
     // alert(value);
+  }
+
+  sendMessage() {
+    this.ThreeService.sendMessage(!this.message);
   }
 
 }
