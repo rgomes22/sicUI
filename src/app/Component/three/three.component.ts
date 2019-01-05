@@ -12,6 +12,7 @@ import { Shelf } from './three-files/Objects3D/Shelf';
 import { Hanger } from './three-files/Objects3D/Hanger';
 import { DrawerUnit } from './three-files/Objects3D/DrawerUnit';
 import MousePicking from './three-files/MousePicking';
+import { Obj3D } from './three-files/interfaces/Obj3D';
 
 @Component({
   selector: 'app-three',
@@ -88,7 +89,13 @@ export class ThreeComponent implements AfterViewInit {
   public nearClippingPane: number = 1;
 
   @Input('farClipping')
-  public farClippingPane: number = 4000
+  public farClippingPane: number = 4000;
+
+  private dot : THREE.Points;
+
+  private pick  : MousePicking ;
+
+  private objectToBeAttached : Obj3D;
 
   /* DEPENDENCY INJECTION (CONSTRUCTOR) */
   constructor() {
@@ -192,8 +199,7 @@ export class ThreeComponent implements AfterViewInit {
 
     this.scene.add(drawerUnit.mesh());
   }
-  private dot : THREE.Points;
-  private pick  : MousePicking ;
+
   private addDoor() {
     var dotGeometry = new THREE.Geometry();
     dotGeometry.vertices.push(new THREE.Vector3(0, 0, 0));
@@ -209,11 +215,14 @@ export class ThreeComponent implements AfterViewInit {
     this.pick.updateMouse(e.clientX,e.clientY,this.renderer);
     this.pick.intersect();
     var posV = this.pick.surfacePosition() ;
-    if(posV!=null){
-      this.dot.position.copy(posV);
+    if(posV!=null && this.objectToBeAttached != null){
+      this.objectToBeAttached.position(posV);
     }
-    
   }
+
+  @HostListener('click', ['$event.target'])
+  onClick(btn) {
+ }
 
 
 
