@@ -1,16 +1,17 @@
-import {  AfterViewInit, Component, OnInit, ElementRef, Input, ViewChild, HostListener } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ElementRef, Input, ViewChild, HostListener } from '@angular/core';
 import * as THREE from 'three';
 import { directiveDef } from '@angular/core/src/view';
 import { DirectionalLight, AxesHelper } from 'three';
 import OrbitControls from 'three-orbitcontrols';
-import {StudioSetup} from './three-files/StudioSetup';
-import {Wall} from './three-files/Objects3D/Wall';
+import { StudioSetup } from './three-files/StudioSetup';
+import { Wall } from './three-files/Objects3D/Wall';
 import { Closet } from './three-files/Objects3D/Closet';
 
-import {ColladaLoader } from "three/examples/js/loaders/ColladaLoader";
+import { ColladaLoader } from "three/examples/js/loaders/ColladaLoader";
 import { Shelf } from './three-files/Objects3D/Shelf';
 import { Hanger } from './three-files/Objects3D/Hanger';
 import { DrawerUnit } from './three-files/Objects3D/DrawerUnit';
+import MousePicking from './three-files/MousePicking';
 
 @Component({
   selector: 'app-three',
@@ -23,10 +24,10 @@ export class ThreeComponent implements AfterViewInit {
 
   private controls: OrbitControls;
 
-  private get canvas() : HTMLCanvasElement {
+  private get canvas(): HTMLCanvasElement {
     return this.canvasRef.nativeElement;
   }
-  
+
   @ViewChild('canvas')
   private canvasRef: ElementRef;
 
@@ -56,7 +57,7 @@ export class ThreeComponent implements AfterViewInit {
 
   //private plane: THREE.PlaneGeometry;
 
-   /* CUBE PROPERTIES */
+  /* CUBE PROPERTIES */
   @Input()
   public rotationSpeedX: number = 0.005;
 
@@ -92,14 +93,14 @@ export class ThreeComponent implements AfterViewInit {
   /* DEPENDENCY INJECTION (CONSTRUCTOR) */
   constructor() {
     this.render = this.render.bind(this);
-   }
+  }
 
   /**
    * Animate the cube
    */
   private animateCube() {
-//    this.cube.rotation.x += this.rotationSpeedX;
-  //  this.cube.rotation.y += this.rotationSpeedY;
+    //    this.cube.rotation.x += this.rotationSpeedX;
+    //  this.cube.rotation.y += this.rotationSpeedY;
   }
 
 
@@ -128,55 +129,52 @@ export class ThreeComponent implements AfterViewInit {
 
     this.axis = new THREE.AxesHelper(2000); // add axis to the scene
     this.scene.add(this.axis);
-    
+
   }
 
   private getAspectRatio() {
     return this.canvas.clientWidth / this.canvas.clientHeight;
   }
 
-  private createStudio (){
+  private createStudio() {
     var studioSetup = new StudioSetup();
     studioSetup.addLightsToScene(this.scene);
     studioSetup.addWallsToScene(this.scene);
   }
 
-  
-  private addControls (){
-    this.controls = new OrbitControls(this.camera,this.renderer.domElement,);
-    this.controls.maxPolarAngle = Math.PI/2 - 0.0523598776;
+
+  private addControls() {
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.maxPolarAngle = Math.PI / 2 - 0.0523598776;
     this.controls.maxDistance = 2500;
     this.controls.rotateSpeed = 1.0;
     this.controls.zoomSpeed = 1.2;
     this.controls.addEventListener('change', this.render);
   }
-  @HostListener('document:mousemove', ['$event']) 
-  onMouseMove(e) {
-    console.log(e);
-  }
 
-  private addCloset(){
-    var closet = new Closet(this.length,this.height,this.depth,this.thickness);
+
+  private addCloset() {
+    var closet = new Closet(this.length, this.height, this.depth, this.thickness);
     this.scene.add(closet.mesh());
   }
 
-  private addShlef(){
+  private addShlef() {
 
-    var shelf = new Shelf(this.length,this.thickness,this.depth,this.thickness);
+    var shelf = new Shelf(this.length, this.thickness, this.depth, this.thickness);
 
     /*Tirar as posiçoes depois */
-    var a = new THREE.Vector3( this.length/2, 500, this.depth/2 );
+    var a = new THREE.Vector3(this.length / 2, 500, this.depth / 2);
     shelf.position(a);
     /**** */
 
     this.scene.add(shelf.mesh());
   }
 
-  private addHanger(){
-    var hanger = new Hanger (2,this.length,this.thickness);
+  private addHanger() {
+    var hanger = new Hanger(2, this.length, this.thickness);
 
     /*Tirar as posiçoes depois */
-    var a = new THREE.Vector3( this.length/2, 600, this.depth/2 );
+    var a = new THREE.Vector3(this.length / 2, 600, this.depth / 2);
     hanger.position(a);
     /**** */
 
@@ -184,23 +182,47 @@ export class ThreeComponent implements AfterViewInit {
 
   }
 
-  private addDrawer(){
-    var drawerUnit = new DrawerUnit(this.length,100,this.depth,this.thickness);
+  private addDrawer() {
+    var drawerUnit = new DrawerUnit(this.length, 100, this.depth, this.thickness);
     /*Tirar as posiçoes depois */
-    var a = new THREE.Vector3( 0, 300, 0);
+    var a = new THREE.Vector3(0, 300, 0);
     drawerUnit.position(a);
     /**** */
 
     this.scene.add(drawerUnit.mesh());
   }
+  private dot : THREE.Points;
+  private pick  : MousePicking ;
+  private addDoor() {
+    var dotGeometry = new THREE.Geometry();
+    dotGeometry.vertices.push(new THREE.Vector3(0, 0, 0));
+    var dotMaterial = new THREE.PointsMaterial({ size: 25, sizeAttenuation: false ,color : 0xff});
+    this.dot = new THREE.Points(dotGeometry, dotMaterial);
 
-  private addDoor(){
+    this.scene.add(this.dot);
 
+    var geometry = new THREE.PlaneGeometry( 1000, 1000);
+    var material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+    this.plane = new THREE.Mesh( geometry, material );
+    this.scene.add( this.plane );
+    this.pick = new MousePicking(this.camera,[this.plane]);
   }
 
- 
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e : MouseEvent) {
+    //console.log(e);
+    this.pick.updateMouse(e.clientX,e.clientY,this.renderer);
+    this.pick.intersect();
+    var posV = this.pick.surfacePosition() ;
+    if(posV!=null){
+      this.dot.position.copy(posV);
+    }
+    
+  }
 
-  
+
+
+
   /**
    * Start the rendering loop
    */
@@ -209,24 +231,24 @@ export class ThreeComponent implements AfterViewInit {
     // Use canvas element in template
     this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas });
     this.renderer.setPixelRatio(devicePixelRatio);
-    this.renderer.setSize(this.canvas.clientWidth * 0.7, this.canvas.clientHeight*0.7);
+    this.renderer.setSize(this.canvas.clientWidth * 0.7, this.canvas.clientHeight * 0.7);
     //document.getElementById("container").appendChild(this.renderer.domElement);
     //"objeto"
-   
+
     let component: ThreeComponent = this;
     (function render() {
       requestAnimationFrame(render);
       component.animateCube();
       component.render();
-      
+
     }());
   }
 
-  private render (){
+  private render() {
     this.renderer.render(this.scene, this.camera);
   }
 
-  
+
   /* EVENTS */
 
   /**
@@ -239,7 +261,7 @@ export class ThreeComponent implements AfterViewInit {
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
   }
 
-  
+
   /* LIFECYCLE */
 
   /**
