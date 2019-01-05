@@ -16,7 +16,7 @@ export class AttachmentPlane implements Obj3D {
 
     constructor(length : number , height :number){
         var geometry = new THREE.PlaneGeometry( length, height);
-        var material = new THREE.MeshBasicMaterial( {wireframe : true,visible : true} );
+        var material = new THREE.MeshBasicMaterial( {visible : false} );
         this.plane = new THREE.Mesh( geometry, material );
     } 
 

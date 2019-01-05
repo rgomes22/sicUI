@@ -12,7 +12,9 @@ import { Shelf } from './three-files/Objects3D/Shelf';
 import { Hanger } from './three-files/Objects3D/Hanger';
 import { DrawerUnit } from './three-files/Objects3D/DrawerUnit';
 import MousePicking from './three-files/MousePicking';
+import { Obj3D } from './three-files/interfaces/Obj3D';
 
+import { ThreeServiceService } from '../../Services/three-Service.service';
 import { Category } from 'src/app/model/Category';
 
 import { CategoryServiceService } from '../../Services/category-service.service';
@@ -23,7 +25,11 @@ import { CategoryServiceService } from '../../Services/category-service.service'
   templateUrl: './three.component.html',
   styleUrls: ['./three.component.css']
 })
-export class ThreeComponent implements AfterViewInit {
+export class ThreeComponent implements AfterViewInit, OnInit{
+
+  private message: Category;
+
+
   /* HELPER PROPERTIES (PRIVATE PROPERTIES) */
   private camera: THREE.PerspectiveCamera;
 
@@ -65,7 +71,7 @@ export class ThreeComponent implements AfterViewInit {
   @Input()
   public size: number = 200;
 
-  @Input() categoria: Category;
+  
 
   public rootCategoria: Category;
 
@@ -99,12 +105,25 @@ export class ThreeComponent implements AfterViewInit {
   public nearClippingPane: number = 1;
 
   @Input('farClipping')
-  public farClippingPane: number = 4000
+  public farClippingPane: number = 4000;
+
+  private dot : THREE.Points;
+
+  private pick  : MousePicking ;
+
+  private objectToBeAttached : Obj3D;
 
   /* DEPENDENCY INJECTION (CONSTRUCTOR) */
-  constructor(private categoryService: CategoryServiceService) {
+  constructor(private categoryService: CategoryServiceService,
+    private ThreeService: ThreeServiceService) {
     this.render = this.render.bind(this);
   }
+
+
+  ngOnInit() {
+    this.ThreeService.currentMessage.subscribe(message => this.message = message);
+  }
+
 
   /**
    * Animate the cube
@@ -203,8 +222,7 @@ export class ThreeComponent implements AfterViewInit {
 
     this.scene.add(drawerUnit.mesh());
   }
-  private dot : THREE.Points;
-  private pick  : MousePicking ;
+
   private addDoor() {
     var dotGeometry = new THREE.Geometry();
     dotGeometry.vertices.push(new THREE.Vector3(0, 0, 0));
@@ -220,11 +238,14 @@ export class ThreeComponent implements AfterViewInit {
     this.pick.updateMouse(e.clientX,e.clientY,this.renderer);
     this.pick.intersect();
     var posV = this.pick.surfacePosition() ;
-    if(posV!=null){
-      this.dot.position.copy(posV);
+    if(posV!=null && this.objectToBeAttached != null){
+      this.objectToBeAttached.position(posV);
     }
-    
   }
+
+  @HostListener('click', ['$event.target'])
+  onClick(btn) {
+ }
 
 
 
@@ -270,7 +291,7 @@ export class ThreeComponent implements AfterViewInit {
 /**Metodo para desenhar de acordo com a categoria */
 public draw(){
     
-  this.categoryService.getCategoryById(this.categoria.categoryParentId).subscribe(data =>{
+  this.categoryService.getCategoryById(this.message.categoryId).subscribe(data =>{
     console.log('Catategoria' + data);
     this.rootCategoria = data;
   });
