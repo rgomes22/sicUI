@@ -2,5 +2,5 @@
 
 export class Price{
     Price: number;
-    activeDate: number
+    ActiveDate: number;
 }

@@ -92,7 +92,7 @@ export function tokenGetter() {
     ThreeComponent,
     DialogContent,
     PlanoGestaoComponent,
-    PlanoDetailComponent
+    PlanoDetailComponent,
 
 
     

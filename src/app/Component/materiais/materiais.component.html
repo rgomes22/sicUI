@@ -1,3 +1,5 @@
+<div style="width:50%; float:left">
+
 <div style="text-align:left">
   <h2>{{titulo}}</h2> 
   <button (click)="goBack()">Back</button >
@@ -12,7 +14,7 @@
   </li>
 </div>
 
-<div style="text-align: center;;">
+<div style="text-align: center;">
   <h2>CRIAR MATERIAL</h2>
   <label >Nome:
       <input #nome />
@@ -29,15 +31,25 @@
   <label for="datetimepicker">Date Time</label>
   <angular2-date-picker [(ngModel)]="dateOfPrice" [settings]="settings" style="padding: 0.2 rem 0.1 rem"></angular2-date-picker>
 
-  <button (click)="createMaterial(nome.value, preco.value)">Criar Material</button>
+  <button style="margin-top: 25px; margin-bottom: 50px"  (click)="createMaterial(nome.value, preco.value)">Criar Material</button>
 </div>
-  <!-- DESCOMENTAR QUANDO MUDAR O METODO PUT DO SIC GC 
-<div *ngIf="selectedMaterial" style="text-align: center">
-  <h2>Editar Material</h2>
-  <label>Nome:
-    <input type="text" #Name/>
-  </label>
-  <button (click)="editMaterial(Name.value)">
-    Editar
-  </button>
-</div>-->
+
+</div>
+
+<div style="margin-left: 51% ">
+<div *ngIf="selectedMaterial" align="center">
+  <h3 >Material {{selectedMaterial.materialName}} Editor</h3>
+  <h4>Price History</h4>
+  <li *ngFor="let p of priceHistoryArray">
+    Value: {{p.price}}€  <span style="margin-left:5px"> Activation Date: {{p.date}}</span>
+  </li>
+  <p style="margin-top: 8px">Current Price: {{selectedMaterialPrice}}€</p>
+  <p>New Price</p> 
+  <input #newprice type="number" step="any" min="0" style="margin-top: 5px"/>
+  <p style="margin-top:10px">Date for the new Price</p>
+    <div style="text-align:center; width:60%">
+    <angular2-date-picker [(ngModel)]="newPriceDate" [settings]="settings" style="padding: 0.2 rem 0.1 rem;"></angular2-date-picker>
+    </div>
+  <button align= "center" style="margin-top: 25px;"  (click)="alterPrice(newprice.value)">Add Price</button>
+</div>
+</div>
