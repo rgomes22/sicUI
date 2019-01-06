@@ -315,11 +315,14 @@ export class ThreeComponent implements AfterViewInit, OnInit {
       return;
     }
     console.log(this.rootCategoria.categoryName, "SITIO CERTO");
-    console.log(this.rootCategoria.categoryParentName, "SITIO CERTO pai categoria");
+    
     if(this.message.category.categoryParentId!=null){
+      console.log(this.rootCategoria.categoryParentName, "SITIO CERTO pai categoria");
       this.categoryService.getCategoryById(this.message.category.categoryParentId).subscribe(cat => this.rootCategoria = cat);
     }
+    //if(this.checkIfExist()){
 
+    //}
     switch (this.rootCategoria.categoryName) {
       case this.armario: {
         this.addCloset();
@@ -338,20 +341,26 @@ export class ThreeComponent implements AfterViewInit, OnInit {
         break;
       }
       default: {
-        //statements; 
+        console.log("Categoria nao existe");
         break;
       }
     }
   }
 
+/*
+  private updateObject(){
+
+  }
+
   private  checkIfExist(){
     this.scene.children.forEach(element => {
-      if(element.name == this.message.id){
+      if(element.name == this.message.functionCode){
         return true;
       }
     });
     return false;
   }
+*/
   /* LIFECYCLE */
 
   /**

@@ -10,6 +10,9 @@ export class Data{
     depth: number;
     category: Category = new Category();
     finish: Finish;
-    id: string;
+    parent:boolean;
+    child:boolean;
+    create:boolean;
+    preview:boolean;
     
 }
