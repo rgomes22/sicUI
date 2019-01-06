@@ -10,15 +10,15 @@
     <p></p>
     <a routerLink="/ver-catalogos">VER CATÁLOGOS</a>
     <p></p>
-    <a routerLink="/encomenda"> ENCOMENDAS</a>
+    <a *ngIf="isCliente" routerLink="/encomenda"> ENCOMENDAS</a>
     <p></p>
-    <a routerLink="/planos">PLANO DE ENCOMENDAS</a>
+    <a *ngIf="isGestor" routerLink="/planos">PLANO DE ENCOMENDAS</a>
     <p></p>
-    <a routerLink="/catalogo"> GESTÃO DE PRODUTOS</a>
+    <a *ngIf="isGestor" routerLink="/catalogo"> GESTÃO DE PRODUTOS</a>
     <p></p>
-    <a routerLink="/gerir-colecao"> GESTÃO DE COLEÇÔES</a>
+    <a *ngIf="isGestor" routerLink="/gerir-colecao"> GESTÃO DE COLEÇÔES</a>
     <p></p>
-    <a routerLink="/gerir-catalogo"> GESTÃO DE CATÁLOGOS</a>
+    <a *ngIf="isGestor" routerLink="/gerir-catalogo"> GESTÃO DE CATÁLOGOS</a>
   </nav>
   <hr>
 </div>
