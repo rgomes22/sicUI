@@ -2,8 +2,10 @@ import * as THREE from 'three';
 import { Scene } from 'three';
 import {Obj3D} from '../interfaces/Obj3D';
 import { dependenciesFromGlobalMetadata } from '@angular/compiler/src/render3/r3_factory';
+import { Texturable } from '../interfaces/Texturable';
+import changeMaterial from '../functions/MaterialChange';
 
-export class Hanger implements Obj3D{
+export class Hanger implements Obj3D , Texturable{
     private hanger : THREE.Mesh;
 
 
@@ -30,5 +32,8 @@ export class Hanger implements Obj3D{
         this.hanger.rotateOnAxis(vector,angle);
     }
 
+    applyTexture(texturePath: string) {
+        this.hanger.material = changeMaterial(texturePath);
+    }
   
 }
