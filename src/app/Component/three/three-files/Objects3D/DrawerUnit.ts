@@ -9,7 +9,7 @@ export class DrawerUnit implements Obj3D{
     private drawerQuant: number = 3;
     private drawer : THREE.Mesh;
 
-    constructor(length : number, height : number, depth : number,thickness : number){
+    constructor(length : number, height : number, depth : number,thickness : number,nome: string){
         this.unit=new THREE.Group();
         let material = new THREE.MeshPhongMaterial({color: 0x559a99});
         let geometry = new THREE.CubeGeometry(length-thickness,height,thickness);

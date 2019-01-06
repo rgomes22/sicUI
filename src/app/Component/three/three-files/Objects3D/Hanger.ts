@@ -7,7 +7,7 @@ export class Hanger implements Obj3D{
     private hanger : THREE.Mesh;
 
 
-    constructor(handlerRadius : number, length : number,thickness : number){
+    constructor(handlerRadius : number, length : number,thickness : number,nome: string){
         let shelfMaterial = new THREE.MeshPhongMaterial({color: 0x559a99});
         let shelfGeometry = new THREE.CylinderGeometry(handlerRadius,handlerRadius,length-thickness,32);
         
