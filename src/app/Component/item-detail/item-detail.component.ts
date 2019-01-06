@@ -172,6 +172,18 @@ export class ItemDetailComponent implements OnInit {
     let id = this.item.id;
     this.itemService.editParentItem({ Nome, ProductId, MaterialId, FinishId, Height, Depth, Width } as criarItemFilhoDTO, id).subscribe(it => this.item = it);
 
+    this.allProdutos.forEach(element => {
+     
+      if( Number(element.productId) == this.ProductId ){
+        this.message.category= element.productCategory;
+      }
+    });
+    
+    this.message.depth=Depth;
+    this.message.height=Height;
+    this.message.length=Width;
+    this.sendMessage();
+
   }
 
   productOp(value: number): void {
