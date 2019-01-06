@@ -198,7 +198,7 @@ export class ThreeComponent implements AfterViewInit, OnInit {
 
 
   private addCloset() {
-    var closet = new Closet(this.message.length*this.ratio, this.message.height*this.ratio, this.message.depth*this.ratio, this.thickness);
+    var closet  = new Closet(this.message.length*this.ratio, this.message.height*this.ratio, this.message.depth*this.ratio, this.thickness);
     this.scene.add(closet.mesh());
     this.pick = new MousePicking(this.camera, closet.attachSurfaces());
   }
