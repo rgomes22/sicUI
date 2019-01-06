@@ -58,13 +58,21 @@ export class ItemDetailComponent implements OnInit {
 
     }
     let idP = parseInt(this.item.idproduto);
-    this.ProdutosService.getProduto(idP).subscribe(p => {this.produto = p;this.message.category = p.productCategory;this.sendMessage()});
+    this.ProdutosService.getProduto(idP).subscribe(p => {
+      this.produto = p;
+      this.message.category = this.produto.productCategory;
+      });
+      
   }
 
   getItem(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.itemService.getItem(id)
-      .subscribe(item => this.item = item, () => console.log('oi'), () => {this.getProduto();});
+      .subscribe(item =>{ this.item = item;this.message.height=this.item.height;
+        this.message.depth=this.item.depth;
+        this.message.length=this.item.width;
+        this.sendMessage();   
+      }, () => console.log('oi'), () => {this.getProduto();}  );
 
       
     // this.location.go(this.location.path());

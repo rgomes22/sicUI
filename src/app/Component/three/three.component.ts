@@ -31,6 +31,7 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   private message: Data;
 
 
+
   /* HELPER PROPERTIES (PRIVATE PROPERTIES) */
   private camera: THREE.PerspectiveCamera;
 
@@ -72,7 +73,7 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   @Input()
   public size: number = 200;
 
-
+  private ratio: number = 6;
 
   public rootCategoria: Category;
 
@@ -197,17 +198,17 @@ export class ThreeComponent implements AfterViewInit, OnInit {
 
 
   private addCloset() {
-    var closet = new Closet(this.length, this.height, this.depth, this.thickness);
+    var closet = new Closet(this.message.length*this.ratio, this.message.height*this.ratio, this.message.depth*this.ratio, this.thickness);
     this.scene.add(closet.mesh());
     this.pick = new MousePicking(this.camera, closet.attachSurfaces());
   }
 
   private addShlef() {
 
-    var shelf = new Shelf(this.length, this.thickness, this.depth, this.thickness);
+    var shelf = new Shelf(this.message.length, this.thickness, this.message.depth, this.thickness);
 
     /*Tirar as posiçoes depois */
-    var a = new THREE.Vector3(this.length / 2, 500, this.depth / 2);
+    var a = new THREE.Vector3(this.message.length / 2, 500, this.message.depth / 2);
     shelf.position(a);
     /**** */
 
@@ -215,10 +216,10 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   }
 
   private addHanger() {
-    var hanger = new Hanger(2, this.length, this.thickness);
+    var hanger = new Hanger(2, this.message.length, this.thickness);
 
     /*Tirar as posiçoes depois */
-    var a = new THREE.Vector3(this.length / 2, 600, this.depth / 2);
+    var a = new THREE.Vector3(this.message.length / 2, 600, this.message.depth / 2);
     hanger.position(a);
     /**** */
 
@@ -227,7 +228,7 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   }
 
   private addDrawer() {
-    var drawerUnit = new DrawerUnit(this.length, 100, this.depth, this.thickness);
+    var drawerUnit = new DrawerUnit(this.message.length, 100, this.message.depth, this.thickness);
     /*Tirar as posiçoes depois */
     var a = new THREE.Vector3(0, 300, 0);
     drawerUnit.position(a);
@@ -309,6 +310,10 @@ export class ThreeComponent implements AfterViewInit, OnInit {
       return;
     }
     console.log(this.rootCategoria.categoryName, "SITIO CERTO");
+    //console.log(this.rootCategoria.categoryParentName, "SITIO CERTO pai categoria");
+    /*if(this.message.category.categoryParentId!=null){
+      this.categoryService.getCategoryById(this.message.category.categoryParentId).subscribe(cat => this.rootCategoria = cat);
+    }*/
 
     switch (this.rootCategoria.categoryName) {
       case this.armario: {
