@@ -117,6 +117,8 @@ export class ThreeComponent implements AfterViewInit, OnInit {
 
   private objectToBeAttached: Obj3D;
 
+  private parentObject:Obj3D;
+
   /* DEPENDENCY INJECTION (CONSTRUCTOR) */
   constructor(private categoryService: CategoryServiceService,
     private ThreeService: ThreeServiceService) {
@@ -310,6 +312,8 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   /**Metodo para desenhar de acordo com a categoria */
   public draw() {
 
+    this.checkIfExist();
+
     if (this.rootCategoria === undefined) {
       console.log("ROOT UNDEFINED");
       return;
@@ -347,20 +351,29 @@ export class ThreeComponent implements AfterViewInit, OnInit {
     }
   }
 
-/*
-  private updateObject(){
 
-  }
+  
 
   private  checkIfExist(){
-    this.scene.children.forEach(element => {
-      if(element.name == this.message.functionCode){
-        return true;
-      }
-    });
-    return false;
+    if(this.message.parent && this.message.create){
+      /**Inicio da cena  */
+      console.log("PAI && CREATE");
+
+    }else if(this.message.parent && this.message.preview){
+      /**Edita o item pai */
+      console.log("PAI && PREVIEW");
+
+    }else if(this.message.child && this.message.create){
+      /**Cria o item filho e ja nao o pode editar */
+      console.log("FILHO && CREATE");
+
+    }else if(this.message.child && this.message.preview){
+      /**Altera o filho */
+      console.log("FILHO && PREVIEW");
+    }
+    
   }
-*/
+
   /* LIFECYCLE */
 
   /**
