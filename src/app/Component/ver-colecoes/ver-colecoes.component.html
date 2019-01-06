@@ -2,12 +2,12 @@
     <h2>{{titulo}}</h2>
     <button (click)="goBack()">Back</button>
   </div>
-  
+  <hr>
   <div style="text-align:left">
     <h3>{{listagem}}</h3>
     <li *ngFor="let col of allColecoes" [class.selected]="col === selectedColecao" (click)="onSelect(col)">
       <span class="badge">{{col.collectionName}}</span>
     </li>
   </div>
-  
+  <hr>
   <app-ver-colecao [colection]="selectedColecao"></app-ver-colecao>

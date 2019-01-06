@@ -8,6 +8,7 @@
       <li *ngFor="let prod of catalog.products" [class.selected]="prod === selectedProduct" (click)="onSelect(prod)">
         <span class="badge">{{prod.productName}}</span>
       </li>
+      <hr>
       <p></p>
       <div *ngIf="selectedProduct">
         <h5>NOME: </h5>{{selectedProduct.productName}}

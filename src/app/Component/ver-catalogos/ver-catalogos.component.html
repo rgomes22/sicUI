@@ -2,12 +2,12 @@
     <h2>{{titulo}}</h2>
     <button (click)="goBack()">Back</button>
   </div>
-  
+  <hr>
   <div style="text-align:left">
     <h3>{{listagem}}</h3>
     <li *ngFor="let cat of allCatalogos" [class.selected]="cat === selectedCatalogo" (click)="onSelect(cat)">
       <span class="badge">{{cat.catalogName}}</span>
     </li>
   </div>
-  
+  <hr>
   <app-ver-catalogo [catalog]="selectedCatalogo"></app-ver-catalogo>
