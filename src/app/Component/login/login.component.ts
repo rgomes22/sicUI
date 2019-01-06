@@ -107,6 +107,7 @@ export class LoginComponent implements OnInit {
               }else{
                 this.roleService.changeRole(false, true);
               }
+              this.authDataService.changeUserEmail(this.authService.getEmailFromToken());
               this.router.navigate([""]);
             } else if (message.status === 400) {
               this.loginSecondFactorMessage = JSON.parse(message.error).message;

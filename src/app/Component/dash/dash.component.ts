@@ -65,7 +65,9 @@ export class DashComponent implements OnInit {
   logout(): void {
     this.authService.destroyTokens();
     this.isAuth = false;
+    this.user_email = "";
     this.authDataService.changeAuth(this.isAuth);
+    this.authDataService.changeUserEmail(this.user_email);
     this.roleService.changeRole(false, false);
     this.router.navigate[""];
   }
