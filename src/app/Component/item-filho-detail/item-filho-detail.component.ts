@@ -9,6 +9,7 @@ import { MaterialFinish } from '../../model/MaterialFinish';
 import { Produto } from '../../model/Produto';
 import { ProdutosService } from '../../Services/produtos.service';
 import { MaterialFinishService } from '../../Services/material-finish.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-item-filho-detail',
@@ -29,6 +30,7 @@ export class ItemFilhoDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
+    private toastr: ToastrService,
     private itemService: ItemService
     , private materialFinishService: MaterialFinishService,
     private ProdutosService: ProdutosService) { }
@@ -44,7 +46,7 @@ export class ItemFilhoDetailComponent implements OnInit {
 
   getProduto(): void {
     if (!this.item.child) {
-      alert("Nao pode aceder a itens PAI por aqui");
+      this.toastr.error("Nao pode aceder a itens PAI por aqui");
       this.goBack();
     }
     let idP = parseInt(this.item.idproduto);
@@ -80,11 +82,11 @@ export class ItemFilhoDetailComponent implements OnInit {
 
   createFilho(Nome: string, Height: number, Depth: number, Width: number): void {
     if (!Height || !Width || !Depth || !Nome) {
-      alert("TEM PARAMETROS EM FALTA");
+      this.toastr.error("TEM PARAMETROS EM FALTA");
       return;
     }
     if (!this.MaterialId || !this.FinishId || !this.ProductId) {
-      alert("TEM DE SELECIONAR OPCOES NAS CAIXAS DE OPCAO");
+      this.toastr.error("TEM DE SELECIONAR OPCOES NAS CAIXAS DE OPCAO");
       return;
     }
     //alert(ProductId + MaterialId);
@@ -93,13 +95,13 @@ export class ItemFilhoDetailComponent implements OnInit {
     let ProductId = this.ProductId;
     const id = this.route.snapshot.paramMap.get('id');
 
-    this.itemService.createChild({ Nome, ProductId, MaterialId, FinishId, Height, Depth, Width } as criarItemFilhoDTO, id).subscribe(it => { this.item.itemFilhos.push(it);this.ngOnInit() });
+    this.itemService.createChild({ Nome, ProductId, MaterialId, FinishId, Height, Depth, Width } as criarItemFilhoDTO, id).subscribe(it => { this.item.itemFilhos.push(it);this.ngOnInit();this.toastr.success("added item to parent"); });
     // this.location.go(this.location.path());
   }
 
   editarItem(Nome: string, Height: number, Depth: number, Width: number): void {
     if (!Nome && !Height && !Depth && !Width && !this.MaterialIdEdit && !this.FinishIdEdit) {
-      alert("TEM DE DEFINIR PARAMETROS DE EDIÇAO");
+      this.toastr.error("TEM DE DEFINIR PARAMETROS DE EDIÇAO");
       return;
     }
     if (!Nome) {
@@ -129,7 +131,7 @@ export class ItemFilhoDetailComponent implements OnInit {
     let ProductId = parseInt(this.item.idproduto);
     let id = this.item.id;
     let idPai = this.route.snapshot.paramMap.get('idPai');
-    this.itemService.editChildItem({ Nome, ProductId, MaterialId, FinishId, Height, Depth, Width } as criarItemFilhoDTO, id,idPai).subscribe(it => {this.item = it;this.ngOnInit()});
+    this.itemService.editChildItem({ Nome, ProductId, MaterialId, FinishId, Height, Depth, Width } as criarItemFilhoDTO, id,idPai).subscribe(it => {this.item = it;this.toastr.success("ITEM ALTERADO");this.ngOnInit()});
 
   }
 
