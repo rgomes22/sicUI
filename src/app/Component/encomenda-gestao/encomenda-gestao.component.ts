@@ -80,7 +80,7 @@ cidadeSelecionada : string;
   deleteEncomenda(encomenda: Encomenda): void {
     if(encomenda.estado=='criada')
     {
-      this.encomendaService.deleteEncomenda(encomenda).subscribe(enc => this.toastr.success("Apagado com sucesso"));
+      this.encomendaService.deleteEncomenda(encomenda).subscribe(enc => {this.toastr.success("Apagado com sucesso");this.ngOnInit();});
     }
     else
     {
@@ -90,11 +90,11 @@ cidadeSelecionada : string;
 
   createEncomenda(nome: string, pais: string, rua: string):void {
     
-    if(!nome || !pais || !rua){
+    if(!nome || !pais || !rua ){
       this.toastr.error('MISSING PARAMETERS')
       return;}
       let cidade = this.cidadeSelecionada;
-    this.encomendaService.createEncomenda({nome,pais,cidade,rua} as Encomenda).subscribe(enc => {this.allEncomendas.push(enc); this.toastr.success("Criado com sucesso")});
+    this.encomendaService.createEncomenda({nome,pais,cidade,rua} as Encomenda).subscribe(enc => {this.allEncomendas.push(enc); this.toastr.success("Criado com sucesso"); this.ngOnInit();});
   }
   
   goBack(): void {

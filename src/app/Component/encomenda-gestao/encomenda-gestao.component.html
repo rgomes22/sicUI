@@ -7,6 +7,7 @@
 <p></p>
 <h2>GERIR ENCOMENDAS</h2>
 <p align="center">
+    
   <li *ngFor="let enc of allEncomendas">
    <a routerLink="/encomendas/{{enc.id}}">
     <span class="badge">{{enc.nome}}</span>
@@ -14,6 +15,7 @@
     <button class="delete" title="delete Encomenda" 
     (click)="deleteEncomenda(enc)">x</button>
   </li>
+  
 </p>
 
 </div> 

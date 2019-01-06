@@ -61,6 +61,10 @@ import { GerirCatalogoComponent } from './Component/gerir-catalogo/gerir-catalog
 import { EditCatalogoComponent } from './Component/edit-catalogo/edit-catalogo.component';
 import { CatalogEditComponent } from './Component/editar-catalogo/editar-catalogo.component';
 
+import { VerColecoesComponent } from './Component/ver-colecoes/ver-colecoes.component';
+import { VerColecaoComponent } from './Component/ver-colecao/ver-colecao.component';
+import { VerCatalogoComponent } from './Component/ver-catalogo/ver-catalogo.component';
+import { VerCatalogosComponent } from './Component/ver-catalogos/ver-catalogos.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -106,8 +110,11 @@ export function tokenGetter() {
     GerirCatalogoComponent,
     EditCatalogoComponent,
     CatalogEditComponent,
+    VerColecoesComponent,
+    VerColecaoComponent,
+    VerCatalogoComponent,
+    VerCatalogosComponent,
     MaterialFinishGestaoComponent,
-
   ],
   imports: [
     NgbModule,

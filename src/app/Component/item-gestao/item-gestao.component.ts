@@ -9,6 +9,7 @@ import { ThrowStmt } from '@angular/compiler';
 import { MaterialFinish } from '../../model/MaterialFinish';
 import { Produto } from '../../model/Produto';
 import { ProdutosService } from '../../Services/produtos.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-item-gestao',
@@ -28,6 +29,7 @@ export class ItemGestaoComponent implements OnInit {
   constructor(private location : Location,
     private itemService : ItemService
     ,private materialFinishService: MaterialFinishService,
+    private toastr: ToastrService,
     private ProdutosService: ProdutosService) { }
     
 
@@ -55,23 +57,23 @@ export class ItemGestaoComponent implements OnInit {
 
   delete(item: Item): void {
     this.allItens = this.allItens.filter(h => h !== item);
-    this.itemService.deleteItem(item).subscribe(()=>this.ngOnInit());
+    this.itemService.deleteItem(item).subscribe(()=>this.ngOnInit(), ()=>this.toastr.success("Deleted"));
     //this.location.go(this.location.path());
   }
 
   createPai(Nome: string,Height: number,Depth: number,Width: number): void{
     if(  !Height || !Width || !Depth || !Nome){
-      alert("MISSING PARAMETER");
+      this.toastr.error("MISSING PARAMETER");
       return;
     }
     if(!this.MaterialId || !this.FinishId ||!this.ProductId ){
-      alert("missing prd");
+      this.toastr.error("missing prd");
     }
     //alert(ProductId + MaterialId);
     let MaterialId = this.MaterialId;
     let FinishId = this.FinishId;
     let ProductId =  this.ProductId;
-    this.itemService.createParent({Nome,ProductId,MaterialId,FinishId,Height,Depth,Width} as criarItemFilhoDTO).subscribe(it => {this.allItens.push(it);this.ngOnInit();});
+    this.itemService.createParent({Nome,ProductId,MaterialId,FinishId,Height,Depth,Width} as criarItemFilhoDTO).subscribe(it => {this.allItens.push(it);this.ngOnInit();this.toastr.success("added item")});
     //this.location.go(this.location.path());
   }
 

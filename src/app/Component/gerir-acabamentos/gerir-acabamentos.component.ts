@@ -41,7 +41,7 @@ export class GerirAcabamentosComponent implements OnInit {
   
   delete(finish:Finish): void {
     this.allAcabamentos = this.allAcabamentos.filter(h => h !== finish);
-    this.finishService.delete(finish).subscribe(()=>this.ngOnInit(),()=>this.toastr.success("ACABAMENTO APAGADO COM SUCESSO"));
+    this.finishService.delete(finish).subscribe(a=>{this.ngOnInit();this.toastr.success("ACABAMENTO APAGADO COM SUCESSO");});
   }
 
 }

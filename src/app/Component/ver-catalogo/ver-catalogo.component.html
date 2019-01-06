@@ -1,0 +1,48 @@
+<div *ngIf="catalog">
+
+  <div style="width: 600px; float: left; margin-left: 50px">
+    <h2>{{catalog.catalogName | uppercase}} Produtos:</h2>
+
+    <div style="text-align:left">
+      <h3>{{listagem}}</h3>
+      <li *ngFor="let prod of catalog.products" [class.selected]="prod === selectedProduct" (click)="onSelect(prod)">
+        <span class="badge">{{prod.productName}}</span>
+      </li>
+      <hr>
+      <p></p>
+      <div *ngIf="selectedProduct">
+        <h5>NOME: </h5>{{selectedProduct.productName}}
+        <p></p>
+        <h5>DESCRIÇÃO: </h5>{{selectedProduct.productDescription}}
+        <p></p>
+        <h5>CATEGORIA: </h5>{{selectedProduct.productCategory.categoryName}}
+        <p></p>
+        <h5>MATERIAIS:</h5>
+        <p></p>
+        <div>
+          <li *ngFor="let m of selectedProduct.productMaterialWithFinish">
+            <span>{{m.materialName}}</span>
+          </li>
+        </div>
+        <p></p>
+        <h5>DIMENSÕES CONTINUAS</h5>
+        <li *ngFor="let a of ProductContDimensions" [class.selected]="a === selectedContDim" (click)="onSelectCD(a)">
+          <span> Width: {{a.minWidthValue}} to {{a.maxWidthValue}} </span>
+          <span>| Height: {{a.minHeightValue}} to {{a.maxHeightValue}} </span>
+          <span>| Depth: {{a.minDepthValue}} to {{a.maxDepthValue}}</span>
+        </li>
+        <p></p>
+        <h5>DIMENSÕES DISCRETAS</h5>
+        <li *ngFor="let d of ProductDiscDimensions" [class.selected]="d === selectedDiscDim" (click)="onSelectDD(d)">
+          <span>Current values: </span>
+          <span>Width: {{d.widthValue}} | Height: {{d.heightValue}} | Depth: {{d.depthValue}}</span>
+        </li>
+        <p></p>
+        <h5>SUBPRODUTOS:</h5>
+        <p></p>
+        <div>
+          <li *ngFor="let m of selectedProduct.subProducts">
+            <span>{{m.productName}}</span>
+          </li>
+        </div>
+      </div>

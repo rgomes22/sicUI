@@ -4,7 +4,7 @@ import { RegisterComponent } from './register.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule, MatInputModule } from '@angular/material';
+import { MatCardModule, MatInputModule, MatCheckboxModule, MatDialogModule } from '@angular/material';
 import { tokenGetter } from 'src/app/app.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,7 +17,7 @@ describe('RegisterComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ RegisterComponent ],
-      imports: [RouterTestingModule, BrowserAnimationsModule, ReactiveFormsModule, MatCardModule, MatInputModule, HttpClientTestingModule, HttpClientModule,JwtModule.forRoot({
+      imports: [RouterTestingModule, BrowserAnimationsModule, ReactiveFormsModule, MatCardModule, MatCheckboxModule, MatDialogModule,MatInputModule, HttpClientTestingModule, HttpClientModule,JwtModule.forRoot({
         config: {
           tokenGetter: tokenGetter }
         })

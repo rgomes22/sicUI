@@ -22,8 +22,8 @@ export class RestricaoGestaoComponent implements OnInit {
   opcaoSelecionadaMandatoria:boolean;
   opcaoSelecionadaMaterial:boolean;
   allRestricoes: Restricao[];
-  titulo = 'Gestão de Restriçoes';
-  listagem = 'Lista Restriçoes Existentes';
+  titulo = 'Gestão de Agregacoes';
+  listagem = 'Lista de Agregacoes Existentes';
   criar = 'Adicionar Agregaçao';
   restricaoSelecionada :Restricao;
   //novaRestricao:Restricao;
