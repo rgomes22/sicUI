@@ -7,6 +7,7 @@ import { Category } from '../../model/Category';
 import { ProdutosService } from '../../Services/produtos.service';
 import { produtoPutDTO } from '../../DTOS/produtoPutDTO';
 import { categoryDTO } from '../../DTOS/categoryDTO';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-edit',
@@ -21,7 +22,8 @@ export class ProductEditComponent implements OnInit {
   category:Category;
   categoryId : number;
 
-  constructor(private materialFinishService: MaterialFinishService, private categoryService: CategoryServiceService, private productService: ProdutosService) { 
+  constructor(private materialFinishService: MaterialFinishService,
+     private categoryService: CategoryServiceService, private productService: ProdutosService,private toastr: ToastrService) { 
     
   }
 
@@ -50,7 +52,7 @@ export class ProductEditComponent implements OnInit {
   editarProduto(pro:Produto,name:string , description:string){
     if(!name || 
       !description){
-      alert("Todos os parametros tem de estar preenchidos");
+      this.toastr.error("Todos os parametros tem de estar preenchidos");
       return;
     }
     let productId = pro.productId;
@@ -61,7 +63,7 @@ export class ProductEditComponent implements OnInit {
     
 
     this.productService.putProduct(pro.productId,
-      {productId,productName,productDescription,productCategoryId} as produtoPutDTO).subscribe(p => this.product = p,()=>alert("Produto editado"));
+      {productId,productName,productDescription,productCategoryId} as produtoPutDTO).subscribe(p => this.product = p,()=>this.toastr.success("Produto editado"));
 
     
     return

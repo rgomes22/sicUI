@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FinishService } from '../../Services/finish.service';
 import { Finish } from '../../model/Finish';
 import { Location } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-gerir-acabamentos',
@@ -16,7 +17,7 @@ export class GerirAcabamentosComponent implements OnInit {
   selectedAcabamento: Finish;
   constructor(
     private location: Location,
-    private finishService: FinishService) { }
+    private finishService: FinishService,private toastr: ToastrService) { }
 
   ngOnInit() {
     this.getAcabamentos();
@@ -40,7 +41,7 @@ export class GerirAcabamentosComponent implements OnInit {
   
   delete(finish:Finish): void {
     this.allAcabamentos = this.allAcabamentos.filter(h => h !== finish);
-    this.finishService.delete(finish).subscribe(()=>this.ngOnInit(),()=>alert("ACABAMENTO APAGADO COM SUCESSO"));
+    this.finishService.delete(finish).subscribe(()=>this.ngOnInit(),()=>this.toastr.success("ACABAMENTO APAGADO COM SUCESSO"));
   }
 
 }

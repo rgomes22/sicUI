@@ -79,7 +79,6 @@ export class CatalogoService {
 
   addProduto(id: string, productId: number): Observable<Catalogo>{
     const url2 = `${this.urlAddProduto}/${id}/add/${productId}`;
-    alert("put url " + url2);
     return this.httpClient.put<Catalogo>(url2, httpOptions).pipe(
       tap(_ => this.log(`ADD PRODUTO`)),
       catchError(this.handleError<Catalogo>(`Erro no add produto do catálogo`))

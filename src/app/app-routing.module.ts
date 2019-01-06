@@ -47,6 +47,7 @@ import { ErrorPageComponent } from './Component/error-page/error-page.component'
 import { RegisterComponent } from './Component/register/register.component';
 import { CriarAcabamentoComponent } from './Component/criar-acabamento/criar-acabamento.component';
 import { SubmeterEncomendaComponent } from './Component/submeter-encomenda/submeter-encomenda.component';
+import { MaterialFinishGestaoComponent } from './Component/material-finish-gestao/material-finish-gestao.component';
 
 import { CriarCatalogoComponent } from './Component/criar-catalogo/criar-catalogo.component';
 import { GerirCatalogoComponent } from './Component/gerir-catalogo/gerir-catalogo.component'
@@ -86,8 +87,11 @@ const routes: Routes = [
   {path:'gerirAcabamentos' , component : GerirAcabamentosComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'gerirAcabamentos' }},
   {path: 'login', component: LoginComponent, canActivate: [AuthLogin]},
   {path: 'register', component: RegisterComponent, canActivate: [AuthLogin]},
+
   {path: 'criarAcabamento', component: CriarAcabamentoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'criarAcabamento' }},
   {path: 'submeterEncomenda', component: SubmeterEncomendaComponent, canActivate: [RoleGuard], data: {expectedRole: 'cliente', path:'submeterEncomenda' }},
+  {path: 'materialFinish', component: MaterialFinishGestaoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'materialFinish'}},
+
   { path: '**', redirectTo: '' }
 ];
 

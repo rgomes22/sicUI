@@ -8,6 +8,7 @@ import { Restricao } from '../../model/Restricao';
 import { Produto } from '../../model/Produto';
 
 import { RestricaoDTO } from '../../DTOS/restricaoDTO';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-restricao-gestao',
@@ -46,7 +47,7 @@ export class RestricaoGestaoComponent implements OnInit {
   constructor(
     private location: Location,
     private restricaoService : RestricoesService,
-    private produtosService : ProdutosService
+    private produtosService : ProdutosService,private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -78,7 +79,7 @@ export class RestricaoGestaoComponent implements OnInit {
   postRestricao( restrictionDescription:string, restrictionMaxOccupationHeight:number,restrictionMaxOccupationDepth:number,restrictionMaxOccupationWidth:number,restrictionMinOccupationHeigth:number,restrictionMinOccupationDepth:number, restrictionMinOccupationWidth:number){
 
     if (/*!Descricao|| !this.produtoSelecionado || !this.parteSelecionada || */this.produtoSelecionado==this.parteSelecionada  /*|| !Hmax || !Dmax || !Wmax || !Hmin || !Dmin || !Wmin*/) {
-      alert("TEM DE DEFINIR CORRETAMENTE PARAMETROS DE EDIÇAO");
+      this.toastr.error("TEM DE DEFINIR CORRETAMENTE PARAMETROS DE EDIÇAO");
       return;
       
     }else{
