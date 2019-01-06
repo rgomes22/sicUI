@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
-
-import { Colecao } from 'src/app/model/Colecao';
-
+import { Location } from '@angular/common';import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Catalogo } from 'src/app/model/Catalogo';
 import { CatalogoService } from 'src/app/Services/catalogoService';
 
