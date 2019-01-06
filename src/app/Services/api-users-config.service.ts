@@ -7,6 +7,6 @@ export class ApiUsersConfigService {
 
   public apiLink: string;
   constructor() {
-    this.apiLink = 'http://localhost:3000/';
+    this.apiLink = 'https://sic-users2018.herokuapp.com/';
   }
 }
