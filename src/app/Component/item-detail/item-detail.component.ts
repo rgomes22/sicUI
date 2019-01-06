@@ -72,6 +72,7 @@ export class ItemDetailComponent implements OnInit {
       .subscribe(item =>{ this.item = item;this.message.height=this.item.height;
         this.message.depth=this.item.depth;
         this.message.length=this.item.width;
+        this.message.material=this.item.material;
       }, () => console.log('oi'), () => {this.getProduto();}  );
 
       
@@ -86,6 +87,7 @@ export class ItemDetailComponent implements OnInit {
   getMfs(): void {
     this.materialFinishService.getMaterialFinishes().subscribe(mfs => this.allMaterialFinishes = mfs);
   }
+
 
   goBack(): void {
     this.location.back();
@@ -136,6 +138,7 @@ export class ItemDetailComponent implements OnInit {
     this.message.depth=Depth;
     this.message.height=Height;
     this.message.length=Width;
+    this.message.material= String(this.MaterialId);
     this.sendMessage();
   }
 
@@ -196,6 +199,10 @@ export class ItemDetailComponent implements OnInit {
     console.log(value);
     // alert(value);
   }
+
+
+
+
   finishOp(value: number): void {
     this.FinishId = value;
     console.log(value);

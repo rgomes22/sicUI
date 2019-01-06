@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 
 import { Category } from '../../model/Category';
 import { CategoryServiceService } from '../../Services/category-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-gerir-category',
@@ -20,7 +21,7 @@ listagem = 'Categorias Disponiveis';
 
   constructor( 
     private location: Location,
-    private categoryService: CategoryServiceService
+    private categoryService: CategoryServiceService,private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -41,9 +42,8 @@ listagem = 'Categorias Disponiveis';
 
   delete(category:Category): void {
     this.allCategories = this.allCategories.filter(h => h !== category);
-    this.categoryService.delete(category).subscribe(()=>this.ngOnInit());
+    this.categoryService.delete(category).subscribe(()=>this.ngOnInit(),()=>this.toastr.success("Apagada com sucesso"));
   }
-
   onSelect(category: Category): void {
     this.getCategories();
     this.selectedCategory = category;

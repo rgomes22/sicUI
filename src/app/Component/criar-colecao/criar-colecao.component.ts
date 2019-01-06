@@ -53,7 +53,6 @@ export class CriarColecaoComponent implements OnInit {
     }
 
     post(collectionName: string, collectionDescription: string): void {
-        alert(collectionName);
         if (!collectionName || !collectionDescription) {
             this.toastr.error("All spaces must contain elements", "Error");
             return;
