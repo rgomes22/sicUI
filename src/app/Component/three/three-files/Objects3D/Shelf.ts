@@ -8,7 +8,7 @@ export class Shelf implements Obj3D{
     private shelf : THREE.Mesh;
 
 
-    constructor(length : number, height : number, depth : number,thickness : number){
+    constructor(length : number, height : number, depth : number,thickness : number,nome: string){
         let shelfMaterial = new THREE.MeshPhongMaterial({color: 0x559a99});
         let shelfGeometry = new THREE.CubeGeometry(length-thickness,height,depth);
         

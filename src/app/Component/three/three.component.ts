@@ -198,14 +198,15 @@ export class ThreeComponent implements AfterViewInit, OnInit {
 
 
   private addCloset() {
-    var closet  = new Closet(this.message.length*this.ratio, this.message.height*this.ratio, this.message.depth*this.ratio, this.thickness);
+    var closet = new Closet(this.message.length*this.ratio, this.message.height*this.ratio, this.message.depth*this.ratio, this.thickness,this.message.id);
+    
     this.scene.add(closet.mesh());
     this.pick = new MousePicking(this.camera, closet.attachSurfaces());
   }
 
   private addShlef() {
 
-    var shelf = new Shelf(this.message.length, this.thickness, this.message.depth, this.thickness);
+    var shelf = new Shelf(this.message.length, this.thickness, this.message.depth, this.thickness,this.message.id);
 
     /*Tirar as posiçoes depois */
     var a = new THREE.Vector3(this.message.length / 2, 500, this.message.depth / 2);
@@ -216,7 +217,7 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   }
 
   private addHanger() {
-    var hanger = new Hanger(2, this.message.length, this.thickness);
+    var hanger = new Hanger(2, this.message.length, this.thickness,this.message.id);
 
     /*Tirar as posiçoes depois */
     var a = new THREE.Vector3(this.message.length / 2, 600, this.message.depth / 2);
@@ -228,7 +229,7 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   }
 
   private addDrawer() {
-    var drawerUnit = new DrawerUnit(this.message.length, 100, this.message.depth, this.thickness);
+    var drawerUnit = new DrawerUnit(this.message.length, 100, this.message.depth, this.thickness,this.message.id);
     /*Tirar as posiçoes depois */
     var a = new THREE.Vector3(0, 300, 0);
     drawerUnit.position(a);
@@ -310,10 +311,10 @@ export class ThreeComponent implements AfterViewInit, OnInit {
       return;
     }
     console.log(this.rootCategoria.categoryName, "SITIO CERTO");
-    //console.log(this.rootCategoria.categoryParentName, "SITIO CERTO pai categoria");
-    /*if(this.message.category.categoryParentId!=null){
+    console.log(this.rootCategoria.categoryParentName, "SITIO CERTO pai categoria");
+    if(this.message.category.categoryParentId!=null){
       this.categoryService.getCategoryById(this.message.category.categoryParentId).subscribe(cat => this.rootCategoria = cat);
-    }*/
+    }
 
     switch (this.rootCategoria.categoryName) {
       case this.armario: {
@@ -337,6 +338,15 @@ export class ThreeComponent implements AfterViewInit, OnInit {
         break;
       }
     }
+  }
+
+  private  checkIfExist(){
+    this.scene.children.forEach(element => {
+      if(element.name == this.message.id){
+        return true;
+      }
+    });
+    return false;
   }
   /* LIFECYCLE */
 
