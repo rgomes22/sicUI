@@ -53,8 +53,7 @@ export class ItemFilhoDetailComponent implements OnInit {
 
   getItem(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.itemService.getItem(id)
-      .subscribe(item => this.item = item, () => console.log('oi'), () => this.getProduto());
+    this.itemService.getItem(id).subscribe(item => this.item = item, () => console.log('oi'), () => this.getProduto());
 
     // this.location.go(this.location.path());
 

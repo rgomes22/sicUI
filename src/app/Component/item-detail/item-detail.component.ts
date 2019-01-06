@@ -77,6 +77,7 @@ export class ItemDetailComponent implements OnInit {
         this.message.depth=this.item.depth;
         this.message.length=this.item.width;
         this.message.material=this.item.material;
+        this.item.price = (parseInt(this.item.price)*0.0001).toString();
       }, () => console.log('oi'), () => {this.getProduto();}  );
 
       
