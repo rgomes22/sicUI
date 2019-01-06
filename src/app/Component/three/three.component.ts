@@ -425,10 +425,10 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   /**
    * Update scene after resizing. 
    */
-  public onResize() {
+  @HostListener('window:resize', ['$event'])
+  onResize(event ) {
     this.camera.aspect = this.getAspectRatio();
     this.camera.updateProjectionMatrix();
-
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
   }
 
