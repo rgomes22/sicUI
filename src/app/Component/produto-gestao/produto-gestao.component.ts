@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 
 import { ProdutosService } from '../../Services/produtos.service';
 import { Produto } from '../../model/Produto';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class ProdutoGestaoComponent implements OnInit {
 
   constructor(
     private location: Location, 
-    private produtosService: ProdutosService
+    private produtosService: ProdutosService,private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -46,7 +47,7 @@ export class ProdutoGestaoComponent implements OnInit {
   //delete do produto
   delete(produto: Produto): void {
     this.allProdutos = this.allProdutos.filter(h => h !== produto);
-    this.produtosService.delete(produto).subscribe(()=>alert("APAGADO O PRODUTO"),()=>this.getProdutos());
+    this.produtosService.delete(produto).subscribe(()=>this.toastr.success("APAGADO O PRODUTO"),()=>this.getProdutos());
   }
 
 }

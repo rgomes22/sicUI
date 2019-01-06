@@ -35,8 +35,8 @@ export class ColecoesService {
 
   putColecao(id: string, colecao: colecaoPutDTO): Observable<Colecao> {
     const url2 = `${this.urlPutColecao}/${id}`;
-    alert("put url " + url2);
-    alert(colecao.collectionDescription);
+    //alert("put url " + url2);
+   // alert(colecao.collectionDescription);
     return this.httpClient.put<Colecao>(url2, colecao, httpOptions).pipe(
       tap(_ => this.log(`put id`)),
       catchError(this.handleError<Colecao>(`put id`))
@@ -79,7 +79,7 @@ export class ColecoesService {
 
   addProduto(id: string, productId: number): Observable<Colecao>{
     const url2 = `${this.urlAddProduto}/${id}/add/${productId}`;
-    alert("put url " + url2);
+  //  alert("put url " + url2);
     return this.httpClient.put<Colecao>(url2, httpOptions).pipe(
       tap(_ => this.log(`put id`)),
       catchError(this.handleError<Colecao>(`put id`))
@@ -88,7 +88,7 @@ export class ColecoesService {
 
   removeProduto(id: string, productId: number): Observable<Colecao>{
     const url2 = `${this.urlAddProduto}/${id}/delete/${productId}`;
-    alert("put url " + url2);
+  //  alert("put url " + url2);
     return this.httpClient.put<Colecao>(url2, httpOptions).pipe(
       tap(_ => this.log(`put id`)),
       catchError(this.handleError<Colecao>(`put id`))

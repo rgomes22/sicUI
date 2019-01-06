@@ -9,6 +9,7 @@ import { CDPutDTO } from '../../DTOS/CDPutDTO';
 import { DDPutDTO } from '../../DTOS/DDPutDTO';
 import { ContinuousDimensionPostDTO } from '../../DTOS/ContinuousDimensionPostDTO';
 import { DiscreetDimensionPostDTO } from '../../DTOS/DiscreetDimensionPostDTO';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dimensoes-gestao',
@@ -29,7 +30,8 @@ export class DimensoesGestaoComponent implements OnInit {
   postDD : DiscreetDimensionPostDTO;
   
 
-  constructor(private location: Location, private dimensionService : DimensionsService, private produtoService : ProdutosService) { }
+  constructor(private location: Location, private dimensionService : DimensionsService, private produtoService : ProdutosService
+   , private toastr: ToastrService) { }
 
   ngOnInit() {
     this.getProdutos();
@@ -72,7 +74,7 @@ export class DimensoesGestaoComponent implements OnInit {
 
   editContDim(minWidthValue:number, maxWidthValue:number, minHeightValue:number, maxHeightValue:number, minDepthValue:number, maxDepthValue:number){
     if(!minWidthValue||!minHeightValue||!minDepthValue||!maxHeightValue||!maxWidthValue||!maxDepthValue){
-      alert("all spaces must have numbers");
+      this.toastr.error("all spaces must have numbers");
     }
     
     this.putCD.DimensionId = this.selectedContDim.dimensionId; 
@@ -90,7 +92,7 @@ export class DimensoesGestaoComponent implements OnInit {
 
   editDiscDim(width:number, depth:number, height:number){
     if(!width||!depth||!height){
-      alert("all spaces must have numbers");
+      this.toastr.error("all spaces must have numbers");
     }
     this.putDD.DimensionId = this.selectedDiscDim.dimensionId;
     this.putDD.ProductId = parseInt(this.selectedProd.productId);
@@ -103,7 +105,7 @@ export class DimensoesGestaoComponent implements OnInit {
 
   criarCont(minW: number,maxW:number,minH:number,maxH:number,minD:number,maxD:number){
     if(!minW||!maxW||!minH||!maxH||!minD||!maxD){
-      alert("all spaces must have numbers");
+      this.toastr.error("all spaces must have numbers");
     }
     this.postCD.productId = parseInt(this.selectedProd.productId);
     this.postCD.minWidthValue = minW;
@@ -118,7 +120,7 @@ export class DimensoesGestaoComponent implements OnInit {
 
   criarDisc(minDW:number,minDD:number,minDH:number){
     if(!minDD||!minDW||!minDH){
-      alert("all spaces must have numbers");
+      this.toastr.error("all spaces must have numbers");
     }
 
     this.postDD.productId = parseInt(this.selectedProd.productId);
