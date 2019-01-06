@@ -10,6 +10,7 @@
   <p align="center">
     <li *ngFor="let item of allItens">
       <div *ngIf="item.child !== true">
+        <div *ngIf="item.editavel === true">
        <nav>
         <a routerLink="/itens/{{item.id}}">
           <span class="badge">{{item.nome}}</span>
@@ -17,6 +18,7 @@
         <button class="delete" title="delete Item" (click)="delete(item)">x</button>
         </nav>
       </div>
+    </div>
     </li>
   </p>
 

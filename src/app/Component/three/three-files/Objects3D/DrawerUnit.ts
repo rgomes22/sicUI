@@ -11,7 +11,7 @@ export class DrawerUnit implements Obj3D{
     private drawer : THREE.Mesh;
     private parts : THREE.Mesh[];
 
-    constructor(length : number, height : number, depth : number,thickness : number,nome: string){
+    constructor(length : number, height : number, depth : number,thickness : number){
         this.unit=new THREE.Group();
         let material = new THREE.MeshPhongMaterial({color: 0x559a99});
         let geometry = new THREE.CubeGeometry(length-thickness,height,thickness);

@@ -61,6 +61,10 @@ export class ItemDetailComponent implements OnInit {
     this.ProdutosService.getProduto(idP).subscribe(p => {
       this.produto = p;
       this.message.category = this.produto.productCategory;
+      this.message.child=false;
+      this.message.parent=true;
+      this.message.create=true;
+      this.message.preview=false;
       this.sendMessage();
       });
       
@@ -114,6 +118,12 @@ export class ItemDetailComponent implements OnInit {
     let ProductId = this.ProductId;
     const id = this.route.snapshot.paramMap.get('id');
 
+    this.message.create=true;
+    this.message.child=true;
+    this.message.parent=false;
+    this.message.preview=false;
+    this.sendMessage();
+
     this.itemService.createChild({ Nome, ProductId, MaterialId, FinishId, Height, Depth, Width } as criarItemFilhoDTO, id).subscribe(it => { this.item.itemFilhos.push(it) });
     // this.location.go(this.location.path());
   }
@@ -135,6 +145,10 @@ export class ItemDetailComponent implements OnInit {
       }
     });
     
+    this.message.child=true;
+    this.message.parent=false;
+    this.message.create=false;
+    this.message.preview=true;
     this.message.depth=Depth;
     this.message.height=Height;
     this.message.length=Width;
@@ -181,7 +195,13 @@ export class ItemDetailComponent implements OnInit {
         this.message.category= element.productCategory;
       }
     });
-    
+    this.message.parent=true;
+    this.message.child=false;
+    this.message.create=false;
+    this.message.preview=true;
+
+
+
     this.message.depth=Depth;
     this.message.height=Height;
     this.message.length=Width;

@@ -74,7 +74,7 @@ export class ItemFilhoDetailComponent implements OnInit {
 
   remove(filho: Item): void {
     this.item.itemFilhos = this.item.itemFilhos.filter(h => h !== filho);
-    this.itemService.removeItem(filho, this.item.id).subscribe();
+    this.itemService.removeItem(filho, this.item.id).subscribe(_=>this.ngOnInit());
     // this.location.go(this.location.path());
   }
 
@@ -93,7 +93,7 @@ export class ItemFilhoDetailComponent implements OnInit {
     let ProductId = this.ProductId;
     const id = this.route.snapshot.paramMap.get('id');
 
-    this.itemService.createChild({ Nome, ProductId, MaterialId, FinishId, Height, Depth, Width } as criarItemFilhoDTO, id).subscribe(it => { this.item.itemFilhos.push(it) });
+    this.itemService.createChild({ Nome, ProductId, MaterialId, FinishId, Height, Depth, Width } as criarItemFilhoDTO, id).subscribe(it => { this.item.itemFilhos.push(it);this.ngOnInit() });
     // this.location.go(this.location.path());
   }
 
@@ -129,7 +129,7 @@ export class ItemFilhoDetailComponent implements OnInit {
     let ProductId = parseInt(this.item.idproduto);
     let id = this.item.id;
     let idPai = this.route.snapshot.paramMap.get('idPai');
-    this.itemService.editChildItem({ Nome, ProductId, MaterialId, FinishId, Height, Depth, Width } as criarItemFilhoDTO, id,idPai).subscribe(it => this.item = it);
+    this.itemService.editChildItem({ Nome, ProductId, MaterialId, FinishId, Height, Depth, Width } as criarItemFilhoDTO, id,idPai).subscribe(it => {this.item = it;this.ngOnInit()});
 
   }
 

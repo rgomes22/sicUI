@@ -55,7 +55,7 @@ export class ItemGestaoComponent implements OnInit {
 
   delete(item: Item): void {
     this.allItens = this.allItens.filter(h => h !== item);
-    this.itemService.deleteItem(item).subscribe();
+    this.itemService.deleteItem(item).subscribe(()=>this.ngOnInit());
     //this.location.go(this.location.path());
   }
 
@@ -71,7 +71,7 @@ export class ItemGestaoComponent implements OnInit {
     let MaterialId = this.MaterialId;
     let FinishId = this.FinishId;
     let ProductId =  this.ProductId;
-    this.itemService.createParent({Nome,ProductId,MaterialId,FinishId,Height,Depth,Width} as criarItemFilhoDTO).subscribe(it => {this.allItens.push(it)});
+    this.itemService.createParent({Nome,ProductId,MaterialId,FinishId,Height,Depth,Width} as criarItemFilhoDTO).subscribe(it => {this.allItens.push(it);this.ngOnInit();});
     //this.location.go(this.location.path());
   }
 
