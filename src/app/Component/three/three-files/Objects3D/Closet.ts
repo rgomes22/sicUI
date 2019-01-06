@@ -55,7 +55,7 @@ export class Closet implements Obj3D ,Texturable,Attachable {
 
         //AttachmentPlane
         var planeGeometry = new THREE.PlaneGeometry( length, height);
-        var planeMaterial = new THREE.MeshBasicMaterial( {wireframe : true , visible:true} );
+        var planeMaterial = new THREE.MeshBasicMaterial( {wireframe : false , visible:false} );
         this.attachPlane = new THREE.Mesh( planeGeometry, planeMaterial );
         this.attachPlane.position.x=length/2;
         this.attachPlane.position.y=height/2+thickness;

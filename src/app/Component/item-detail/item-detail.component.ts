@@ -61,6 +61,7 @@ export class ItemDetailComponent implements OnInit {
     this.ProdutosService.getProduto(idP).subscribe(p => {
       this.produto = p;
       this.message.category = this.produto.productCategory;
+      this.sendMessage();
       });
       
   }
@@ -71,7 +72,6 @@ export class ItemDetailComponent implements OnInit {
       .subscribe(item =>{ this.item = item;this.message.height=this.item.height;
         this.message.depth=this.item.depth;
         this.message.length=this.item.width;
-        this.sendMessage();   
       }, () => console.log('oi'), () => {this.getProduto();}  );
 
       
