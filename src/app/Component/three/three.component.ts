@@ -380,7 +380,7 @@ export class ThreeComponent implements AfterViewInit, OnInit {
     this.pick.updateMouse(e.clientX, e.clientY, this.renderer);
     this.pick.intersect();
     var posV = this.pick.surfacePosition();
-    if (posV != null && this.onPicking) {
+    if (posV != null && this.onPicking && this.objectToBeAttached !=null) {
       this.objectToBeAttached.position(posV);
     }
   }
