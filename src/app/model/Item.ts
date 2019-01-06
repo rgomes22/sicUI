@@ -15,4 +15,5 @@ export class Item{
     price: string;
     itemFilhos : Item[];
     child: boolean;
+    editavel: boolean;
 }
