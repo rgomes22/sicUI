@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Category } from '../model/Category';
+import { Data } from '../model/Data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThreeServiceService {
 
-  private messageSource = new BehaviorSubject<Category>(new Category());
+  private messageSource = new BehaviorSubject<Data>(new Data());
   currentMessage = this.messageSource.asObservable();
 
   constructor() { }
 
-  sendMessage(message: Category) {
+  sendMessage(message: Data) {
     this.messageSource.next(message);
   }
 }

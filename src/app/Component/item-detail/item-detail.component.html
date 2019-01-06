@@ -129,6 +129,7 @@
         </label>
         <p></p>
         <button (click)="createFilho(Nome.value,Height.value,Depth.value,Width.value)">Criar</button>
+        <button (click)="drawChild(Height.value,Depth.value,Width.value)">Preview</button>
       </div>
       <div id="canvas" class="split left"  >
           <app-three  [size]="200" [cameraZ]="500" [cameraY]="400" [cameraX]="0" [fieldOfView]="70" [nearClipping]="1" [farClipping]="100000" [length]="400" [height]="700" [depth]="200"></app-three>

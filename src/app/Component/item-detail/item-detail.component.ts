@@ -11,7 +11,7 @@ import { ProdutosService } from '../../Services/produtos.service';
 import { MaterialFinishService } from '../../Services/material-finish.service';
 
 import { ThreeServiceService } from '../../Services/three-Service.service';
-import { Category } from 'src/app/model/Category';
+import { Data } from 'src/app/model/Data';
 import { send } from 'q';
 
 
@@ -31,7 +31,7 @@ export class ItemDetailComponent implements OnInit {
   MaterialIdEdit: number;
   FinishIdEdit: number;
 
-  private message: Category;
+  private message: Data = new Data();
 
   constructor(
     private route: ActivatedRoute,
@@ -58,7 +58,7 @@ export class ItemDetailComponent implements OnInit {
 
     }
     let idP = parseInt(this.item.idproduto);
-    this.ProdutosService.getProduto(idP).subscribe(p => {this.produto = p;this.message = p.productCategory;this.sendMessage()});
+    this.ProdutosService.getProduto(idP).subscribe(p => {this.produto = p;this.message.category = p.productCategory;this.sendMessage()});
   }
 
   getItem(): void {
@@ -106,6 +106,29 @@ export class ItemDetailComponent implements OnInit {
 
     this.itemService.createChild({ Nome, ProductId, MaterialId, FinishId, Height, Depth, Width } as criarItemFilhoDTO, id).subscribe(it => { this.item.itemFilhos.push(it) });
     // this.location.go(this.location.path());
+  }
+
+  drawChild(Height: number, Depth: number, Width: number): void {
+    if (!Height || !Width || !Depth ) {
+      alert("TEM PARAMETROS EM FALTA");
+      return;
+    }
+    if (!this.MaterialId || !this.FinishId || !this.ProductId) {
+      alert("TEM DE SELECIONAR OPCOES NAS CAIXAS DE OPCAO");
+      return;
+    }
+    
+    this.allProdutos.forEach(element => {
+     
+      if( Number(element.productId) == this.ProductId ){
+        this.message.category= element.productCategory;
+      }
+    });
+    
+    this.message.depth=Depth;
+    this.message.height=Height;
+    this.message.length=Width;
+    this.sendMessage();
   }
 
   editarItem(Nome: string, Height: number, Depth: number, Width: number): void {

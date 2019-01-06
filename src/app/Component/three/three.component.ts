@@ -15,6 +15,7 @@ import MousePicking from './three-files/MousePicking';
 import { Obj3D } from './three-files/interfaces/Obj3D';
 
 import { ThreeServiceService } from '../../Services/three-Service.service';
+import { Data } from 'src/app/model/Data';
 import { Category } from 'src/app/model/Category';
 
 import { CategoryServiceService } from '../../Services/category-service.service';
@@ -27,7 +28,7 @@ import { CategoryServiceService } from '../../Services/category-service.service'
 })
 export class ThreeComponent implements AfterViewInit, OnInit {
 
-  private message: Category;
+  private message: Data;
 
 
   /* HELPER PROPERTIES (PRIVATE PROPERTIES) */
@@ -79,7 +80,7 @@ export class ThreeComponent implements AfterViewInit, OnInit {
 
   private prateleira: string = "prateleira";
 
-  private gavetas: string = "gavetas";
+  private gavetas: string = "Gaveta";
 
   private cabide: string = "cabide";
 
@@ -123,8 +124,8 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     this.ThreeService.currentMessage.subscribe(message => {
       this.message = message;
-      if (!(message.categoryId === undefined)) {
-        this.categoryService.getCategoryById(this.message.categoryId)
+      if (!(message.category.categoryId === undefined)) {
+        this.categoryService.getCategoryById(this.message.category.categoryId)
           .subscribe(data => {
             this.rootCategoria = data;
             console.log('Catategoria ' + this.rootCategoria);
