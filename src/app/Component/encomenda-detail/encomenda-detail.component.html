@@ -21,8 +21,10 @@
 <p></p>
 <select name="itemAcrescentar" (change)="acrescentarItem($event.target.value)" class="select-width form-control">
     <option value="-1">Escolha uma item para acrescentar</option>
-    <option *ngFor="let item of itemsAcrescentar" value="{{item.id}}">{{item.nome}}</option>
-  </select>
+    <ng-container *ngFor="let item of itemsAcrescentar">
+      <option *ngIf="item.child !== true && item.editavel===true" value="{{item.id}}" >{{item.nome}}</option>
+    </ng-container>
+  </select >
   <p></p>
   <p></p>
   <button style="text-align:center;margin:auto;display: block" (click)="addItemToOrder()">Acrescentar</button >

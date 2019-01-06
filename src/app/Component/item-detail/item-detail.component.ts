@@ -13,6 +13,7 @@ import { MaterialFinishService } from '../../Services/material-finish.service';
 import { ThreeServiceService } from '../../Services/three-Service.service';
 import { Data } from 'src/app/model/Data';
 import { send } from 'q';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -36,8 +37,8 @@ export class ItemDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private location: Location,
-    private itemService: ItemService
-    , private materialFinishService: MaterialFinishService,
+    private toastr: ToastrService,
+    private itemService: ItemService    , private materialFinishService: MaterialFinishService,
     private ProdutosService: ProdutosService,
     private ThreeService: ThreeServiceService) { }
 
@@ -53,7 +54,7 @@ export class ItemDetailComponent implements OnInit {
 
   getProduto(): void {
     if (this.item.child) {
-      alert("Nao pode aceder a itens Filho por aqui");
+      this.toastr.error("Nao pode aceder a itens Filho por aqui");
       this.goBack();
 
     }
@@ -100,17 +101,17 @@ export class ItemDetailComponent implements OnInit {
 
   remove(filho: Item): void {
     this.item.itemFilhos = this.item.itemFilhos.filter(h => h !== filho);
-    this.itemService.removeItem(filho, this.item.id).subscribe();
+    this.itemService.removeItem(filho, this.item.id).subscribe(enc => this.toastr.success("removed item from is parent"));
     // this.location.go(this.location.path());
   }
 
   createFilho(Nome: string, Height: number, Depth: number, Width: number): void {
     if (!Height || !Width || !Depth || !Nome) {
-      alert("TEM PARAMETROS EM FALTA");
+      this.toastr.error("TEM PARAMETROS EM FALTA");
       return;
     }
     if (!this.MaterialId || !this.FinishId || !this.ProductId) {
-      alert("TEM DE SELECIONAR OPCOES NAS CAIXAS DE OPCAO");
+      this.toastr.error("TEM DE SELECIONAR OPCOES NAS CAIXAS DE OPCAO");
       return;
     }
     //alert(ProductId + MaterialId);
@@ -125,17 +126,17 @@ export class ItemDetailComponent implements OnInit {
     this.message.preview=false;
     this.sendMessage();
 
-    this.itemService.createChild({ Nome, ProductId, MaterialId, FinishId, Height, Depth, Width } as criarItemFilhoDTO, id).subscribe(it => { this.item.itemFilhos.push(it) });
+    this.itemService.createChild({ Nome, ProductId, MaterialId, FinishId, Height, Depth, Width } as criarItemFilhoDTO, id).subscribe(it => { this.item.itemFilhos.push(it);this.toastr.success("Criado");this.ngOnInit(); });
     // this.location.go(this.location.path());
   }
 
   drawChild(Height: number, Depth: number, Width: number): void {
     if (!Height || !Width || !Depth ) {
-      alert("TEM PARAMETROS EM FALTA");
+      this.toastr.error("TEM PARAMETROS EM FALTA");
       return;
     }
     if (!this.MaterialId || !this.FinishId || !this.ProductId) {
-      alert("TEM DE SELECIONAR OPCOES NAS CAIXAS DE OPCAO");
+      this.toastr.error("TEM DE SELECIONAR OPCOES NAS CAIXAS DE OPCAO");
       return;
     }
     
@@ -159,7 +160,7 @@ export class ItemDetailComponent implements OnInit {
 
   editarItem(Nome: string, Height: number, Depth: number, Width: number): void {
     if (!Nome && !Height && !Depth && !Width && !this.MaterialIdEdit && !this.FinishIdEdit) {
-      alert("TEM DE DEFINIR PARAMETROS DE EDIÇAO");
+      this.toastr.error("TEM DE DEFINIR PARAMETROS DE EDIÇAO");
       return;
     }
     if (!Nome) {
@@ -188,7 +189,7 @@ export class ItemDetailComponent implements OnInit {
     }
     let ProductId = parseInt(this.item.idproduto);
     let id = this.item.id;
-    this.itemService.editParentItem({ Nome, ProductId, MaterialId, FinishId, Height, Depth, Width } as criarItemFilhoDTO, id).subscribe(it => this.item = it);
+    this.itemService.editParentItem({ Nome, ProductId, MaterialId, FinishId, Height, Depth, Width } as criarItemFilhoDTO, id).subscribe(it => this.item = it,()=>this.toastr.success("ITEM ALTERADO"));
 
     this.allProdutos.forEach(element => {
      

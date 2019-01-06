@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ErrorPageComponent } from './error-page.component';
+import { ErrorService } from 'src/app/Services/error.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { RouterModule } from '@angular/router';
 
 describe('ErrorPageComponent', () => {
   let component: ErrorPageComponent;
@@ -8,7 +11,9 @@ describe('ErrorPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ErrorPageComponent ]
+      declarations: [ ErrorPageComponent ],
+      imports:[RouterTestingModule, RouterModule],
+      providers: [ ErrorService ]
     })
     .compileComponents();
   }));

@@ -29,7 +29,6 @@ deleteItem(Item: Item | string): Observable<any> {
   const id = typeof Item === 'string' ? Item : Item.id;
   const urlDel = `${this.itemUrl}/${id}`;
   return this.http.delete<any>(urlDel, httpOptions).pipe(
-    tap(_ => alert(`Deleted item`)),
     catchError(this.handleError<any>('delete item', []))
   );
 }
@@ -37,7 +36,7 @@ deleteItem(Item: Item | string): Observable<any> {
 getItem( id: string ): Observable<Item>{
   const url = `${this.itemUrl}/${id}`;
   return this.http.get<Item>(url).pipe(
-    tap(_ => this.log(`fetched item id=${id}`)),
+    tap(_ => this.log(`fetched item id`)),
     catchError(this.handleError<Item>(`get item id=${id}`))
   );
 }
@@ -46,7 +45,6 @@ createChild(filho: criarItemFilhoDTO, id: string): Observable<Item>{
   const urlAC = `${this.itemUrl}/${id}/adicionarparte`;
   this.log(`${filho.ProductId}`);
   return this.http.post<Item>(urlAC,filho,httpOptions).pipe(
-    tap((iFilho: Item) => alert(`added item to parent, ${iFilho.nome}`)),
     catchError(this.handleError<any>('ADD CHILD'))
   );
 }
@@ -55,7 +53,6 @@ createParent(filho: criarItemFilhoDTO): Observable<Item>{
   const urlAC = `${this.itemUrl}/`;
 
   return this.http.post<Item>(urlAC,filho,httpOptions).pipe(
-    tap((iFilho: Item) => alert(`added item ${iFilho.nome}`)),
     catchError(this.handleError<any>('ADD PARENT ITEM'))
   );
 }
@@ -63,7 +60,6 @@ createParent(filho: criarItemFilhoDTO): Observable<Item>{
 editParentItem(filho: criarItemFilhoDTO,id:string): Observable<Item>{
   const url = `${this.itemUrl}/${id}`;
   return this.http.put(url,filho,httpOptions).pipe(
-    tap(_ => alert(`ITEM ALTERADO`)),
     catchError(this.handleError<any>('EDIT ITEM'))
   );
 
@@ -72,7 +68,6 @@ editParentItem(filho: criarItemFilhoDTO,id:string): Observable<Item>{
 editChildItem(filho: criarItemFilhoDTO,id:string,idPai:string): Observable<Item>{
   const url = `${this.itemUrl}/${idPai}/edit/${id}`;
   return this.http.put(url,filho,httpOptions).pipe(
-    tap(_ => alert(`ITEM ALTERADO`)),
     catchError(this.handleError<any>('EDIT ITEM'))
 )
 }
@@ -82,7 +77,6 @@ removeItem(item: Item, id: string): Observable<Item>{
   
    return this.http.get<Item>(url).pipe(
      
-    tap(_ => alert(`removed item ${item.nome} from is parent`)),
     catchError(this.handleError<any>(`REMOVE ITEM`))
   );
 }
