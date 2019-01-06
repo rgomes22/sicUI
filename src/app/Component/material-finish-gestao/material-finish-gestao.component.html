@@ -1,0 +1,66 @@
+
+
+<div style="width: 45%; margin-left:5%">
+  <!--div Materiais-->
+  <div style="width:45%; float: left; margin-left: 5%;">
+    <h3>Materiais Disponíveis</h3>
+    <select style="margin-bottom: 13px;" (change)="onMatSelect($event.target.value)">
+      <option value="-1">Escolha um material</option>
+      <option *ngFor="let mat of arrayMateriais" value="{{mat.materialId}}"> {{mat.materialName}}</option>    
+    </select>
+    <div *ngIf="selectedMaterialId" style="padding-bottom:20px;">
+      <label>Material Price: {{selectedMaterialPrice}}€</label>
+    </div>
+  </div>
+  <!--div Acabamentos-->
+  <div style="width:45%; padding-top: 20px; margin-left: 5%;">
+    <p></p>
+    <h3 style="margin-top:5px">Acabamentos Disponíveis</h3>
+    <select (change)="onFinSelect($event.target.value)">
+      <option value="-1">Escolha um acabamento</option>
+      <option *ngFor="let fin of arrayFinish" value="{{fin.finishId}}"> {{fin.finishName}}</option>    
+    </select> 
+    <div style="padding-top: 20px">
+      <h3> Preço Adicional de Acabamento
+        <input type="number" step="any" min="0" value="0" #increment>
+      </h3>
+    </div>
+  </div>
+  <div style="width:45%; padding-top: 20px; margin-left: 5%;">
+    <h3>Data para preço</h3>
+    <div style="text-align:center; width:70%">
+      <angular2-date-picker [(ngModel)]="newPriceDate" [settings]="settings" style="padding: 0.2 rem 0.1 rem;"></angular2-date-picker>
+    </div>
+
+    <div>
+      <button style="margin-top: 20px" (click)="criarCombo(increment.value)">Criar Combinação</button>
+    </div>
+  </div>
+
+</div>
+
+<!--Listagem Combinações-->
+<div style="width:45%; margin-left:5%">
+  <h3>Combinações Criadas</h3>
+  <ol>
+    <li *ngFor="let c of arrayCombinations" [class.selected]="c === selectedCombo" (click)="onComboSelect(c)">
+      Material {{c.materialName}}, acabamento {{c.finishName}}
+    </li>
+  </ol>
+</div>
+
+<div *ngIf="selectedCombo">
+  <h3>Material {{selectedCombo.materialName}} Price Editor</h3>
+  <h4>Price History</h4>
+  <li *ngFor="let p of arrayComboPrices">Value: {{p.price}} ActivationDate: {{p.date}}</li>
+  <h4>Add Price</h4>
+  <input type="number" step="any" min="0" value="0" #newPrice>
+  <div style="width:45%; padding-top: 20px; margin-left: 5%;">
+      <h3>Data para preço</h3>
+      <div style="text-align:center; width:70%">
+        <angular2-date-picker [(ngModel)]="newPriceDate" [settings]="settings" style="padding: 0.2 rem 0.1 rem;"></angular2-date-picker>
+      </div>
+  </div>
+  <button (click)="alterPrice(newPrice.value)"></button>
+</div>
+

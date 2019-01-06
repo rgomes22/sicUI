@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { MaterialFinish } from '../model/MaterialFinish';
+import { Price } from '../model/Price';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -23,6 +24,27 @@ export class MaterialFinishService {
     )
 
   }
+
+  createMaterialFinish(idFinish : string, idMaterial : string): Observable<MaterialFinish>{
+    var m = {
+      MaterialId : idMaterial,
+      FinishId : idFinish,
+    }
+    return this.http.post<MaterialFinish>(this.mfUrl,m,httpOptions).pipe(
+      tap(p => this.log('created material finish')),
+      catchError(this.handleError<MaterialFinish>('Creation Error'))
+    );
+  }
+
+addPrice(idM: string, idF:string,price : Price): Observable<Price>{
+  const url2 = `${this.mfUrl}/${idM}/addPrice/${idF}`;
+  console.log(price);
+  console.log(url2);
+  return this.http.post<Price>(url2,price,httpOptions).pipe(
+    tap(p => this.log('added Price')),
+    catchError(this.handleError<Price>('Price adition error'))
+  );
+}
   
 private handleError<T> (operation = 'operation', result?: T) {
   return (error: any): Observable<T> => {
@@ -40,7 +62,7 @@ private handleError<T> (operation = 'operation', result?: T) {
 
 /** Log a HeroService message with the MessageService */
 private log(message: string) {
-  console.log(`ItemService: ${message}`);
+  console.log(`MaterialFinish Service: ${message}`);
 
 }
 
