@@ -38,9 +38,8 @@
     </p>
     <div>
       <li *ngFor="let m of colection.products">
-      <span>{{m.productId}}{{m.productName}}</span>
+      <span>{{m.productName}}</span>
       <button class="delete" title="delete colecão" (click)="removeP(m)"> x </button>
-
       </li>
     </div>
   </div>

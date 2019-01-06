@@ -52,6 +52,11 @@ import { CriarCatalogoComponent } from './Component/criar-catalogo/criar-catalog
 import { GerirCatalogoComponent } from './Component/gerir-catalogo/gerir-catalogo.component'
 import { EditCatalogoComponent } from './Component/edit-catalogo/edit-catalogo.component';
 import { CatalogEditComponent } from './Component/editar-catalogo/editar-catalogo.component';
+import { VerColecoesComponent } from './Component/ver-colecoes/ver-colecoes.component';
+import { VerColecaoComponent } from './Component/ver-colecao/ver-colecao.component';
+import { VerCatalogoComponent } from './Component/ver-catalogo/ver-catalogo.component';
+import { VerCatalogosComponent } from './Component/ver-catalogos/ver-catalogos.component';
+
 
 const routes: Routes = [
   {path: 'catalogo', component : CatalogoComponent},
@@ -87,6 +92,10 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent, canActivate: [AuthLogin]},
   {path: 'criarAcabamento', component: CriarAcabamentoComponent},
   {path: 'submeterEncomenda', component: SubmeterEncomendaComponent},
+  {path: 'ver-colecoes', component: VerColecoesComponent},
+  {path: 'ver-colecao', component: VerColecaoComponent},
+  {path: 'ver-catalogos', component: VerCatalogosComponent},
+  {path: 'ver-catalogo', component: VerCatalogoComponent},
   { path: '**', redirectTo: '' }
 ];
 
