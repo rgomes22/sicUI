@@ -5,6 +5,9 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { MaterialFinish } from '../model/MaterialFinish';
 import { Price } from '../model/Price';
+import { priceDTO } from '../DTOS/priceDTO';
+
+import { ToastrService } from 'ngx-toastr';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -15,7 +18,7 @@ const httpOptions = {
 })
 export class MaterialFinishService {
   private mfUrl = 'https://3db-sic-webapi.azurewebsites.net/api/materialfinish';
-  constructor(private http: HttpClient,) { }
+  constructor(private http: HttpClient, private toastr : ToastrService) { }
 
   getMaterialFinishes (): Observable<MaterialFinish[]>{
     return this.http.get<MaterialFinish[]>(this.mfUrl).pipe(
@@ -38,14 +41,28 @@ export class MaterialFinishService {
 
 addPrice(idM: string, idF:string,price : Price): Observable<Price>{
   const url2 = `${this.mfUrl}/${idM}/addPrice/${idF}`;
-  console.log(price);
-  console.log(url2);
   return this.http.post<Price>(url2,price,httpOptions).pipe(
     tap(p => this.log('added Price')),
     catchError(this.handleError<Price>('Price adition error'))
   );
 }
+
+getPriceHistory(idM:string, idF: string): Observable<priceDTO[]>{
+  const url2 = `${this.mfUrl}/${idM}/priceHistory/${idF}`;
+  return this.http.get<priceDTO[]>(url2).pipe(
+    tap(p=> this.log('added Price')),
+    catchError(this.handleError<priceDTO[]>('Error retriving prices',[]))
+  );
+}
   
+getActivePrice(idM: string , idF: string): Observable<priceDTO>{
+  const url2 = `${this.mfUrl}/${idM}/activePrice/${idF}`;
+  return this.http.get<priceDTO>(url2).pipe(
+    tap(_ => this.log('Loaded Active Price')),
+    catchError(this.handleError<priceDTO>('get mf current price'))
+  )
+}
+
 private handleError<T> (operation = 'operation', result?: T) {
   return (error: any): Observable<T> => {
 
@@ -54,7 +71,7 @@ private handleError<T> (operation = 'operation', result?: T) {
 
     // TODO: better job of transforming error for user consumption
     this.log(`${operation} failed: ${error.message}`);
-    alert(`failed: ${error.message}`);
+    this.toastr.error("Error");
     // Let the app keep running by returning an empty result.
     return of(result as T);
   };

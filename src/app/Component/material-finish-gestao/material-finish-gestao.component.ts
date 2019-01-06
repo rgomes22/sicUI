@@ -18,14 +18,16 @@ export class MaterialFinishGestaoComponent implements OnInit {
   arrayMateriais : Material[] = [];
   arrayFinish : Finish[] = [];
   arrayCombinations : MaterialFinish[] = [];
-  arrayComboPrices : any[] = [];
+  arrayPriceHistory : any[] = [];
 
   selectedMaterialPrice : number;
   selectedMaterialId : string;
   selectedFinishId : string;
   selectedCombo : MaterialFinish;
+  selectedComboCurrentPrice : number;
 
   dateOfPrice : Date;
+  anotherPriceDate : Date;
   settings : any;
 
   constructor(
@@ -40,6 +42,7 @@ export class MaterialFinishGestaoComponent implements OnInit {
     this.getFinish();
     this.getMateriais();
     this.dateOfPrice = new Date();
+    this.anotherPriceDate = new Date();
     this.settings = {
       bigBanner : true,
       timePicker : true,
@@ -68,20 +71,26 @@ export class MaterialFinishGestaoComponent implements OnInit {
       this.arrayCombinations = array;
     })
   }
-/*
-  getMaterialPriceHistory(id:string):void{
-    this.allService.getMaterialPriceHistory(id).subscribe(prices =>{
-      this.priceHistoryArray.splice(0,this.priceHistoryArray.length);
-      for(var i = 0; i < prices.length; i++){
+
+  getMaterialPriceHistory(idM:string, idF:string):void{
+    this.allService.getPriceHistory(idM,idF).subscribe(prices =>{
+      console.log(prices);
+      this.arrayPriceHistory.splice(0,this.arrayPriceHistory.length); // limpa array
+      for(var i = 0; i< prices.length; i++){
         var temp = new Date(prices[i].activeDate*1000).toString().split(" ");
-        this.priceHistoryArray.push({
-          price: prices[i].price,
-          date: temp[1]+" "+temp[2]+" "+temp[3]+" "+temp[4],//shows month day year hour min sec
-          
-        })
+        this.arrayPriceHistory.push({
+            price : prices[i].price,
+            date:temp[1]+" "+temp[2]+" "+temp[3]+" "+temp[4],//shows month day year hour min sec
+          });
       }
     });
-  }*/
+  }
+
+  getComboCurrentPrice(idM:string, idF:string):void{
+    this.allService.getActivePrice(idM,idF).subscribe(price =>{
+      this.selectedComboCurrentPrice = price.price;
+    });
+  }
 
   onMatSelect(id:string):void{
     this.matService.getMaterialPrice(id).subscribe(price => {
@@ -96,10 +105,31 @@ export class MaterialFinishGestaoComponent implements OnInit {
 
   onComboSelect(c:MaterialFinish):void{
     this.selectedCombo = c;
+    this.getMaterialPriceHistory(c.materialId.toString(),c.finishId.toString());
+    this.getComboCurrentPrice(c.materialId.toString(),c.finishId.toString());
   }
 
-  alterPrice(price : number):void{
+  alterPrice(newPrice : number):void{
 
+    var timestamp : number;
+
+    if(this.anotherPriceDate instanceof Date){
+      timestamp = this.anotherPriceDate.getTime();
+    }else{
+      timestamp = new Date(this.anotherPriceDate).getTime();
+    }
+
+    timestamp = Math.floor( timestamp /1000);
+
+    let price : Price = new Price();
+    price.Price = newPrice;
+    price.ActiveDate = timestamp;
+
+    this.allService.addPrice(this.selectedCombo.materialId.toString(),this.selectedCombo.finishId.toString(),price).subscribe(price =>{
+      this.getMaterialPriceHistory(this.selectedCombo.materialId.toString(),this.selectedCombo.finishId.toString());
+      this.getComboCurrentPrice(this.selectedCombo.materialId.toString(),this.selectedCombo.finishId.toString());
+      this.toastr.success("Preço Adicionado", "Sucesso");
+    });
   }
 
   criarCombo(precoAdicional : number):void{
@@ -126,8 +156,9 @@ export class MaterialFinishGestaoComponent implements OnInit {
     price.ActiveDate = timestamp;
     
     this.allService.createMaterialFinish(this.selectedFinishId,this.selectedMaterialId).subscribe(mf =>{
-      this.allService.addPrice(this.selectedMaterialId,this.selectedFinishId,price).subscribe(price =>{console.log("yolo")});
-      console.log("yolo");
+      this.allService.addPrice(this.selectedMaterialId,this.selectedFinishId,price).subscribe();
+      this.getCombination();
+      this.toastr.success("Combinação criada","Sucesso");
     });
 
     
