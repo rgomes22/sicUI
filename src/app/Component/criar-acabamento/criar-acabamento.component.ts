@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { FinishService } from 'src/app/Services/finish.service';
 import { Finish } from 'src/app/model/Finish';
 import { criarFinishDTO } from 'src/app/DTOS/criarFinishDTO';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-criar-acabamento',
@@ -18,7 +19,8 @@ export class CriarAcabamentoComponent implements OnInit {
   
   constructor(
     private location: Location,
-    private finishService:FinishService) { }
+    private finishService:FinishService,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
   }
@@ -32,10 +34,10 @@ export class CriarAcabamentoComponent implements OnInit {
   post(finishName:string):void{
    
     if(!finishName ){
-      alert("Parametros em falta");
+      this.toastr.error("Parametros em falta");
       return;
     }
-    this.finishService.postFinish({finishName} as criarFinishDTO).subscribe(fin=>{this.finish.push(fin)},()=>alert("ACABAMENTO CRIADO COM SUCESSO"));
+    this.finishService.postFinish({finishName} as criarFinishDTO).subscribe(fin=>{this.finish.push(fin)},()=>this.toastr.success("ACABAMENTO CRIADO COM SUCESSO"));
   }
 
   

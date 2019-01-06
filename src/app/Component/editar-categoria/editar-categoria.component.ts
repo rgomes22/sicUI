@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Category } from 'src/app/model/Category';
 import { CategoryServiceService } from 'src/app/Services/category-service.service';
 import { categoryPutDTO } from 'src/app/DTOS/categoryPutDTO';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-editar-categoria',
@@ -13,7 +14,7 @@ export class EditarCategoriaComponent implements OnInit {
   @Input() category : Category;
   allCategories: Category[];
   parentCategoryID :number;
-  constructor(private categoryService: CategoryServiceService) { }
+  constructor(private categoryService: CategoryServiceService,private toastr: ToastrService) { }
 
   ngOnInit() {
     this.getCategories();
@@ -22,18 +23,18 @@ export class EditarCategoriaComponent implements OnInit {
   editarCategory(cat:Category, name:string){
     if(!name || 
       !this.parentCategoryID){
-      alert("Todos os parametros tem de estar preenchidos");
+      this.toastr.error("Todos os parametros tem de estar preenchidos");
       return;
     }
     if(this.parentCategoryID == cat.categoryId){
-      alert("O Pai desta categoria nao pode ser a mesma");
+      this.toastr.error("O Pai desta categoria nao pode ser a mesma");
       return;
     }
     let categoryId = cat.categoryId;
     let categoryName = name;
     let categoryParentId = this.parentCategoryID;
     this.categoryService.putCategoria(cat.categoryId,
-      {categoryId,categoryName,categoryParentId} as categoryPutDTO).subscribe(c => this.category = c,()=>alert("Editada com sucesso"),()=>this.ngOnInit());
+      {categoryId,categoryName,categoryParentId} as categoryPutDTO).subscribe(c => this.category = c,()=>this.toastr.success("Editada com sucesso"),()=>this.ngOnInit());
     return
   }
 

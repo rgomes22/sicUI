@@ -53,7 +53,6 @@ export class FinishService {
       const url2 = `${this.url}/${id}`;
     
       return this.http.put<Finish>(url2,finish,httpOptions).pipe(
-        tap(_ => alert("Acabamento editado com sucesso")),
         catchError(this.handleError<Finish>(`put id`))
       );
     }
@@ -62,7 +61,6 @@ export class FinishService {
       const id = typeof finish === 'number' ? finish : finish.finishId;
       const url = `${this.url}/${id}`;
       return this.http.delete<Finish>(url, httpOptions).pipe(
-        tap(_=>alert("Acabamento apagado com sucesso")),
         catchError(this.handleError<Finish>('DELETE FINISH'))
       );
     }
@@ -71,7 +69,6 @@ export class FinishService {
 
     postFinish(finish:criarFinishDTO): Observable<Finish>{
       return this.http.post<Finish>(this.url,finish,httpOptions).pipe(
-        tap((finish:Finish)=> alert("Acabamento adicionado com sucesso")),
         catchError(this.handleError<Finish>('Post acabamento'))
       );
     }

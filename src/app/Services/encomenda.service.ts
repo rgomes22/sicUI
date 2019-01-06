@@ -43,7 +43,6 @@ export class EncomendaService {
 
   encomenda_submit(id : string): Observable<Encomenda>
   {
-    console.log("Service log: " + id);
      const url = `${this.urlSic}/encomendas/${id}/submit`;
      return this.httpClient.get<Encomenda>(url).pipe(
        tap(_ => this.log(`submit`)),
@@ -63,7 +62,6 @@ export class EncomendaService {
     const url2 = `${this.urlSic}/encomendas/${id}/addItem`;
     
     return this.httpClient.put<Encomenda>(url2,item,httpOptions).pipe(
-      tap(_ => alert("Item adicionado com sucesso")),
       catchError(this.handleError<Encomenda>(`add item`))
     );
   }
@@ -73,7 +71,6 @@ export class EncomendaService {
     const url2 = `${this.urlSic}/encomendas/${id}/removeItem`;
     
     return this.httpClient.put<Encomenda>(url2,item,httpOptions).pipe(
-      tap(_ => alert("Item removido com sucesso")),
       catchError(this.handleError<Encomenda>(`removido item`))
     );
   }
