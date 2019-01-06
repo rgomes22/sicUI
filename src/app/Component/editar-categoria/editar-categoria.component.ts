@@ -34,7 +34,7 @@ export class EditarCategoriaComponent implements OnInit {
     let categoryName = name;
     let categoryParentId = this.parentCategoryID;
     this.categoryService.putCategoria(cat.categoryId,
-      {categoryId,categoryName,categoryParentId} as categoryPutDTO).subscribe(c => this.category = c,()=>this.toastr.success("Editada com sucesso"),()=>this.ngOnInit());
+      {categoryId,categoryName,categoryParentId} as categoryPutDTO).subscribe(c => {this.category = c;this.toastr.success("Editada com sucesso");this.ngOnInit()});
     return
   }
 

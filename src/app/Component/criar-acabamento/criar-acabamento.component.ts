@@ -37,7 +37,7 @@ export class CriarAcabamentoComponent implements OnInit {
       this.toastr.error("Parametros em falta");
       return;
     }
-    this.finishService.postFinish({finishName} as criarFinishDTO).subscribe(fin=>{this.finish.push(fin)},()=>this.toastr.success("ACABAMENTO CRIADO COM SUCESSO"));
+    this.finishService.postFinish({finishName} as criarFinishDTO).subscribe(fin=>{this.finish.push(fin);this.toastr.success("ACABAMENTO CRIADO COM SUCESSO");});
   }
 
   

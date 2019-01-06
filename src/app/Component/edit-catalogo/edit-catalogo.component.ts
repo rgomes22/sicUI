@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Catalogo } from 'src/app/model/Catalogo';
 import { CatalogoService } from 'src/app/Services/catalogoService';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class EditCatalogoComponent implements OnInit {
 
   constructor(
     private location: Location, 
-    private catalogoService: CatalogoService
+    private catalogoService: CatalogoService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -50,7 +52,7 @@ getCatalogos(): void {
   //delete do Catálogo
   delete(catalog: Catalogo): void {
     this.allCatalogos = this.allCatalogos.filter(h => h !== catalog);
-    this.catalogoService.delete(catalog.catalogId).subscribe();
+    this.catalogoService.delete(catalog.catalogId).subscribe(c =>{this.toastr.success("Deleted"); this.ngOnInit();});
   }
 
 }

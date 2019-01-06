@@ -34,7 +34,7 @@ export class CollectionEditComponent implements OnInit {
       this.toastr.error("The space must contain an element", "Error");
     }else{
       let productId = parseInt(p.productId);
-      this.colecoesService.removeProduto(this.colection.collectionId, productId).subscribe(c => this.colection = c);
+      this.colecoesService.removeProduto(this.colection.collectionId, productId).subscribe(c => {this.colection = c; this.toastr.success("Deleted"); this.ngOnInit();});
     }
   }
 
@@ -58,7 +58,7 @@ export class CollectionEditComponent implements OnInit {
     let collectionDescription = description;
 
     this.colecoesService.putColecao(col.collectionId,
-      {collectionId, collectionName, collectionDescription} as colecaoPutDTO).subscribe(c => this.colection = c);
+      {collectionId, collectionName, collectionDescription} as colecaoPutDTO).subscribe(c => {this.colection = c; this.toastr.success("Editado"); this.ngOnInit();});
 
     return
   
@@ -76,7 +76,7 @@ export class CollectionEditComponent implements OnInit {
       this.toastr.error("The space must contain an element", "Error");
     }else{
       let productId = this.selectedProductId;
-      this.colecoesService.addProduto(col.collectionId, productId).subscribe(c => this.colection = c);
+      this.colecoesService.addProduto(col.collectionId, productId).subscribe(c => {this.colection = c; this.toastr.success("Adicionado");this.ngOnInit()});
     }
     
   }

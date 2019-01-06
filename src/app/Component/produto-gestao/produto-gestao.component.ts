@@ -47,7 +47,7 @@ export class ProdutoGestaoComponent implements OnInit {
   //delete do produto
   delete(produto: Produto): void {
     this.allProdutos = this.allProdutos.filter(h => h !== produto);
-    this.produtosService.delete(produto).subscribe(()=>this.toastr.success("APAGADO O PRODUTO"),()=>this.getProdutos());
+    this.produtosService.delete(produto).subscribe(e=>{this.toastr.success("APAGADO O PRODUTO");this.getProdutos();});
   }
 
 }

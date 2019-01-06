@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 
 import { Colecao } from 'src/app/model/Colecao';
 import { ColecoesService } from 'src/app/Services/colecoesService';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -24,7 +25,8 @@ export class EditColecaoComponent implements OnInit {
 
   constructor(
     private location: Location, 
-    private colecoesService: ColecoesService
+    private colecoesService: ColecoesService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -34,7 +36,7 @@ export class EditColecaoComponent implements OnInit {
 
   getColecao(colection: Colecao){
     let id = parseInt(colection.collectionId);
-    this.colecoesService.getColecao(id).subscribe(d=>this.selectedColecao=d);
+    this.colecoesService.getColecao(id).subscribe(d=>{this.selectedColecao=d; this.ngOnInit();});
   } 
 
   goBack(): void {
@@ -53,7 +55,7 @@ export class EditColecaoComponent implements OnInit {
   delete(colecao: Colecao): void {
     this.allColecoes = this.allColecoes.filter(h => h !== colecao);
     console.log(colecao.collectionId);
-    this.colecoesService.delete(colecao.collectionId).subscribe();
+    this.colecoesService.delete(colecao.collectionId).subscribe(c =>{this.toastr.success("Apagado"); this.ngOnInit();});
   }
 
 }

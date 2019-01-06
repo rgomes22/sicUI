@@ -7,6 +7,7 @@ import { Finish } from 'src/app/model/Finish';
 import { MaterialFinish } from 'src/app/model/MaterialFinish';
 import { Price } from 'src/app/model/Price';
 import { ToastrService } from 'ngx-toastr';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-material-finish-gestao',
@@ -35,6 +36,7 @@ export class MaterialFinishGestaoComponent implements OnInit {
     private finService : FinishService,
     private allService : MaterialFinishService,
     private toastr : ToastrService,
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -57,7 +59,9 @@ export class MaterialFinishGestaoComponent implements OnInit {
       this.arrayMateriais = array;
     });
   }
-
+  goBack(): void {
+    this.location.back();
+  } 
   
   getFinish(): void{
     this.finService.getAcabamentos().subscribe(array => {

@@ -36,7 +36,7 @@ export class CatalogEditComponent implements OnInit {
       this.toastr.error("The space must contain an element", "Error");
     }else{
       let productId = parseInt(p.productId);
-      this.catalogoService.removeProduto(this.catalog.catalogId, productId).subscribe(c => this.catalog = c);
+      this.catalogoService.removeProduto(this.catalog.catalogId, productId).subscribe(c =>{ this.catalog = c; this.toastr.success("Removido");this.ngOnInit();});
     }
   }
 
@@ -60,7 +60,7 @@ export class CatalogEditComponent implements OnInit {
     let catalogDescription = description;
 
     this.catalogoService.putCatalogo(cat.catalogId,
-      {catalogId, catalogName, catalogDescription} as catalogoPutDTO).subscribe(c => this.catalog = c);
+      {catalogId, catalogName, catalogDescription} as catalogoPutDTO).subscribe(c => {this.catalog = c; this.toastr.success("Editado")});
 
     return
   
@@ -78,7 +78,7 @@ export class CatalogEditComponent implements OnInit {
       this.toastr.error("The space must contain an element", "Error");
     }else{
       let productId = this.selectedProductId;
-      this.catalogoService.addProduto(cat.catalogId, productId).subscribe(c => this.catalog = c);
+      this.catalogoService.addProduto(cat.catalogId, productId).subscribe(c => {this.catalog = c; this.toastr.success("Adicionado"); this.ngOnInit();});
     }
     
   }

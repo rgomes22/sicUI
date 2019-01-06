@@ -49,7 +49,7 @@ export class CriarCategoriaComponent implements OnInit {
     }
 
     let categoryParentID = this.parentCategoryID;
-    this.categoryService.postCategoria({categoryName,categoryParentID} as criarCategoriaDTO).subscribe(prod=>{this.categorias.push(prod)},()=>this.getCategories(),()=>this.toastr.success("CATEGORIA CRIADA"));
+    this.categoryService.postCategoria({categoryName,categoryParentID} as criarCategoriaDTO).subscribe(prod=>{this.categorias.push(prod);this.getCategories();this.toastr.success("CATEGORIA CRIADA");});
   }
 
   adicionarPai(id: number):void
