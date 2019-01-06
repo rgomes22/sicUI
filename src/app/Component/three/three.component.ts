@@ -58,6 +58,8 @@ export class ThreeComponent implements AfterViewInit, OnInit {
 
   private plane: THREE.Mesh;
 
+  private onPositioning : THREE.Object3D;
+
   private axis: AxesHelper;
 
   @Input() length: number = 400; //linha vermelha
@@ -231,6 +233,7 @@ export class ThreeComponent implements AfterViewInit, OnInit {
     var drawerUnit = new DrawerUnit(this.message.length, 100, this.message.depth, this.thickness);
     /*Tirar as posiçoes depois */
     var a = new THREE.Vector3(0, 300, 0);
+    this.objectToBeAttached = drawerUnit;
     drawerUnit.position(a);
     /**** */
 
@@ -259,6 +262,7 @@ export class ThreeComponent implements AfterViewInit, OnInit {
 
   @HostListener('click', ['$event.target'])
   onClick(btn) {
+  // this.objectToBeAttached = null;
   }
 
 
