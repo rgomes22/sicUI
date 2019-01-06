@@ -1,0 +1,14 @@
+<div style="text-align:left">
+  <h2>{{titulo}}</h2>
+  <button (click)="goBack()">Back</button>
+</div>
+
+<div style="text-align: center">
+  <h3>{{listagem}}</h3>
+  <li *ngFor="let cat of allCatalogos" [class.selected]="cat === selectedCatalogo" (click)="onSelect(cat)">
+    <span class="badge">{{cat.catalogName}}</span>
+    <button class="delete" title="Delete Catálogo" (click)="delete(cat)"> x </button>
+  </li>
+</div>
+
+<app-editar-catalogo [catalog]="selectedCatalogo"></app-editar-catalogo>

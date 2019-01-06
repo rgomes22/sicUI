@@ -1,18 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthServiceService } from 'src/app/Services/auth-service.service';
-import { AuthDataService } from 'src/app/Services/auth-data.service';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { AuthServiceService } from "src/app/Services/auth-service.service";
+import { AuthDataService } from "src/app/Services/auth-data.service";
+import { IsRoleService } from "src/app/Services/is-role.service";
 
 @Component({
-  selector: 'app-dash',
-  templateUrl: './dash.component.html',
-  styleUrls: ['./dash.component.css']
+  selector: "app-dash",
+  templateUrl: "./dash.component.html",
+  styleUrls: ["./dash.component.css"]
 })
 export class DashComponent implements OnInit {
-
   public isAuth: boolean;
 
-  constructor(public router: Router, private authService: AuthServiceService, private authDataService: AuthDataService) {
+  constructor(
+    public router: Router,
+    private authService: AuthServiceService,
+    private authDataService: AuthDataService,
+    private roleService: IsRoleService
+  ) {
     if (this.authService.isAuthenticated()) {
       this.isAuth = true;
     } else {
@@ -29,15 +34,17 @@ export class DashComponent implements OnInit {
     }
     console.log(this.isAuth); */
     //return this.isAuth;
-    this.authDataService.currentMessage.subscribe(isAuth => this.isAuth = isAuth);
+    this.authDataService.currentMessage.subscribe(
+      isAuth => (this.isAuth = isAuth)
+    );
   }
 
   login(): void {
-    this.router.navigate(['login']);
+    this.router.navigate(["login"]);
   }
 
   register(): void {
-    this.router.navigate(['register']);
+    this.router.navigate(["register"]);
   }
 
   updateIsAuth(): void {
@@ -51,6 +58,7 @@ export class DashComponent implements OnInit {
     this.authService.destroyTokens();
     this.isAuth = false;
     this.authDataService.changeAuth(this.isAuth);
-    this.router.navigate[''];
+    this.roleService.changeRole(false, false);
+    this.router.navigate[""];
   }
 }

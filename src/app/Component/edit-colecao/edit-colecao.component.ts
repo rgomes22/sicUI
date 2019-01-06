@@ -17,7 +17,9 @@ export class EditColecaoComponent implements OnInit {
   allColecoes: Colecao[];
 
   onSelect(colection: Colecao): void {
-    this.selectedColecao = colection;
+    let id = parseInt(colection.collectionId);
+    this.colecoesService.getColecao(id).subscribe(d=>this.selectedColecao=d);
+ 
   }
 
   constructor(
@@ -29,6 +31,11 @@ export class EditColecaoComponent implements OnInit {
     this.getColecoes();
   
   }
+
+  getColecao(colection: Colecao){
+    let id = parseInt(colection.collectionId);
+    this.colecoesService.getColecao(id).subscribe(d=>this.selectedColecao=d);
+  } 
 
   goBack(): void {
   this.location.back();
@@ -45,7 +52,8 @@ export class EditColecaoComponent implements OnInit {
   //delete da coleção
   delete(colecao: Colecao): void {
     this.allColecoes = this.allColecoes.filter(h => h !== colecao);
-    this.colecoesService.delete(colecao).subscribe();
+    console.log(colecao.collectionId);
+    this.colecoesService.delete(colecao.collectionId).subscribe();
   }
 
 }

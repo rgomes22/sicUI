@@ -6,6 +6,7 @@ import { Encomenda } from 'src/app/model/Encomenda';
 import { ActivatedRoute } from '@angular/router';
 import { EncomendaService } from 'src/app/Services/encomenda.service';
 import { addItemEncomendaDTO } from 'src/app/DTOS/addItemEncomendaDTO';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-encomenda-detail',
   templateUrl: './encomenda-detail.component.html',
@@ -21,7 +22,8 @@ export class EncomendaDetailComponent implements OnInit {
   constructor(private location : Location,
               private itemService : ItemService,
               private route: ActivatedRoute,
-              private encomendaService: EncomendaService
+              private encomendaService: EncomendaService,
+              private toastr: ToastrService
     ) { }
 
   ngOnInit() {
@@ -50,13 +52,13 @@ export class EncomendaDetailComponent implements OnInit {
 
   addItemToOrder():void{
       let idItem = this.itemAcresentar;
-      this.encomendaService.addItem( this.encomenda.id, {idItem} as addItemEncomendaDTO).subscribe(i => {this.encomenda = i; this.ngOnInit();});
+      this.encomendaService.addItem( this.encomenda.id, {idItem} as addItemEncomendaDTO).subscribe(i => {this.encomenda = i;this.toastr.success("Adicionado com sucesso"); this.ngOnInit();});
       return
   }
 
   removeItemToOrder( item : Item):void{
     let idItem = item.id;
-    this.encomendaService.removeItem( this.encomenda.id, {idItem} as addItemEncomendaDTO).subscribe(i => this.encomenda = i,()=>this.ngOnInit());
+    this.encomendaService.removeItem( this.encomenda.id, {idItem} as addItemEncomendaDTO).subscribe(i => {this.encomenda = i;this.toastr.success("Eliniado com sucesso");this.ngOnInit();});
     return
 }
 

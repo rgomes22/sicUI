@@ -13,6 +13,7 @@
     <div *ngIf="produto">
 
       <h4>Produto: {{produto.productName}}</h4>
+      <h4>Categoria Produto: {{produto.productCategory.categoryName}}</h4>
     </div>
     <h4>Descricao: {{item.descricao}}</h4>
     <h4>Width: {{item.width}}</h4>
@@ -21,6 +22,8 @@
 
     <h4>Material: {{item.material}}</h4>
     <h4>Finish: {{item.finish}}</h4>
+    <h4>Preco: {{item.price}}</h4>
+
     <p></p>
     <hr>
     <div style="text-align:center">
@@ -128,10 +131,10 @@
         </label>
         <p></p>
         <button (click)="createFilho(Nome.value,Height.value,Depth.value,Width.value)">Criar</button>
+        <button (click)="drawChild(Height.value,Depth.value,Width.value)">Preview</button>
       </div>
-      <div id="canvas" class="split left">
-          <app-three [size]="200" [rotationSpeedX]="0.005" [rotationSpeedY]="0.01" [cameraZ]="500" [cameraY]="400" [cameraX]="0"
-          [fieldOfView]="70" [nearClipping]="1" [farClipping]="100000"></app-three>
+      <div id="canvas" class="split left"  >
+          <app-three  [size]="200" [cameraZ]="500" [cameraY]="400" [cameraX]="0" [fieldOfView]="70" [nearClipping]="1" [farClipping]="100000" [length]="400" [height]="700" [depth]="200"></app-three>
       </div>
     </div>
 

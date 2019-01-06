@@ -12,7 +12,7 @@ export class Item{
 
     material: string;
     finish: string;
-
+    price: string;
     itemFilhos : Item[];
     child: boolean;
 }

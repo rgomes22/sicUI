@@ -41,10 +41,9 @@ export class EncomendaService {
     );
   }
 
-  encomenda_submit(encomenda : string): Observable<Encomenda>
+  encomenda_submit(id : string): Observable<Encomenda>
   {
-  
-     const url = `${this.urlSic}/encomendas/${encomenda}/submit`;
+     const url = `${this.urlSic}/encomendas/${id}/submit`;
      return this.httpClient.get<Encomenda>(url).pipe(
        tap(_ => this.log(`submit`)),
        catchError(this.handleError<Encomenda>(``))
@@ -53,8 +52,8 @@ export class EncomendaService {
   getEncomenda( id: string ): Observable<Encomenda>{
     const url = `${this.urlSic}/encomendas/${id}`;
     return this.httpClient.get<Encomenda>(url).pipe(
-      tap(_ => this.log(`fetched item id=${id}`)),
-      catchError(this.handleError<Encomenda>(`get item id=${id}`))
+      tap(_ => this.log(`fetched item id`)),
+      catchError(this.handleError<Encomenda>(`get item id`))
     );
   }
 
@@ -63,7 +62,6 @@ export class EncomendaService {
     const url2 = `${this.urlSic}/encomendas/${id}/addItem`;
     
     return this.httpClient.put<Encomenda>(url2,item,httpOptions).pipe(
-      tap(_ => alert("Item adicionado com sucesso")),
       catchError(this.handleError<Encomenda>(`add item`))
     );
   }
@@ -73,7 +71,6 @@ export class EncomendaService {
     const url2 = `${this.urlSic}/encomendas/${id}/removeItem`;
     
     return this.httpClient.put<Encomenda>(url2,item,httpOptions).pipe(
-      tap(_ => alert("Item removido com sucesso")),
       catchError(this.handleError<Encomenda>(`removido item`))
     );
   }

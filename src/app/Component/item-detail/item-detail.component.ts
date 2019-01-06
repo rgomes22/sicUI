@@ -10,6 +10,10 @@ import { Produto } from '../../model/Produto';
 import { ProdutosService } from '../../Services/produtos.service';
 import { MaterialFinishService } from '../../Services/material-finish.service';
 
+import { ThreeServiceService } from '../../Services/three-Service.service';
+import { Data } from 'src/app/model/Data';
+import { send } from 'q';
+
 
 @Component({
   selector: 'app-item-detail',
@@ -27,19 +31,22 @@ export class ItemDetailComponent implements OnInit {
   MaterialIdEdit: number;
   FinishIdEdit: number;
 
+  private message: Data = new Data();
+
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private itemService: ItemService
     , private materialFinishService: MaterialFinishService,
-    private ProdutosService: ProdutosService) { }
+    private ProdutosService: ProdutosService,
+    private ThreeService: ThreeServiceService) { }
 
   ngOnInit() {
 
     this.getItem();
     this.getMfs();
     this.getProdutos();
-    
+
 
 
   }
@@ -51,14 +58,23 @@ export class ItemDetailComponent implements OnInit {
 
     }
     let idP = parseInt(this.item.idproduto);
-    this.ProdutosService.getProduto(idP).subscribe(p => this.produto = p, p => console.log(p.productName));
+    this.ProdutosService.getProduto(idP).subscribe(p => {
+      this.produto = p;
+      this.message.category = this.produto.productCategory;
+      this.sendMessage();
+      });
+      
   }
 
   getItem(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.itemService.getItem(id)
-      .subscribe(item => this.item = item, () => console.log('oi'), () => this.getProduto());
+      .subscribe(item =>{ this.item = item;this.message.height=this.item.height;
+        this.message.depth=this.item.depth;
+        this.message.length=this.item.width;
+      }, () => console.log('oi'), () => {this.getProduto();}  );
 
+      
     // this.location.go(this.location.path());
 
   }
@@ -100,6 +116,29 @@ export class ItemDetailComponent implements OnInit {
     // this.location.go(this.location.path());
   }
 
+  drawChild(Height: number, Depth: number, Width: number): void {
+    if (!Height || !Width || !Depth ) {
+      alert("TEM PARAMETROS EM FALTA");
+      return;
+    }
+    if (!this.MaterialId || !this.FinishId || !this.ProductId) {
+      alert("TEM DE SELECIONAR OPCOES NAS CAIXAS DE OPCAO");
+      return;
+    }
+    
+    this.allProdutos.forEach(element => {
+     
+      if( Number(element.productId) == this.ProductId ){
+        this.message.category= element.productCategory;
+      }
+    });
+    
+    this.message.depth=Depth;
+    this.message.height=Height;
+    this.message.length=Width;
+    this.sendMessage();
+  }
+
   editarItem(Nome: string, Height: number, Depth: number, Width: number): void {
     if (!Nome && !Height && !Depth && !Width && !this.MaterialIdEdit && !this.FinishIdEdit) {
       alert("TEM DE DEFINIR PARAMETROS DE EDIÇAO");
@@ -133,6 +172,18 @@ export class ItemDetailComponent implements OnInit {
     let id = this.item.id;
     this.itemService.editParentItem({ Nome, ProductId, MaterialId, FinishId, Height, Depth, Width } as criarItemFilhoDTO, id).subscribe(it => this.item = it);
 
+    this.allProdutos.forEach(element => {
+     
+      if( Number(element.productId) == this.ProductId ){
+        this.message.category= element.productCategory;
+      }
+    });
+    
+    this.message.depth=Depth;
+    this.message.height=Height;
+    this.message.length=Width;
+    this.sendMessage();
+
   }
 
   productOp(value: number): void {
@@ -160,6 +211,10 @@ export class ItemDetailComponent implements OnInit {
     this.FinishIdEdit = value;
     console.log(value);
     // alert(value);
+  }
+
+  sendMessage() {
+    this.ThreeService.sendMessage(this.message);
   }
 
 }

@@ -22,6 +22,7 @@ export class ColecoesService {
   private urlGetColecoes = 'https://3db-sic-webapi.azurewebsites.net/api/Collection';
   private urlPostColecao = 'https://3db-sic-webapi.azurewebsites.net/api/Collection';
   private urlPutColecao = 'https://3db-sic-webapi.azurewebsites.net/api/Collection';
+  private urlAddProduto = 'https://3db-sic-webapi.azurewebsites.net/api/Collection';
   constructor(private httpClient: HttpClient) { }
 
   getColecoes(): Observable<Colecao[]> {
@@ -34,7 +35,8 @@ export class ColecoesService {
 
   putColecao(id: string, colecao: colecaoPutDTO): Observable<Colecao> {
     const url2 = `${this.urlPutColecao}/${id}`;
-    alert("put url " + url2);
+    //alert("put url " + url2);
+   // alert(colecao.collectionDescription);
     return this.httpClient.put<Colecao>(url2, colecao, httpOptions).pipe(
       tap(_ => this.log(`put id`)),
       catchError(this.handleError<Colecao>(`put id`))
@@ -66,8 +68,8 @@ export class ColecoesService {
   don't send data as you did with put and post.
   still send the httpOptions. 
   */
-  delete(colecao: Colecao | number): Observable<Colecao> {
-    const id = typeof colecao === 'number' ? colecao : colecao.colecaoId;
+  delete(colecao: string): Observable<Colecao> {
+    const id = colecao
     const url = `${this.urlGetColecoes}/${id}`;
     return this.httpClient.delete<Colecao>(url, httpOptions).pipe(
       tap(_ => this.log(`Delete da Colecao id`)),
@@ -75,6 +77,23 @@ export class ColecoesService {
     );
   }
 
+  addProduto(id: string, productId: number): Observable<Colecao>{
+    const url2 = `${this.urlAddProduto}/${id}/add/${productId}`;
+  //  alert("put url " + url2);
+    return this.httpClient.put<Colecao>(url2, httpOptions).pipe(
+      tap(_ => this.log(`put id`)),
+      catchError(this.handleError<Colecao>(`put id`))
+    );
+  }
+
+  removeProduto(id: string, productId: number): Observable<Colecao>{
+    const url2 = `${this.urlAddProduto}/${id}/delete/${productId}`;
+  //  alert("put url " + url2);
+    return this.httpClient.put<Colecao>(url2, httpOptions).pipe(
+      tap(_ => this.log(`put id`)),
+      catchError(this.handleError<Colecao>(`put id`))
+    );
+  }
 
   private log(message: string) {
     console.log(`Collection service: ${message}`);

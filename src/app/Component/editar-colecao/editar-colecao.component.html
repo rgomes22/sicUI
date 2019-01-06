@@ -1,7 +1,7 @@
 <div *ngIf="colection">
 
   <div style="width: 600px; float: left; margin-left: 50px">
-    <h2>{{colection.colectionName | uppercase}} Editor</h2>
+    <h2>{{colection.collectionName | uppercase}} Editor</h2>
 
     <label>Name:
       <input type="text" #NameE />
@@ -12,16 +12,35 @@
       </label>
     </div>
     <button style="margin-bottom: 50px" (click)="editarColecao(colection,NameE.value,Description.value)">
-        Submeter Edição
-      </button>
+      Submeter Edição
+    </button>
+    <p></p>
+    <div>
+      <label>Inserir Produto:
+        <select name="selectedProductId" (change)="selectProduct($event.target.value)" class="select-width form-control">
+          <option value="-1">Escolha um Produto</option>
+          <option *ngFor="let prod of produtos" value="{{prod.productId}}">{{prod.productId}}
+            {{prod.productName}}</option>
+        </select>
+      </label>
+    </div>
+    <button style="margin-bottom: 50px" (click)="addProduct(colection)">
+      Adicionar Produto
+    </button>
     <p></p>
     <h3>DADOS DA COLEÇÃO:</h3>
-    <span>DESCRIÇÃO: </span>{{colection.colecaoDescription}}
+    <span>NOME: </span>{{colection.collectionName}}
+    <p></p>
+    <span>DESCRIÇÃO: </span>{{colection.collectionDescription}}
     <p></p>
     <p>
       PRODUTOS:
     </p>
-    <li *ngFor="let p of colection.colecaoProdutos">
-      <span>{{p.productName}}</span>
-    </li>
-</div>
+    <div>
+      <li *ngFor="let m of colection.products">
+      <span>{{m.productId}}{{m.productName}}</span>
+      <button class="delete" title="delete colecão" (click)="removeP(m)"> x </button>
+
+      </li>
+    </div>
+  </div>

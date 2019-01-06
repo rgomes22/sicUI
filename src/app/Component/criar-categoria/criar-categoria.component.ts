@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { CategoryServiceService } from '../../Services/category-service.service';
 import { Category } from 'src/app/model/Category';
 import { criarCategoriaDTO } from 'src/app/DTOS/criarCategoriaDTO';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-criar-categoria',
@@ -20,7 +21,8 @@ export class CriarCategoriaComponent implements OnInit {
   
   constructor(
     private location: Location,
-    private categoryService:CategoryServiceService) { }
+    private categoryService:CategoryServiceService,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
     
@@ -42,12 +44,12 @@ export class CriarCategoriaComponent implements OnInit {
    
     if(!categoryName ||
       !this.parentCategoryID ){
-      alert("Parametros em falta");
+      this.toastr.error("Parametros em falta");
       return;
     }
 
     let categoryParentID = this.parentCategoryID;
-    this.categoryService.postCategoria({categoryName,categoryParentID} as criarCategoriaDTO).subscribe(prod=>{this.categorias.push(prod)},()=>this.getCategories(),()=>alert("CATEGORIA CRIADA"));
+    this.categoryService.postCategoria({categoryName,categoryParentID} as criarCategoriaDTO).subscribe(prod=>{this.categorias.push(prod)},()=>this.getCategories(),()=>this.toastr.success("CATEGORIA CRIADA"));
   }
 
   adicionarPai(id: number):void

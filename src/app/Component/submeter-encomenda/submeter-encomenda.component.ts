@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import {EncomendaService} from '../../Services/encomenda.service'
 import { Encomenda } from 'src/app/model/Encomenda';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-submeter-encomenda',
@@ -10,10 +11,10 @@ import { Encomenda } from 'src/app/model/Encomenda';
 })
 export class SubmeterEncomendaComponent implements OnInit {
 
-  encomendaSelecionada : string;
   allEncomendas: Encomenda[];
+  encomendaGet : Encomenda= new Encomenda;
   constructor(private location:Location,
-              private encomendaService: EncomendaService) { }
+              private encomendaService: EncomendaService,private toastr: ToastrService) { }
 
   ngOnInit() {
     this.getEncomendas();
@@ -30,17 +31,27 @@ export class SubmeterEncomendaComponent implements OnInit {
      });
   }
 
+  getEncomenda(value: string): void {    
+    this.encomendaService.getEncomenda(value)
+    .subscribe(encomenda => {this.encomendaGet = encomenda;});
 
-  selectOrder(value: string): void {
-    this.encomendaSelecionada = value;
-    console.log(value);
     // alert(value);
   }
-
   submitEncomenda():void {
-  
-    let encomenda = this.encomendaSelecionada;
-   this.encomendaService.encomenda_submit(encomenda).subscribe(enc => {this.allEncomendas.push(enc); alert("Submetida com sucesso")});
+    if(this.encomendaGet.estado=='criada')
+    {
+      if(this.encomendaGet.itens !== undefined && this.encomendaGet.itens.length > 0)
+      {
+        let encomenda = this.encomendaGet;
+        this.encomendaService.encomenda_submit(encomenda.id).subscribe(enc => {this.allEncomendas.push(enc); this.toastr.success("Submetida com sucesso"); this.ngOnInit();});
+      }
+      else{
+        this.toastr.error('Não tem itens associados');
+      }
+    }
+    else{
+      this.toastr.error('Estado da encomenda selecionada:' + this.encomendaGet.estado);
+    }
   }
 
   

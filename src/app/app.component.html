@@ -5,14 +5,20 @@
   </h2>
   <app-dash></app-dash>
   <nav>
-    <a routerLink ="/encomenda"> ENCOMENDAS</a>
-  <p></p>
-  <a routerLink = "/planos">PLANO DE ENCOMENDAS</a>
-  <p></p>
-  
-  <a routerLink ="/catalogo"> GESTÃO DE PRODUTOS</a>
-  <p></p>
-  <a routerLink ="/gerir-colecao"> GESTÃO DE COLEÇÔES</a>
+    <p></p>
+    <a routerLink="/ver-colecoes">VER COLEÇÕES</a>
+    <p></p>
+    <a routerLink="/ver-catalogos">VER CATÁLOGOS</a>
+    <p></p>
+    <a *ngIf="isCliente" routerLink="/encomenda"> ENCOMENDAS</a>
+    <p></p>
+    <a *ngIf="isGestor" routerLink="/planos">PLANO DE ENCOMENDAS</a>
+    <p></p>
+    <a *ngIf="isGestor" routerLink="/catalogo"> GESTÃO DE PRODUTOS</a>
+    <p></p>
+    <a *ngIf="isGestor" routerLink="/gerir-colecao"> GESTÃO DE COLEÇÔES</a>
+    <p></p>
+    <a *ngIf="isGestor" routerLink="/gerir-catalogo"> GESTÃO DE CATÁLOGOS</a>
   </nav>
   <hr>
 </div>

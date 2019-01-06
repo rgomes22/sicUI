@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { Scene } from 'three';
 import {Obj3D} from '../interfaces/Obj3D';
 import { dependenciesFromGlobalMetadata } from '@angular/compiler/src/render3/r3_factory';
+import changeMaterial from '../functions/MaterialChange';
 
 export class Shelf implements Obj3D{
     private shelf : THREE.Mesh;
@@ -30,6 +31,10 @@ export class Shelf implements Obj3D{
 
     rotate(angle: number, vector: THREE.Vector3) {
         this.shelf.rotateOnAxis(vector,angle);
+    }
+
+    applyTexture(texturePath: string) {
+        this.shelf.material = changeMaterial(texturePath);
     }
 
 }

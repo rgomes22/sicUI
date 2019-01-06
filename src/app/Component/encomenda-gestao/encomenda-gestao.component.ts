@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 
 import { Encomenda } from '../../model/Encomenda';
 import { EncomendaService } from '../../Services/encomenda.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-encomenda-gestao',
@@ -61,7 +62,7 @@ export class EncomendaGestaoComponent implements OnInit {
 cidadeSelecionada : string;
   constructor(
     private location : Location,
-    private encomendaService : EncomendaService
+    private encomendaService : EncomendaService,private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -77,17 +78,23 @@ cidadeSelecionada : string;
   }
 
   deleteEncomenda(encomenda: Encomenda): void {
-    this.allEncomendas = this.allEncomendas.filter(h => h !== encomenda);
-    this.encomendaService.deleteEncomenda(encomenda).subscribe(enc => alert("Apagado com sucesso"));
+    if(encomenda.estado=='criada')
+    {
+      this.encomendaService.deleteEncomenda(encomenda).subscribe(enc => this.toastr.success("Apagado com sucesso"));
+    }
+    else
+    {
+      this.toastr.error("Estado da encomenda: "+encomenda.estado);
+    }
   }
 
   createEncomenda(nome: string, pais: string, rua: string):void {
     
     if(!nome || !pais || !rua){
-      alert('MISSING PARAMETERS')
+      this.toastr.error('MISSING PARAMETERS')
       return;}
       let cidade = this.cidadeSelecionada;
-    this.encomendaService.createEncomenda({nome,pais,cidade,rua} as Encomenda).subscribe(enc => {this.allEncomendas.push(enc); alert("Criado com sucesso")});
+    this.encomendaService.createEncomenda({nome,pais,cidade,rua} as Encomenda).subscribe(enc => {this.allEncomendas.push(enc); this.toastr.success("Criado com sucesso")});
   }
   
   goBack(): void {
