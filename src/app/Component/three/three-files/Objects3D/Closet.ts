@@ -3,6 +3,7 @@ import { Scene } from 'three';
 import {Obj3D} from '../interfaces/Obj3D';
 import { Texturable } from '../interfaces/Texturable';
 import Attachable from '../interfaces/Attachable';
+import changeMaterial from '../functions/MaterialChange';
 export class Closet implements Obj3D ,Texturable,Attachable {
  
     //private objMesh : THREE.Mesh;
@@ -11,11 +12,15 @@ export class Closet implements Obj3D ,Texturable,Attachable {
 
     private closet : THREE.Group;
 
+    private parts : THREE.Mesh[];
+
     private attachPlane : THREE.Mesh;
 
     constructor(length : number , height : number, depth : number,thickness : number){
 
         this.closet = new THREE.Group();
+
+        this.parts = new Array();
 
         let material = new THREE.MeshPhongMaterial({ color:0x600907});
 
@@ -25,6 +30,7 @@ export class Closet implements Obj3D ,Texturable,Attachable {
     
         this.cube.position.x=length/2;
         this.cube.position.y=height/2+thickness;
+        this.parts.push(this.cube);
         this.closet.add(this.cube);
 
         /* LATERIAIS */
@@ -32,11 +38,13 @@ export class Closet implements Obj3D ,Texturable,Attachable {
         this.cube = new THREE.Mesh(geometry,material);
         this.cube.position.y=height/2+thickness;
         this.cube.position.z=depth/2;
+        this.parts.push(this.cube);
         this.closet.add(this.cube);
         this.cube = new THREE.Mesh(geometry,material);
         this.cube.position.y=height/2+thickness;
         this.cube.position.z=depth/2;
         this.cube.position.x=length;
+        this.parts.push(this.cube);
         this.closet.add(this.cube);
 
         /* TAMPOS */
@@ -45,17 +53,19 @@ export class Closet implements Obj3D ,Texturable,Attachable {
         this.cube.position.y=thickness/2;
         this.cube.position.z=depth/2;
         this.cube.position.x=length/2;
+        this.parts.push(this.cube);
         this.closet.add(this.cube);
 
         this.cube = new THREE.Mesh(geometry,material);
         this.cube.position.y=height+thickness/2;
         this.cube.position.z=depth/2;
         this.cube.position.x=length/2;
+        this.parts.push(this.cube);
         this.closet.add(this.cube);
 
         //AttachmentPlane
         var planeGeometry = new THREE.PlaneGeometry( length, height);
-        var planeMaterial = new THREE.MeshBasicMaterial( {wireframe : true , visible:true} );
+        var planeMaterial = new THREE.MeshBasicMaterial( {wireframe : false , visible:false} );
         this.attachPlane = new THREE.Mesh( planeGeometry, planeMaterial );
         this.attachPlane.position.x=length/2;
         this.attachPlane.position.y=height/2+thickness;
@@ -80,7 +90,7 @@ export class Closet implements Obj3D ,Texturable,Attachable {
     }
 
     applyTexture(texturePath: string) {
-        throw new Error("Method not implemented.");
+        this.parts.forEach(part => part.material = changeMaterial(texturePath));
     }
 
     attachSurfaces(): THREE.Object3D[] {

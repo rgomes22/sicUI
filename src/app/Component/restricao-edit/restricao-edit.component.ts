@@ -5,6 +5,7 @@ import { RestricoesService } from '../../Services/restricoes.service';
 import { Produto } from '../../model/Produto';
 import { restricaoPutDTO } from '../../DTOS/restricaoPutDTO'
 import { ProdutosService} from '../../Services/produtos.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -36,7 +37,7 @@ export class RestricaoEditComponent implements OnInit {
   restricaoWmin: number=0;
 
   constructor(
-    private restricaService: RestricoesService
+    private restricaService: RestricoesService,private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -64,12 +65,12 @@ export class RestricaoEditComponent implements OnInit {
     //let productPartId=this.restricao.productPartId;
     if( !restrictionMaxOccupationHeight1 && !restrictionMaxOccupationDepth1 && !restrictionMaxOccupationWidth1 && !restrictionMinOccupationHeigth1 && !restrictionMinOccupationDepth1 && !restrictionMinOccupationWidth1){
       if(!this.opcaoSelecionadaMandatoria && !this.opcaoSelecionadaMaterial){
-      alert("TEM DE PREENCHER PELO MENOS UM PARAMETRO");
+      this.toastr.error("TEM DE PREENCHER PELO MENOS UM PARAMETRO");
       return;}
     }
 
     if(restrictionMaxOccupationDepth1>1 || restrictionMaxOccupationHeight1>1 || restrictionMaxOccupationWidth1>1 || restrictionMinOccupationDepth1>=1 || restrictionMinOccupationHeigth1>=1 || restrictionMinOccupationWidth1>=1){
-      alert("A PERCENTAGEM DE OUCUPACAO DEVE ESTAR COMPREENDIDA ENTRE 0(0%) e 1(100%)");
+      this.toastr.error("A PERCENTAGEM DE OUCUPACAO DEVE ESTAR COMPREENDIDA ENTRE 0(0%) e 1(100%)");
       return;
     }
     

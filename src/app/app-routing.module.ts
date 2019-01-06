@@ -47,6 +47,7 @@ import { ErrorPageComponent } from './Component/error-page/error-page.component'
 import { RegisterComponent } from './Component/register/register.component';
 import { CriarAcabamentoComponent } from './Component/criar-acabamento/criar-acabamento.component';
 import { SubmeterEncomendaComponent } from './Component/submeter-encomenda/submeter-encomenda.component';
+import { MaterialFinishGestaoComponent } from './Component/material-finish-gestao/material-finish-gestao.component';
 
 import { CriarCatalogoComponent } from './Component/criar-catalogo/criar-catalogo.component';
 import { GerirCatalogoComponent } from './Component/gerir-catalogo/gerir-catalogo.component'
@@ -57,37 +58,36 @@ import { VerColecaoComponent } from './Component/ver-colecao/ver-colecao.compone
 import { VerCatalogoComponent } from './Component/ver-catalogo/ver-catalogo.component';
 import { VerCatalogosComponent } from './Component/ver-catalogos/ver-catalogos.component';
 
+import {AllRoleGuardService} from './Services/all-role-guard.service';
 
 const routes: Routes = [
   {path: 'catalogo', component : CatalogoComponent},
-  {path: 'encomenda', component : EncomendasComponent},
-  {path: 'gerir-colecao', component : GerirColecaoComponent},
-  {path: 'edit-colecao', component : EditColecaoComponent},
-  {path: 'editar-colecao', component : CollectionEditComponent},
-  {path: 'encomendas', component : EncomendaGestaoComponent},
-  {path: 'encomendas/:id', component : EncomendaDetailComponent},
-  {path: 'itens', component : ItemGestaoComponent},
-  {path: 'itens/:id', component : ItemDetailComponent},
-  {path: 'itens/:idPai/filho/:id',component : ItemFilhoDetailComponent},
-  {path: 'produtos', component : ProdutoGestaoComponent},
-  {path:  'materiais', component : MateriaisComponent},
-  {path:  'criar-produto', component : CriarProdutoComponent},
-  {path: 'restricao' , component : RestricaoGestaoComponent},
-  {path: 'planos', component : PlanoGestaoComponent},
-  {path: 'planos/:id', component: PlanoDetailComponent},
-  {path: 'dimensoes', component : DimensoesGestaoComponent},
-  {path:'restricao-edicao' , component : RestricaoEditComponent},
-  {path:'gerirCategoria' , component : GerirCategoriasComponent},
-  {path:'criarCategoria' , component : CriarCategoriaComponent}, //canActivate: [RoleGuard], data: {expectedRole: 'gestor'}},
-  //{path:'criarCategoria' , component : CriarCategoriaComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'criarCategoria'}},
-  //{path:'criar-colecao' , component : CriarColecaoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'criarCategoria'}},
-  {path:'criar-colecao' , component : CriarColecaoComponent},
-  {path:'criar-catalogo' , component : CriarCatalogoComponent},
-  {path: 'gerir-catalogo', component : GerirCatalogoComponent},
-  {path: 'edit-catalogo', component : EditCatalogoComponent},
-  {path: 'editar-catalogo', component : CatalogEditComponent},
+  {path: 'encomenda', component : EncomendasComponent, canActivate: [RoleGuard], data: {expectedRole: 'cliente', path:'encomenda'}},
+  {path: 'gerir-colecao', component : GerirColecaoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'gerir-colecao' }},
+  {path: 'edit-colecao', component : EditColecaoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'edit-colecao' }},
+  {path: 'editar-colecao', component : CollectionEditComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'editar-colecao' }},
+  {path: 'encomendas', component : EncomendaGestaoComponent, canActivate: [RoleGuard], data: {expectedRole: 'cliente', path:'encomendas' }},
+  {path: 'encomendas/:id', component : EncomendaDetailComponent, canActivate: [RoleGuard], data: {expectedRole: 'cliente', path:'encomendas' }},
+  {path: 'itens', component : ItemGestaoComponent, canActivate: [RoleGuard], data: {expectedRole: 'cliente', path:'itens' }},
+  {path: 'itens/:id', component : ItemDetailComponent, canActivate: [RoleGuard], data: {expectedRole: 'cliente', path:'itens' }},
+  {path: 'itens/:idPai/filho/:id',component : ItemFilhoDetailComponent, canActivate: [RoleGuard], data: {expectedRole: 'cliente', path:'itens' }},
+  {path: 'produtos', component : ProdutoGestaoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'gestor' }},
+  {path:  'materiais', component : MateriaisComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'materiais' }},
+  {path:  'criar-produto', component : CriarProdutoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'criar-produto' }},
+  {path: 'restricao' , component : RestricaoGestaoComponent,canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'restricao' }},
+  {path: 'planos', component : PlanoGestaoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'planos' }},
+  {path: 'planos/:id', component: PlanoDetailComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'planos' }},
+  {path: 'dimensoes', component : DimensoesGestaoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'dimensoes' }},
+  {path:'restricao-edicao' , component : RestricaoEditComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'restricao-edicao' }},
+  {path:'gerirCategoria' , component : GerirCategoriasComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'gerirCategoria' }},
+  {path:'criarCategoria' , component : CriarCategoriaComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'criarCategoria' }}, //canActivate: [RoleGuard], data: {expectedRole: 'gestor'}},
+  {path:'criar-colecao' , component : CriarColecaoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'criar-colecao' }},
+  {path:'criar-catalogo' , component : CriarCatalogoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'criar-catalogo' }},
+  {path: 'gerir-catalogo', component : GerirCatalogoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'gerir-catalogo' }},
+  {path: 'edit-catalogo', component : EditCatalogoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'edit-catalogo' }},
+  {path: 'editar-catalogo', component : CatalogEditComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'editar-catalogo' }},
   { path: 'error', component:ErrorPageComponent },
-  {path:'gerirAcabamentos' , component : GerirAcabamentosComponent},
+  {path:'gerirAcabamentos' , component : GerirAcabamentosComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'gerirAcabamentos' }},
   {path: 'login', component: LoginComponent, canActivate: [AuthLogin]},
   {path: 'register', component: RegisterComponent, canActivate: [AuthLogin]},
   {path: 'criarAcabamento', component: CriarAcabamentoComponent},
@@ -96,6 +96,10 @@ const routes: Routes = [
   {path: 'ver-colecao', component: VerColecaoComponent},
   {path: 'ver-catalogos', component: VerCatalogosComponent},
   {path: 'ver-catalogo', component: VerCatalogoComponent},
+
+  {path: 'criarAcabamento', component: CriarAcabamentoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'criarAcabamento' }},
+  {path: 'submeterEncomenda', component: SubmeterEncomendaComponent, canActivate: [RoleGuard], data: {expectedRole: 'cliente', path:'submeterEncomenda' }},
+  {path: 'materialFinish', component: MaterialFinishGestaoComponent, canActivate: [RoleGuard], data: {expectedRole: 'gestor', path:'materialFinish'}},
   { path: '**', redirectTo: '' }
 ];
 

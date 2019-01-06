@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit {
   public registerSuccess: boolean;
   private registerMessage: string;
 
-  pwdPattern = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}';
+  pwdPattern = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{16,}';
 
   constructor(private registerService: RegisterService, public dialog: MatDialog) {
     this.registerError = false;
@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
 
   getErrorMessagePass() {
     return this.pass.hasError('required') ? 'Introduz um valor' :
-      this.pass.hasError('pattern') ? 'A password tem de ter no mínimo 8 caracteres com pelo menos uma letra maiúscula, uma letra minúscula, um número e um caracter especial' :
+      this.pass.hasError('pattern') ? 'A password tem de ter no mínimo 16 caracteres com pelo menos uma letra maiúscula, uma letra minúscula, um número e um caracter especial' :
         '';
   }
 

@@ -58,13 +58,26 @@ export class ItemDetailComponent implements OnInit {
 
     }
     let idP = parseInt(this.item.idproduto);
-    this.ProdutosService.getProduto(idP).subscribe(p => {this.produto = p;this.message.category = p.productCategory;this.sendMessage()});
+    this.ProdutosService.getProduto(idP).subscribe(p => {
+      this.produto = p;
+      this.message.category = this.produto.productCategory;
+      this.message.child=false;
+      this.message.parent=true;
+      this.message.create=true;
+      this.message.preview=false;
+      this.sendMessage();
+      });
+      
   }
 
   getItem(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.itemService.getItem(id)
-      .subscribe(item => this.item = item, () => console.log('oi'), () => {this.getProduto();});
+      .subscribe(item =>{ this.item = item;this.message.height=this.item.height;
+        this.message.depth=this.item.depth;
+        this.message.length=this.item.width;
+        this.message.material=this.item.material;
+      }, () => console.log('oi'), () => {this.getProduto();}  );
 
       
     // this.location.go(this.location.path());
@@ -78,6 +91,7 @@ export class ItemDetailComponent implements OnInit {
   getMfs(): void {
     this.materialFinishService.getMaterialFinishes().subscribe(mfs => this.allMaterialFinishes = mfs);
   }
+
 
   goBack(): void {
     this.location.back();
@@ -104,6 +118,12 @@ export class ItemDetailComponent implements OnInit {
     let ProductId = this.ProductId;
     const id = this.route.snapshot.paramMap.get('id');
 
+    this.message.create=true;
+    this.message.child=true;
+    this.message.parent=false;
+    this.message.preview=false;
+    this.sendMessage();
+
     this.itemService.createChild({ Nome, ProductId, MaterialId, FinishId, Height, Depth, Width } as criarItemFilhoDTO, id).subscribe(it => { this.item.itemFilhos.push(it) });
     // this.location.go(this.location.path());
   }
@@ -125,9 +145,14 @@ export class ItemDetailComponent implements OnInit {
       }
     });
     
+    this.message.child=true;
+    this.message.parent=false;
+    this.message.create=false;
+    this.message.preview=true;
     this.message.depth=Depth;
     this.message.height=Height;
     this.message.length=Width;
+    this.message.material= String(this.MaterialId);
     this.sendMessage();
   }
 
@@ -164,6 +189,24 @@ export class ItemDetailComponent implements OnInit {
     let id = this.item.id;
     this.itemService.editParentItem({ Nome, ProductId, MaterialId, FinishId, Height, Depth, Width } as criarItemFilhoDTO, id).subscribe(it => this.item = it);
 
+    this.allProdutos.forEach(element => {
+     
+      if( Number(element.productId) == this.ProductId ){
+        this.message.category= element.productCategory;
+      }
+    });
+    this.message.parent=true;
+    this.message.child=false;
+    this.message.create=false;
+    this.message.preview=true;
+
+
+
+    this.message.depth=Depth;
+    this.message.height=Height;
+    this.message.length=Width;
+    this.sendMessage();
+
   }
 
   productOp(value: number): void {
@@ -176,6 +219,10 @@ export class ItemDetailComponent implements OnInit {
     console.log(value);
     // alert(value);
   }
+
+
+
+
   finishOp(value: number): void {
     this.FinishId = value;
     console.log(value);

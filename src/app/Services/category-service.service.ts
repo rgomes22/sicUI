@@ -61,7 +61,6 @@ export class CategoryServiceService {
     const id = typeof category === 'number' ? category : category.categoryId;
     const url = `${this.url}/${id}`;
     return this.http.delete<Category>(url, httpOptions).pipe(
-      tap(_=> alert("APAGADA COM SUCESSO")),
       catchError(this.handleError<Category>('DELETE CATEGORIA'))
     );
   }

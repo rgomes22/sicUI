@@ -39,7 +39,7 @@ export class MateriaisComponent implements OnInit {
       timePicker : true,
       format: 'dd-MM-yyyy hh:mm a',
       defaultOpen: false,
-      closeOnSelect: false
+      closeOnSelect: true
     }
   }
 
@@ -49,14 +49,13 @@ export class MateriaisComponent implements OnInit {
 
   getMateriais(): void {
     this.materiaisService.getMateriais().subscribe(data =>{
-      console.log('Materiais'+data);
       this.allMateriais = data;
     });
   }
 
   createMaterial(materialName: string, preco : number):void{
     if(!materialName || !preco){
-      this.toastr.error("Arguments Missing");
+      this.toastr.error("Arguments Missing", "Error");
       return;
     }
     var timestamp : number;
@@ -76,7 +75,7 @@ export class MateriaisComponent implements OnInit {
     this.materiaisService.createMaterial({materialName} as Material).subscribe(mat => {
       this.materiaisService.addPriceMaterial(mat.materialId,this.priceOfMaterial).subscribe(price =>{});
       this.getMateriais(); 
-      this.toastr.info("sdsdds");
+      this.toastr.success("Material Added with success","Success");
     });
     
 
@@ -84,13 +83,15 @@ export class MateriaisComponent implements OnInit {
 
   delete(mat : Material) : void{
     this.allMateriais = this.allMateriais.filter(h => h !== mat);
-    this.materiaisService.deleteMaterial(mat).subscribe();
+    this.materiaisService.deleteMaterial(mat).subscribe(h =>{this.toastr.success("Deleted with Success", "Success")});
+    
   }
 
   onSelect(material: Material): void {
     this.selectedMaterial = material;
     this.getMaterialPrice(this.selectedMaterial.materialId);
     this.getMaterialPriceHistory(this.selectedMaterial.materialId);
+    this.toastr.info("Material "+this.selectedMaterial.materialName+" selected","Info");
   }
 
   getMaterialPriceHistory(id:string):void{
@@ -119,7 +120,7 @@ export class MateriaisComponent implements OnInit {
   
   alterPrice(preco: number): void{
     if(!preco){
-     this.toastr.error("specify a price","Error");
+     this.toastr.error("Specify a price","Error");
      return;
     }
 
@@ -139,6 +140,8 @@ export class MateriaisComponent implements OnInit {
     this.materiaisService.addPriceMaterial(this.selectedMaterial.materialId,this.priceOfMaterial).subscribe(price =>{ 
       this.getMaterialPrice(this.selectedMaterial.materialId);
     });
+
+    this.toastr.success("Price altered with success","Success");
   }
 
 }

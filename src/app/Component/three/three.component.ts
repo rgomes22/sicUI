@@ -31,6 +31,7 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   private message: Data;
 
 
+
   /* HELPER PROPERTIES (PRIVATE PROPERTIES) */
   private camera: THREE.PerspectiveCamera;
 
@@ -57,6 +58,8 @@ export class ThreeComponent implements AfterViewInit, OnInit {
 
   private plane: THREE.Mesh;
 
+  private onPositioning : THREE.Object3D;
+
   private axis: AxesHelper;
 
   @Input() length: number = 400; //linha vermelha
@@ -72,7 +75,7 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   @Input()
   public size: number = 200;
 
-
+  private ratio: number = 6;
 
   public rootCategoria: Category;
 
@@ -113,6 +116,8 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   private pick: MousePicking;
 
   private objectToBeAttached: Obj3D;
+
+  private parentObject:Obj3D;
 
   /* DEPENDENCY INJECTION (CONSTRUCTOR) */
   constructor(private categoryService: CategoryServiceService,
@@ -197,17 +202,18 @@ export class ThreeComponent implements AfterViewInit, OnInit {
 
 
   private addCloset() {
-    var closet = new Closet(this.length, this.height, this.depth, this.thickness);
+    var closet = new Closet(this.message.length*this.ratio, this.message.height*this.ratio, this.message.depth*this.ratio, this.thickness);
+    
     this.scene.add(closet.mesh());
     this.pick = new MousePicking(this.camera, closet.attachSurfaces());
   }
 
   private addShlef() {
 
-    var shelf = new Shelf(this.length, this.thickness, this.depth, this.thickness);
+    var shelf = new Shelf(this.message.length, this.thickness, this.message.depth, this.thickness,);
 
     /*Tirar as posiçoes depois */
-    var a = new THREE.Vector3(this.length / 2, 500, this.depth / 2);
+    var a = new THREE.Vector3(this.message.length / 2, 500, this.message.depth / 2);
     shelf.position(a);
     /**** */
 
@@ -215,10 +221,10 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   }
 
   private addHanger() {
-    var hanger = new Hanger(2, this.length, this.thickness);
+    var hanger = new Hanger(2, this.message.length, this.thickness);
 
     /*Tirar as posiçoes depois */
-    var a = new THREE.Vector3(this.length / 2, 600, this.depth / 2);
+    var a = new THREE.Vector3(this.message.length / 2, 600, this.message.depth / 2);
     hanger.position(a);
     /**** */
 
@@ -227,9 +233,10 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   }
 
   private addDrawer() {
-    var drawerUnit = new DrawerUnit(this.length, 100, this.depth, this.thickness);
+    var drawerUnit = new DrawerUnit(this.message.length, 100, this.message.depth, this.thickness);
     /*Tirar as posiçoes depois */
     var a = new THREE.Vector3(0, 300, 0);
+    this.objectToBeAttached = drawerUnit;
     drawerUnit.position(a);
     /**** */
 
@@ -258,6 +265,7 @@ export class ThreeComponent implements AfterViewInit, OnInit {
 
   @HostListener('click', ['$event.target'])
   onClick(btn) {
+  // this.objectToBeAttached = null;
   }
 
 
@@ -304,12 +312,21 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   /**Metodo para desenhar de acordo com a categoria */
   public draw() {
 
+    this.checkIfExist();
+
     if (this.rootCategoria === undefined) {
       console.log("ROOT UNDEFINED");
       return;
     }
     console.log(this.rootCategoria.categoryName, "SITIO CERTO");
+    
+    if(this.message.category.categoryParentId!=null){
+      console.log(this.rootCategoria.categoryParentName, "SITIO CERTO pai categoria");
+      this.categoryService.getCategoryById(this.message.category.categoryParentId).subscribe(cat => this.rootCategoria = cat);
+    }
+    //if(this.checkIfExist()){
 
+    //}
     switch (this.rootCategoria.categoryName) {
       case this.armario: {
         this.addCloset();
@@ -328,11 +345,35 @@ export class ThreeComponent implements AfterViewInit, OnInit {
         break;
       }
       default: {
-        //statements; 
+        console.log("Categoria nao existe");
         break;
       }
     }
   }
+
+
+  
+
+  private  checkIfExist(){
+    if(this.message.parent && this.message.create){
+      /**Inicio da cena  */
+      console.log("PAI && CREATE");
+
+    }else if(this.message.parent && this.message.preview){
+      /**Edita o item pai */
+      console.log("PAI && PREVIEW");
+
+    }else if(this.message.child && this.message.create){
+      /**Cria o item filho e ja nao o pode editar */
+      console.log("FILHO && CREATE");
+
+    }else if(this.message.child && this.message.preview){
+      /**Altera o filho */
+      console.log("FILHO && PREVIEW");
+    }
+    
+  }
+
   /* LIFECYCLE */
 
   /**

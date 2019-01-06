@@ -53,8 +53,9 @@ import { AngularDateTimePickerModule } from 'angular2-datetimepicker'
 import { PlanoGestaoComponent } from './Component/plano-gestao/plano-gestao.component';
 import { PlanoDetailComponent } from './Component/plano-detail/plano-detail.component';
 import { TokenInterceptorService } from './token-interceptor.service';
-import{SubmeterEncomendaComponent} from './Component/submeter-encomenda/submeter-encomenda.component'
 
+import{SubmeterEncomendaComponent} from './Component/submeter-encomenda/submeter-encomenda.component'
+import { MaterialFinishGestaoComponent } from './Component/material-finish-gestao/material-finish-gestao.component'
 import { CriarCatalogoComponent } from './Component/criar-catalogo/criar-catalogo.component';
 import { GerirCatalogoComponent } from './Component/gerir-catalogo/gerir-catalogo.component'
 import { EditCatalogoComponent } from './Component/edit-catalogo/edit-catalogo.component';
@@ -64,6 +65,7 @@ import { VerColecoesComponent } from './Component/ver-colecoes/ver-colecoes.comp
 import { VerColecaoComponent } from './Component/ver-colecao/ver-colecao.component';
 import { VerCatalogoComponent } from './Component/ver-catalogo/ver-catalogo.component';
 import { VerCatalogosComponent } from './Component/ver-catalogos/ver-catalogos.component';
+
 export function tokenGetter() {
   return localStorage.getItem('token');
 }
@@ -111,7 +113,8 @@ export function tokenGetter() {
     VerColecoesComponent,
     VerColecaoComponent,
     VerCatalogoComponent,
-    VerCatalogosComponent
+    VerCatalogosComponent,
+    MaterialFinishGestaoComponent,
   ],
   imports: [
     NgbModule,

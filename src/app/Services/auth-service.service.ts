@@ -97,6 +97,12 @@ export class AuthServiceService {
     return decoded.email;
   }
 
+  public getRoleFromToken(): string {
+    const token = localStorage.getItem(TOKEN);
+    var decoded = jwt_decode(token);
+    return decoded.role;
+  }
+
   public getRefreshTokenFromToken(): string {
     const token = localStorage.getItem(REFRESH_TOKEN);
     //var decoded = jwt_decode(token);

@@ -4,11 +4,15 @@ import { Finish } from './Finish';
 
 export class Data{
 
-    material: Material;
+    material: string;
     length: number;
     height: number;
     depth: number;
     category: Category = new Category();
     finish: Finish;
+    parent:boolean;
+    child:boolean;
+    create:boolean;
+    preview:boolean;
     
 }
