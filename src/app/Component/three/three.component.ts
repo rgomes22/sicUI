@@ -25,7 +25,7 @@ import { CategoryServiceService } from '../../Services/category-service.service'
   templateUrl: './three.component.html',
   styleUrls: ['./three.component.css']
 })
-export class ThreeComponent implements AfterViewInit, OnInit{
+export class ThreeComponent implements AfterViewInit, OnInit {
 
   private message: Category;
 
@@ -71,19 +71,19 @@ export class ThreeComponent implements AfterViewInit, OnInit{
   @Input()
   public size: number = 200;
 
-  
+
 
   public rootCategoria: Category;
 
-  private armario : string = "armario";
+  private armario: string = "Armario";
 
-  private prateleira : string = "prateleira";
+  private prateleira: string = "prateleira";
 
-  private gavetas : string = "gavetas";
+  private gavetas: string = "gavetas";
 
-  private cabide : string = "cabide";
+  private cabide: string = "cabide";
 
-  
+
   //@Input()
   //public texture: string = '/assets/textures/crate.gif';
 
@@ -107,11 +107,11 @@ export class ThreeComponent implements AfterViewInit, OnInit{
   @Input('farClipping')
   public farClippingPane: number = 4000;
 
-  private dot : THREE.Points;
+  private dot: THREE.Points;
 
-  private pick  : MousePicking  ;
+  private pick: MousePicking;
 
-  private objectToBeAttached : Obj3D;
+  private objectToBeAttached: Obj3D;
 
   /* DEPENDENCY INJECTION (CONSTRUCTOR) */
   constructor(private categoryService: CategoryServiceService,
@@ -121,7 +121,17 @@ export class ThreeComponent implements AfterViewInit, OnInit{
 
 
   ngOnInit() {
-    this.ThreeService.currentMessage.subscribe(message => this.message = message);
+    this.ThreeService.currentMessage.subscribe(message => {
+      this.message = message;
+      if (!(message.categoryId === undefined)) {
+        this.categoryService.getCategoryById(this.message.categoryId)
+          .subscribe(data => {
+            this.rootCategoria = data;
+            console.log('Catategoria ' + this.rootCategoria);
+            this.draw();
+          });
+      }
+    });
   }
 
 
@@ -158,8 +168,8 @@ export class ThreeComponent implements AfterViewInit, OnInit{
 
 
     this.axis = new THREE.AxesHelper(2000); // add axis to the scene
-    this.pick = new MousePicking(this.camera,[]);
- 
+    this.pick = new MousePicking(this.camera, []);
+
     this.scene.add(this.axis);
 
   }
@@ -188,7 +198,7 @@ export class ThreeComponent implements AfterViewInit, OnInit{
   private addCloset() {
     var closet = new Closet(this.length, this.height, this.depth, this.thickness);
     this.scene.add(closet.mesh());
-    this.pick = new MousePicking(this.camera,closet.attachSurfaces());
+    this.pick = new MousePicking(this.camera, closet.attachSurfaces());
   }
 
   private addShlef() {
@@ -228,26 +238,26 @@ export class ThreeComponent implements AfterViewInit, OnInit{
   private addDoor() {
     var dotGeometry = new THREE.Geometry();
     dotGeometry.vertices.push(new THREE.Vector3(0, 0, 0));
-    var dotMaterial = new THREE.PointsMaterial({ size: 25, sizeAttenuation: false ,color : 0xff});
+    var dotMaterial = new THREE.PointsMaterial({ size: 25, sizeAttenuation: false, color: 0xff });
     this.dot = new THREE.Points(dotGeometry, dotMaterial);
 
     this.scene.add(this.dot);
-    
+
   }
 
   @HostListener('document:mousemove', ['$event'])
-  onMouseMove(e : MouseEvent) {
-    this.pick.updateMouse(e.clientX,e.clientY,this.renderer);
+  onMouseMove(e: MouseEvent) {
+    this.pick.updateMouse(e.clientX, e.clientY, this.renderer);
     this.pick.intersect();
-    var posV = this.pick.surfacePosition() ;
-    if(posV!=null && this.objectToBeAttached != null){
+    var posV = this.pick.surfacePosition();
+    if (posV != null && this.objectToBeAttached != null) {
       this.objectToBeAttached.position(posV);
     }
   }
 
   @HostListener('click', ['$event.target'])
   onClick(btn) {
- }
+  }
 
 
 
@@ -290,40 +300,38 @@ export class ThreeComponent implements AfterViewInit, OnInit{
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
   }
 
-/**Metodo para desenhar de acordo com a categoria */
-public draw(){
-    
-  this.categoryService.getCategoryById(this.message.categoryId).subscribe(data =>{
-    console.log('Catategoria' + data);
-    this.rootCategoria = data;
-  });
-  if(this.rootCategoria === undefined){
-    return;
-  }
+  /**Metodo para desenhar de acordo com a categoria */
+  public draw() {
 
-  switch(this.rootCategoria.categoryName) { 
-    case this.armario: { 
-      this.addCloset();
-      break; 
-    } 
-    case this.prateleira: { 
-      this.addShlef();
-      break; 
+    if (this.rootCategoria === undefined) {
+      console.log("ROOT UNDEFINED");
+      return;
     }
-    case this.cabide: { 
-      this.addHanger();
-      break; 
-    }  
-    case this.gavetas: { 
-      this.addDrawer();
-      break; 
-    } 
-    default: { 
-       //statements; 
-      break; 
-    } 
+    console.log(this.rootCategoria.categoryName, "SITIO CERTO");
+
+    switch (this.rootCategoria.categoryName) {
+      case this.armario: {
+        this.addCloset();
+        break;
+      }
+      case this.prateleira: {
+        this.addShlef();
+        break;
+      }
+      case this.cabide: {
+        this.addHanger();
+        break;
+      }
+      case this.gavetas: {
+        this.addDrawer();
+        break;
+      }
+      default: {
+        //statements; 
+        break;
+      }
+    }
   }
-}
   /* LIFECYCLE */
 
   /**
@@ -337,10 +345,6 @@ public draw(){
     this.addDoor();
     this.startRenderingLoop();
     this.addControls();
-    window.setTimeout(() =>{
-      console.log("timeout");
-      this.draw();
-    }, 2000);
   }
 
 }

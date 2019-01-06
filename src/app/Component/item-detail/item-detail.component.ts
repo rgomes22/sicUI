@@ -12,6 +12,7 @@ import { MaterialFinishService } from '../../Services/material-finish.service';
 
 import { ThreeServiceService } from '../../Services/three-Service.service';
 import { Category } from 'src/app/model/Category';
+import { send } from 'q';
 
 
 @Component({
@@ -45,7 +46,7 @@ export class ItemDetailComponent implements OnInit {
     this.getItem();
     this.getMfs();
     this.getProdutos();
-    this.ThreeService.currentMessage.subscribe(message => this.message = message);
+
 
 
   }
@@ -57,14 +58,15 @@ export class ItemDetailComponent implements OnInit {
 
     }
     let idP = parseInt(this.item.idproduto);
-    this.ProdutosService.getProduto(idP).subscribe(p => this.produto = p, p => console.log(p.productName));
+    this.ProdutosService.getProduto(idP).subscribe(p => {this.produto = p;this.message = p.productCategory;this.sendMessage()});
   }
 
   getItem(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.itemService.getItem(id)
-      .subscribe(item => this.item = item, () => console.log('oi'), () => this.getProduto());
+      .subscribe(item => this.item = item, () => console.log('oi'), () => {this.getProduto();});
 
+      
     // this.location.go(this.location.path());
 
   }
@@ -169,7 +171,7 @@ export class ItemDetailComponent implements OnInit {
   }
 
   sendMessage() {
-    this.ThreeService.sendMessage(!this.message);
+    this.ThreeService.sendMessage(this.message);
   }
 
 }
