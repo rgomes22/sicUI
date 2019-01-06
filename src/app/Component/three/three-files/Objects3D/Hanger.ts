@@ -9,7 +9,7 @@ export class Hanger implements Obj3D , Texturable{
     private hanger : THREE.Mesh;
 
 
-    constructor(handlerRadius : number, length : number,thickness : number,nome: string){
+    constructor(handlerRadius : number, length : number,thickness : number){
         let shelfMaterial = new THREE.MeshPhongMaterial({color: 0x559a99});
         let shelfGeometry = new THREE.CylinderGeometry(handlerRadius,handlerRadius,length-thickness,32);
         

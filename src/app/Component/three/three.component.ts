@@ -200,7 +200,7 @@ export class ThreeComponent implements AfterViewInit, OnInit {
 
 
   private addCloset() {
-    var closet = new Closet(this.message.length*this.ratio, this.message.height*this.ratio, this.message.depth*this.ratio, this.thickness,this.message.id);
+    var closet = new Closet(this.message.length*this.ratio, this.message.height*this.ratio, this.message.depth*this.ratio, this.thickness);
     
     this.scene.add(closet.mesh());
     this.pick = new MousePicking(this.camera, closet.attachSurfaces());
@@ -208,7 +208,7 @@ export class ThreeComponent implements AfterViewInit, OnInit {
 
   private addShlef() {
 
-    var shelf = new Shelf(this.message.length, this.thickness, this.message.depth, this.thickness,this.message.id);
+    var shelf = new Shelf(this.message.length, this.thickness, this.message.depth, this.thickness,);
 
     /*Tirar as posiçoes depois */
     var a = new THREE.Vector3(this.message.length / 2, 500, this.message.depth / 2);
@@ -219,7 +219,7 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   }
 
   private addHanger() {
-    var hanger = new Hanger(2, this.message.length, this.thickness,this.message.id);
+    var hanger = new Hanger(2, this.message.length, this.thickness);
 
     /*Tirar as posiçoes depois */
     var a = new THREE.Vector3(this.message.length / 2, 600, this.message.depth / 2);
@@ -231,7 +231,7 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   }
 
   private addDrawer() {
-    var drawerUnit = new DrawerUnit(this.message.length, 100, this.message.depth, this.thickness,this.message.id);
+    var drawerUnit = new DrawerUnit(this.message.length, 100, this.message.depth, this.thickness);
     /*Tirar as posiçoes depois */
     var a = new THREE.Vector3(0, 300, 0);
     this.objectToBeAttached = drawerUnit;

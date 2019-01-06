@@ -16,10 +16,10 @@ export class Closet implements Obj3D ,Texturable,Attachable {
 
     private attachPlane : THREE.Mesh;
 
-    constructor(length : number , height : number, depth : number,thickness : number,nome: string){
+    constructor(length : number , height : number, depth : number,thickness : number){
 
         this.closet = new THREE.Group();
-        this.closet.name=nome;
+
         this.parts = new Array();
 
         let material = new THREE.MeshPhongMaterial({ color:0x600907});
