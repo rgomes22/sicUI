@@ -47,6 +47,7 @@ import { ErrorPageComponent } from './Component/error-page/error-page.component'
 import { RegisterComponent } from './Component/register/register.component';
 import { CriarAcabamentoComponent } from './Component/criar-acabamento/criar-acabamento.component';
 import { SubmeterEncomendaComponent } from './Component/submeter-encomenda/submeter-encomenda.component';
+import { MaterialFinishGestaoComponent } from './Component/material-finish-gestao/material-finish-gestao.component';
 
 const routes: Routes = [
   {path: 'catalogo', component : CatalogoComponent},
@@ -78,6 +79,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent, canActivate: [AuthLogin]},
   {path: 'criarAcabamento', component: CriarAcabamentoComponent},
   {path: 'submeterEncomenda', component: SubmeterEncomendaComponent},
+  {path: 'materialFinish', component: MaterialFinishGestaoComponent},
   { path: '**', redirectTo: '' }
 ];
 
