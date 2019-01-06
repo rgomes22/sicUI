@@ -7,20 +7,20 @@
   <p></p>
   <hr>
   <h2>GERIR ITENS</h2>
-  <p align="center">
-    <li *ngFor="let item of allItens">
-      <div *ngIf="item.child !== true">
-        <div *ngIf="item.editavel === true">
+  
+    <div *ngFor="let item of allItens" align="center">
+      <ng-container  *ngIf="item.child !== true">
+        <ng-container  *ngIf="item.editavel === true">
        <nav>
         <a routerLink="/itens/{{item.id}}">
           <span class="badge">{{item.nome}}</span>
         </a>
         <button class="delete" title="delete Item" (click)="delete(item)">x</button>
         </nav>
-      </div>
-    </div>
-    </li>
-  </p>
+      </ng-container >
+    </ng-container >
+  </div>
+ 
 
 </div>
 
