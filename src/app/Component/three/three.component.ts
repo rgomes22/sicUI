@@ -10,7 +10,7 @@ import { Closet } from './three-files/Objects3D/Closet';
 import { ColladaLoader } from "three/examples/js/loaders/ColladaLoader";
 import { Shelf } from './three-files/Objects3D/Shelf';
 import { Hanger } from './three-files/Objects3D/Hanger';
-import { DrawerUnit } from './three-files/Objects3D/DrawerUnit';
+
 import MousePicking from './three-files/MousePicking';
 import { Obj3D } from './three-files/interfaces/Obj3D';
 
@@ -19,6 +19,7 @@ import { Data } from 'src/app/model/Data';
 import { Category } from 'src/app/model/Category';
 
 import { CategoryServiceService } from '../../Services/category-service.service';
+import { DrawerUnit } from './three-files/Objects3D/DrawerUnit';
 
 
 @Component({
@@ -58,7 +59,7 @@ export class ThreeComponent implements AfterViewInit, OnInit {
 
   private plane: THREE.Mesh;
 
-  private onPositioning : THREE.Object3D;
+  private onPositioning: THREE.Object3D;
 
   private axis: AxesHelper;
 
@@ -86,6 +87,8 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   private gavetas: string = "Gaveta";
 
   private cabide: string = "cabide";
+
+  private onPicking : boolean = false;
 
 
   //@Input()
@@ -117,7 +120,7 @@ export class ThreeComponent implements AfterViewInit, OnInit {
 
   private objectToBeAttached: Obj3D;
 
-  private parentObject:Obj3D;
+  private parentObject: Obj3D;
 
   /* DEPENDENCY INJECTION (CONSTRUCTOR) */
   constructor(private categoryService: CategoryServiceService,
@@ -128,15 +131,7 @@ export class ThreeComponent implements AfterViewInit, OnInit {
 
   ngOnInit() {
     this.ThreeService.currentMessage.subscribe(message => {
-      this.message = message;
-      if (!(message.category.categoryId === undefined)) {
-        this.categoryService.getCategoryById(this.message.category.categoryId)
-          .subscribe(data => {
-            this.rootCategoria = data;
-            console.log('Catategoria ' + this.rootCategoria);
-            this.draw();
-          });
-      }
+      this.message = message;this.draw();
     });
   }
 
@@ -201,56 +196,183 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   }
 
 
-  private addCloset() {
-    var closet = new Closet(this.message.length*this.ratio, this.message.height*this.ratio, this.message.depth*this.ratio, this.thickness);
+  private addCloset(material: string) {
+
+    if (this.checkIfExist() == 0) {
+
+      var closet = new Closet(this.message.length * this.ratio, this.message.height * this.ratio, this.message.depth * this.ratio, this.thickness);
+      this.parentObject = closet;
+      closet.applyTexture(material);
+      this.pick = new MousePicking(this.camera, closet.attachSurfaces());
+      this.onPicking = true;
+      this.scene.add(this.parentObject.mesh());
+    } else if (this.checkIfExist() == 1) {
+
+      this.scene.remove(this.parentObject.mesh());
+      var closet = new Closet(this.message.length * this.ratio, this.message.height * this.ratio, this.message.depth * this.ratio, this.thickness);
+      this.parentObject = closet;
+      closet.applyTexture(material);
+      this.pick = new MousePicking(this.camera, closet.attachSurfaces());
+      this.scene.add(this.parentObject.mesh());
     
-    this.scene.add(closet.mesh());
-    this.pick = new MousePicking(this.camera, closet.attachSurfaces());
+    } else if (this.checkIfExist() == 2) {
+
+      this.objectToBeAttached = null;
+      this.onPicking = false;
+
+    } else if (this.checkIfExist() == 3) {
+
+      if (this.objectToBeAttached != null) {
+        this.scene.remove(this.objectToBeAttached.mesh());
+        var closet = new Closet(this.message.length * this.ratio, this.message.height * this.ratio, this.message.depth * this.ratio, this.thickness);
+        this.objectToBeAttached = closet;
+        this.onPicking = true;
+        closet.applyTexture(material);
+        this.scene.add(this.objectToBeAttached.mesh());
+      } else {
+        var closet = new Closet(this.message.length * this.ratio, this.message.height * this.ratio, this.message.depth * this.ratio, this.thickness);
+        this.objectToBeAttached = closet;
+        this.onPicking = true;
+        closet.applyTexture(material);
+        this.scene.add(this.objectToBeAttached.mesh());
+      }
+    }
+
+
+
+
   }
 
-  private addShlef() {
+  private addShlef(material: string) {
 
-    var shelf = new Shelf(this.message.length, this.thickness, this.message.depth, this.thickness,);
+  
+   
 
-    /*Tirar as posiçoes depois */
-    var a = new THREE.Vector3(this.message.length / 2, 500, this.message.depth / 2);
-    shelf.position(a);
-    /**** */
+    if (this.checkIfExist() == 0) {
 
-    this.scene.add(shelf.mesh());
+      var shelf = new Shelf(this.message.length * this.ratio, this.message.height * this.ratio, this.message.depth * this.ratio, this.thickness);
+      this.parentObject = shelf;
+      shelf.applyTexture(material);
+      this.onPicking = true;
+      this.scene.add(this.parentObject.mesh());
+    } else if (this.checkIfExist() == 1) {
+
+      this.scene.remove(this.parentObject.mesh());
+      var shelf = new Shelf(this.message.length * this.ratio, this.message.height * this.ratio, this.message.depth * this.ratio, this.thickness);
+      this.parentObject = shelf;
+      shelf.applyTexture(material);
+      this.scene.add(this.parentObject.mesh());
+    
+    } else if (this.checkIfExist() == 2) {
+
+      this.objectToBeAttached = null;
+      this.onPicking = false;
+
+    } else if (this.checkIfExist() == 3) {
+
+      if (this.objectToBeAttached != null) {
+        this.scene.remove(this.objectToBeAttached.mesh());
+        var shelf = new Shelf(this.message.length * this.ratio, this.message.height * this.ratio, this.message.depth * this.ratio, this.thickness);
+        this.objectToBeAttached = shelf;
+        this.onPicking = true;
+        shelf.applyTexture(material);
+        this.scene.add(this.objectToBeAttached.mesh());
+      } else {
+        var shelf = new Shelf(this.message.length * this.ratio, this.message.height * this.ratio, this.message.depth * this.ratio, this.thickness);
+        this.objectToBeAttached = shelf;
+        this.onPicking = true;
+        shelf.applyTexture(material);
+        this.scene.add(this.objectToBeAttached.mesh());
+      }
+    }
+
+
+
+
+
+
+
   }
 
-  private addHanger() {
-    var hanger = new Hanger(2, this.message.length, this.thickness);
+  private addHanger(material: string) {
+    if (this.checkIfExist() == 0) {
 
-    /*Tirar as posiçoes depois */
-    var a = new THREE.Vector3(this.message.length / 2, 600, this.message.depth / 2);
-    hanger.position(a);
-    /**** */
+      var shelf =  new Hanger(2, this.message.length* this.ratio, this.thickness);
+      this.parentObject = shelf;
+      shelf.applyTexture(material);
+      this.onPicking = true;
+      this.scene.add(this.parentObject.mesh());
+    } else if (this.checkIfExist() == 1) {
 
-    this.scene.add(hanger.mesh());
+      this.scene.remove(this.parentObject.mesh());
+      var shelf =  new Hanger(2, this.message.length* this.ratio, this.thickness);
+      this.parentObject = shelf;
+      shelf.applyTexture(material);
+      this.scene.add(this.parentObject.mesh());
+    
+    } else if (this.checkIfExist() == 2) {
+
+      this.objectToBeAttached = null;
+      this.onPicking = false;
+
+    } else if (this.checkIfExist() == 3) {
+
+      if (this.objectToBeAttached != null) {
+        this.scene.remove(this.objectToBeAttached.mesh());
+        var shelf  = new Hanger(2, this.message.length* this.ratio, this.thickness);
+        this.objectToBeAttached = shelf;
+        this.onPicking = true;
+        shelf.applyTexture(material);
+        this.scene.add(this.objectToBeAttached.mesh());
+      } else {
+        var shelf = new Hanger(2, this.message.length* this.ratio, this.thickness);;
+        this.objectToBeAttached = shelf;
+        this.onPicking = true;
+        shelf.applyTexture(material);
+        this.scene.add(this.objectToBeAttached.mesh());
+      }
+    }
 
   }
 
-  private addDrawer() {
-    var drawerUnit = new DrawerUnit(this.message.length, 100, this.message.depth, this.thickness);
-    /*Tirar as posiçoes depois */
-    var a = new THREE.Vector3(0, 300, 0);
-    this.objectToBeAttached = drawerUnit;
-    drawerUnit.position(a);
-    /**** */
+  private drawerUnitAdd(material: string) {
+    if (this.checkIfExist() == 0) {
 
-    this.scene.add(drawerUnit.mesh());
-  }
+      var shelf =  new DrawerUnit(this.message.length * this.ratio, this.message.height * this.ratio, this.message.depth * this.ratio, this.thickness);
+      this.parentObject = shelf;
+      shelf.applyTexture(material);
+      this.onPicking = true;
+      this.scene.add(this.parentObject.mesh());
+    } else if (this.checkIfExist() == 1) {
 
-  private addDoor() {
-    var dotGeometry = new THREE.Geometry();
-    dotGeometry.vertices.push(new THREE.Vector3(0, 0, 0));
-    var dotMaterial = new THREE.PointsMaterial({ size: 25, sizeAttenuation: false, color: 0xff });
-    this.dot = new THREE.Points(dotGeometry, dotMaterial);
+      this.scene.remove(this.parentObject.mesh());
+      var shelf =  new DrawerUnit(this.message.length * this.ratio, this.message.height * this.ratio, this.message.depth * this.ratio, this.thickness);
+      this.parentObject = shelf;
+      shelf.applyTexture(material);
+      this.scene.add(this.parentObject.mesh());
+    
+    } else if (this.checkIfExist() == 2) {
 
-    this.scene.add(this.dot);
+      this.objectToBeAttached = null;
+      this.onPicking = false;
 
+    } else if (this.checkIfExist() == 3) {
+
+      if (this.objectToBeAttached != null) {
+        this.scene.remove(this.objectToBeAttached.mesh());
+        var shelf  = new DrawerUnit(this.message.length * this.ratio, this.message.height * this.ratio, this.message.depth * this.ratio, this.thickness);
+        this.objectToBeAttached = shelf;
+        this.onPicking = true;
+        shelf.applyTexture(material);
+        this.scene.add(this.objectToBeAttached.mesh());
+      } else {
+        var shelf = new DrawerUnit(this.message.length * this.ratio, this.message.height * this.ratio, this.message.depth * this.ratio, this.thickness);
+        this.objectToBeAttached = shelf;
+        this.onPicking = true;
+        shelf.applyTexture(material);
+        this.scene.add(this.objectToBeAttached.mesh());
+      }
+    }
   }
 
   @HostListener('document:mousemove', ['$event'])
@@ -258,15 +380,16 @@ export class ThreeComponent implements AfterViewInit, OnInit {
     this.pick.updateMouse(e.clientX, e.clientY, this.renderer);
     this.pick.intersect();
     var posV = this.pick.surfacePosition();
-    if (posV != null && this.objectToBeAttached != null) {
+    if (posV != null && this.onPicking) {
       this.objectToBeAttached.position(posV);
     }
   }
 
-  @HostListener('click', ['$event.target'])
+  @HostListener('document:contextmenu', ['$event'])
   onClick(btn) {
-  // this.objectToBeAttached = null;
-  }
+    btn.preventDefault();
+    this.onPicking = false;
+}
 
 
 
@@ -312,36 +435,39 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   /**Metodo para desenhar de acordo com a categoria */
   public draw() {
 
-    this.checkIfExist();
+    if (this.message === undefined) return;
 
-    if (this.rootCategoria === undefined) {
-      console.log("ROOT UNDEFINED");
-      return;
-    }
-    console.log(this.rootCategoria.categoryName, "SITIO CERTO");
-    
-    if(this.message.category.categoryParentId!=null){
-      console.log(this.rootCategoria.categoryParentName, "SITIO CERTO pai categoria");
-      this.categoryService.getCategoryById(this.message.category.categoryParentId).subscribe(cat => this.rootCategoria = cat);
-    }
-    //if(this.checkIfExist()){
+      this.getRootCategory(this.message.category, (c) => {
+        this.addNewItem(c.categoryName, this.message.material);
+      });
 
-    //}
-    switch (this.rootCategoria.categoryName) {
+  }
+
+  private getRootCategory(category: Category, callback: (c: Category) => any) {
+    if (category.categoryParentId == null) {
+      callback(category);
+    } else {
+      this.categoryService.getCategoryById(this.message.category.categoryParentId).subscribe(cat => this.getRootCategory(cat, callback));
+    }
+  }
+
+  private addNewItem(categoria: string, material: string) {
+    console.log(categoria , "CATEGORIA NEW ITEM");
+    switch (categoria) {
       case this.armario: {
-        this.addCloset();
+        this.addCloset(material);
         break;
       }
       case this.prateleira: {
-        this.addShlef();
+        this.addShlef(material);
         break;
       }
       case this.cabide: {
-        this.addHanger();
+        this.addHanger(material);
         break;
       }
       case this.gavetas: {
-        this.addDrawer();
+        this.drawerUnitAdd(material);
         break;
       }
       default: {
@@ -352,26 +478,28 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   }
 
 
-  
-
-  private  checkIfExist(){
-    if(this.message.parent && this.message.create){
+  private checkIfExist(): number {
+    if (this.message.parent && this.message.create) {
       /**Inicio da cena  */
-      console.log("PAI && CREATE");
+      return 0;
+      //console.log("PAI && CREATE");
 
-    }else if(this.message.parent && this.message.preview){
+    } else if (this.message.parent && this.message.preview) {
       /**Edita o item pai */
-      console.log("PAI && PREVIEW");
+      return 1;
+      //console.log("PAI && PREVIEW");
 
-    }else if(this.message.child && this.message.create){
+    } else if (this.message.child && this.message.create) {
       /**Cria o item filho e ja nao o pode editar */
-      console.log("FILHO && CREATE");
+      return 2;
+      //console.log("FILHO && CREATE");
 
-    }else if(this.message.child && this.message.preview){
+    } else if (this.message.child && this.message.preview) {
       /**Altera o filho */
-      console.log("FILHO && PREVIEW");
+      return 3;
+      //console.log("FILHO && PREVIEW");
     }
-    
+
   }
 
   /* LIFECYCLE */
@@ -384,7 +512,6 @@ export class ThreeComponent implements AfterViewInit, OnInit {
   public ngAfterViewInit() {
     this.createScene();
     this.createStudio();
-    this.addDoor();
     this.startRenderingLoop();
     this.addControls();
   }

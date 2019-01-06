@@ -19,7 +19,7 @@ export class Door implements Obj3D{
         
     }
 
-    mesh(){
+    mesh() : THREE.Mesh{
         return this.door; 
     }
 
