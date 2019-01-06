@@ -11,7 +11,7 @@ import { IsRoleService } from "src/app/Services/is-role.service";
 })
 export class DashComponent implements OnInit {
   public isAuth: boolean;
-
+  public user_email: string;
   constructor(
     public router: Router,
     private authService: AuthServiceService,
@@ -20,10 +20,13 @@ export class DashComponent implements OnInit {
   ) {
     if (this.authService.isAuthenticated()) {
       this.isAuth = true;
+      this.user_email = authService.getEmailFromToken();
     } else {
       this.isAuth = false;
+      this.user_email = "";
     }
     this.authDataService.changeAuth(this.isAuth);
+    this.authDataService.changeUserEmail(this.user_email);
   }
 
   ngOnInit() {
@@ -36,6 +39,9 @@ export class DashComponent implements OnInit {
     //return this.isAuth;
     this.authDataService.currentMessage.subscribe(
       isAuth => (this.isAuth = isAuth)
+    );
+    this.authDataService.currentEmail.subscribe(
+      email => (this.user_email = email)
     );
   }
 
@@ -50,7 +56,9 @@ export class DashComponent implements OnInit {
   updateIsAuth(): void {
     console.log(this.isAuth);
     this.isAuth = true;
+    this.user_email = this.authService.getEmailFromToken();
     this.authDataService.changeAuth(this.isAuth);
+    this.authDataService.changeUserEmail(this.user_email);
     console.log(this.isAuth);
   }
 
